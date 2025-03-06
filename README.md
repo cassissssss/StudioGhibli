@@ -131,5 +131,4 @@ Les données sont principalement destinées aux fans et aux chercheurs intéress
 - https://www.kaggle.com/code/satoshiss/simple-data-extraction-and-analysis-ghibli-films
 - https://www.statista.com/statistics/1155079/japan-most-watched-studio-ghibli-movies/
 - https://github.com/phelpsbp/Studio-Ghibli-Genre-Popularity-Analysis/blob/main/Studio%20Ghibli%20Genre%20Popularity.ipynb
-- https://storymaps.arcgis.com/stories/bd288f9c07cd433b8f4a0617d3a1b42f
 - https://www.reddit.com/r/ghibli/comments/6ghvf7/oc_visualisation_ghibli_imdb_scores/
