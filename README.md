@@ -40,17 +40,19 @@
 ### Kaggle – Données sur les films  
 - **Format** : CSV  
 - **Attributs** :  
-  - `title` (str) → Titre du film  
-  - `original_title` (str) → Titre original en japonais  
-  - `director` (str) → Réalisateur  
-  - `producer` (str) → Producteur  
-  - `release_date` (int) → Année de sortie  
-  - `running_time` (int) → Durée en minutes  
-  - `rt_score` (int) → Score Rotten Tomatoes  
-  - `description` (str) → Résumé du film  
+  - `Name` (str) → Nom complet du film  
+  - `Year` (int) → Année de sortie  
+  - `Director` (str) → Réalisateur du film  
+  - `Screenplay` (str) → Scénariste du film  
+  - `Budget` (str) → Budget du film, formaté avec `$` devant  
+  - `Revenue` (str) → Revenus au box-office, formatés avec `$` devant  
+  - `Genre 1` (str) → Genre principal  
+  - `Genre 2` (str) → Genre secondaire  
+  - `Genre 3` (str) → Genre tertiaire  
+  - `Duration` (int) → Durée du film en minutes  
 - **Types de données** :  
-  - Chaîne de caractères (str) pour les noms, titres et descriptions  
-  - Entier (int) pour l'année, la durée et le score  
+  - Chaîne de caractères (str) pour les noms, réalisateurs, scénaristes, budgets, revenus et genres  
+  - Entier (int) pour l'année et la durée   
 
 ### GitHub – Analyse des genres et budgets  
 - **Format** : Jupyter Notebook (Python, CSV)  
