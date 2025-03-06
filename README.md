@@ -115,8 +115,10 @@
 ---
 
 ## But du Projet  
-L'objectif est de faire découvrir l'univers du Studio Ghibli via le **story scrolling**, avec la possibilité d'interagir :  
-- Une **chronologie des films** pour en apprendre plus sur les films d'animation.  
+L'objectif est de faire découvrir l'univers du Studio Ghibli via le **story scrolling**, avec la possibilité d'interagir : 
+
+- Une **introduction** au Studio Ghibli.
+- Une **chronologie des films** pour en apprendre plus sur leurs films d'animation.  
 - Une **carte interactive** des lieux qui ont inspiré les différents films.  
 - Des **anecdotes et données précises**, par exemple sur la place des femmes dans les studios Ghibli.  
 - Une analyse des **types de personnages**, des genres des films, de la musique et des images.  
