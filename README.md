@@ -52,7 +52,8 @@
   - `Duration` (int) → Durée du film en minutes  
 - **Types de données** :  
   - Chaîne de caractères (str) pour les noms, réalisateurs, scénaristes, budgets, revenus et genres  
-  - Entier (int) pour l'année et la durée   
+  - Entier (int) pour l'année et la durée
+  => Données qualitatives nominales et ordinales (années)
 
 ### GitHub – Analyse des genres et budgets  
 - **Format** : Jupyter Notebook (Python, CSV)  
@@ -64,7 +65,8 @@
   - `audience_score` (int) → Score donné par le public  
 - **Types de données** :  
   - Chaîne de caractères (str) pour les titres et genres  
-  - Numérique (int/float) pour les budgets et revenus  
+  - Numérique (int/float) pour les budgets et revenus
+  => Données qualitatives nominales et quantitatives continues
 
 ### API Studio Ghibli (GhibliAPI et Ghibli.rest)  
 - **Format** : JSON  
@@ -86,7 +88,9 @@
   - **Personnages (`people/`)** : nom, âge, genre, affiliation  
   - **Lieux (`locations/`)** : nom, climat, surface  
   - **Espèces (`species/`)** : nom, classification  
-  - **Véhicules (`vehicles/`)** : modèle, pilote  
+  - **Véhicules (`vehicles/`)** : modèle, pilote
+- **Types de données** :
+  - Qualitatives nominales
 
 ### Wiki Ghibli – Structure informelle  
 - **Format** : Texte structuré en HTML (wiki)  
@@ -94,7 +98,9 @@
   - `title` → Nom du film, personnage ou lieu  
   - `summary` → Résumé de l’œuvre ou du sujet  
   - `appearances` → Liste des films où apparaît un personnage  
-  - `background` → Détails historiques et inspirations  
+  - `background` → Détails historiques et inspirations
+- **Types de données** :
+  - Qualitatives nominales
 
 ### Base de données des lieux inspirants (à créer)  
 - **Format envisagé** : CSV ou JSON  
@@ -102,7 +108,9 @@
   - `place_name` (str) → Nom du lieu  
   - `country` (str) → Pays où il se situe  
   - `film_reference` (str) → Film inspiré par ce lieu  
-  - `latitude / longitude` (float) → Coordonnées GPS  
+  - `latitude / longitude` (float) → Coordonnées GPS
+- **Types de données** :
+  - Qualitatives nominales et quantitatives continues (GPS)
 
 ---
 
@@ -115,6 +123,11 @@ L'objectif est de faire découvrir l'univers du Studio Ghibli via le **story scr
 - Des statistiques sur les **classements et budgets** des films.  
 
 ## Références  
-Les données sont principalement destinées aux fans et aux chercheurs intéressés par l’univers Ghibli. Elles sont utilisées par des plateformes comme IMDb, des chercheurs en cinéma, et des créateurs de contenu sur YouTube.  
+Les données sont principalement destinées aux fans et aux chercheurs intéressés par l’univers Ghibli. Elles sont utilisées par des plateformes comme IMDb, des chercheurs en cinéma, et des créateurs de contenu sur YouTube.
 
-
+**Visuels déjà réalisés**
+- https://www.kaggle.com/code/satoshiss/simple-data-extraction-and-analysis-ghibli-films
+- https://www.statista.com/statistics/1155079/japan-most-watched-studio-ghibli-movies/
+- https://github.com/phelpsbp/Studio-Ghibli-Genre-Popularity-Analysis/blob/main/Studio%20Ghibli%20Genre%20Popularity.ipynb
+- https://storymaps.arcgis.com/stories/bd288f9c07cd433b8f4a0617d3a1b42f
+- https://www.reddit.com/r/ghibli/comments/6ghvf7/oc_visualisation_ghibli_imdb_scores/
