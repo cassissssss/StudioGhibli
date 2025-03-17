@@ -1,7 +1,7 @@
 // Variables globales
 let films = [];
 let currentIndex = 0;
-const carouselRadius = 230; // Rayon du cercle
+const carouselRadius = 300; // Rayon du cercle ajusté
 
 async function loadFilms() {
     try {
@@ -47,35 +47,56 @@ function positionCarouselItems() {
     const items = document.querySelectorAll('.carousel-item');
     const totalItems = items.length;
     const angleStep = (2 * Math.PI) / totalItems;
+    const offsetX = -350;
+    const offsetY = 80;
+
+    
     
     items.forEach((item, index) => {
-        // Calculer la position sur le cercle
-        // Rotation décalée pour que le premier élément soit à environ 10 heures
-        const angle = (index * angleStep) - Math.PI / 20;
+        // On décale les indices pour que l'élément actif soit toujours au centre droit
+        // En utilisant le modulo pour faire un cycle circulaire
+        const adjustedIndex = (index - currentIndex + totalItems) % totalItems;
+        
+        // Calculer la position sur le cercle - mettre le film actif à droite (angle 0)
+        // et répartir les autres autour
+        const angle = adjustedIndex * angleStep - Math.PI / 200; 
         
         // Coordonnées X et Y sur le cercle
-        const x = Math.cos(angle) * carouselRadius;
-        const y = Math.sin(angle) * carouselRadius;
+        const x = Math.cos(angle) * carouselRadius + offsetX;
+        const y = Math.sin(angle) * carouselRadius + offsetY;
         
-        // Appliquer la transformation - translation uniquement, pas de rotation 3D
+        // Appliquer la transformation
         item.style.transform = `translate(${x}px, ${y}px)`;
         
-        // Ajuster la taille et l'opacité
+        // Style visuel pour l'élément actif vs inactif
         const isActive = index === currentIndex;
-        item.style.opacity = isActive ? 1 : 0.7;
-        item.style.zIndex = isActive ? 100 : 10;
         
-        // Gérer l'état actif
+        // Transition plus complexe pour effet visuel
+        item.style.transition = 'all 0.8s ease';
+        
         if (isActive) {
             item.classList.add('active');
+            item.style.opacity = 1;
+            item.style.filter = 'grayscale(0%)'; 
+            item.style.zIndex = 100;
+            item.style.transform = `translate(${x}px, ${y}px) scale(1.2)`;
         } else {
             item.classList.remove('active');
+            item.style.opacity = 0.7;
+            item.style.filter = 'grayscale(100%)';
+            item.style.zIndex = 10;
         }
     });
 }
 
 function selectFilm(index) {
     if (index === currentIndex) return;
+    
+    // Animation pour la transition
+    const items = document.querySelectorAll('.carousel-item');
+    items.forEach(item => {
+        item.style.transition = 'all 0.8s ease';
+    });
     
     // Mettre à jour l'index courant
     currentIndex = index;
@@ -100,13 +121,9 @@ function updateFilmDisplay(index) {
     document.querySelector('.main-image').src = film.image || 'placeholder.jpg';
     document.querySelector('.main-image').alt = film.name;
     
-    // Gérer le saut de ligne dans le titre (insérer <br> après un espace au milieu)
+    // Gérer le saut de ligne dans le titre
     const title = film.name;
-    const words = title.split(' ');
-    const middleIndex = Math.ceil(words.length / 2);
-    const firstPart = words.slice(0, middleIndex).join(' ');
-    const secondPart = words.slice(middleIndex).join(' ');
-    document.querySelector('.film-info h1').innerHTML = `${firstPart}<br>${secondPart}`;
+    document.querySelector('.film-info h1').textContent = title;
     
     document.querySelector('.description').textContent = film.description || 'Description non disponible.';
     document.querySelector('.year').textContent = film.year;

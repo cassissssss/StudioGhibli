@@ -42,14 +42,14 @@ body {
 
 .carousel-item {
     position: absolute;
-    width: 140px;
-    height: 90px;
+    width: 168px; 
+    height: 108px;
     background-color: #fff;
     border-radius: 10px;
     overflow: hidden;
     cursor: pointer;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    transition: all 0.5s;
+    transition: all 0.8s ease; /* Synchroniser avec la transition du carousel */
     opacity: 0.7;
     filter: grayscale(100%);
     transform-origin: center center;
@@ -77,6 +77,7 @@ body {
     flex-direction: column;
     padding: 30px;
     position: relative;
+    transform: translateY(-50px);
 }
 
 .main-image {
