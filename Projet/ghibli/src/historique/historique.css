@@ -1,0 +1,141 @@
+.historique-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  header {
+    position: sticky; /* Changé de fixed à sticky pour un meilleur scrolling */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f8f8f0;
+    padding: 20px;
+    z-index: 1000;
+  }
+  
+  h1 {
+    text-align: center;
+    font-size: 4rem;
+    margin-bottom: 30px;
+    font-weight: 900;
+    font-family: "Scale VF", sans-serif;
+  }
+  
+  .timeline {
+    position: relative;
+    height: 20px;
+    margin-bottom: 30px;
+    padding: 20px 0;
+  }
+  
+  .timeline-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+    transform: translateY(-50%);
+  }
+  
+  .year-marker {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background-color: #2b6d9e;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .active-marker {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background-color: #2b6d9e;
+    border-radius: 50%;
+    z-index: 10;
+  }
+  
+  .year-label {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 10px;
+    font-size: 14px;
+    font-family: "DM Sans", sans-serif;
+  }
+  
+  /* Cache l'étiquette année pour le marqueur central */
+  .year-marker[data-central="true"] .year-label {
+    display: none;
+  }
+  
+  main {
+    padding-top: 20px; /* Réduit de 200px à 50px pour éviter trop d'espace */
+    min-height: 100vh;
+  }
+  
+  .sections-container {
+    position: relative;
+  }
+  
+  .year-section {
+    min-height: 80vh; /* Changé de height à min-height pour plus de flexibilité */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px; /* Ajout de padding vertical */
+    margin-bottom: 40px; /* Espace entre les sections */
+    opacity: 1;
+    transition: transform 0.5s ease;
+  }
+  
+  .year-section.active {
+    transform: scale(1.01);
+  }
+  
+  .year-display {
+    font-size: 5rem;
+    font-weight: 900;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 50px;
+    font-family: "Scale VF", sans-serif;
+  }
+  
+  .year-content {
+    display: flex;
+    width: 100%;
+    gap: 40px;
+    align-items: center;
+    flex-wrap: wrap; /* Permet de passer en colonne sur mobile */
+  }
+  
+  .year-image {
+    flex: 1;
+    border-radius: 10px;
+    min-height: 300px;
+    max-width: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .year-description {
+    flex: 1;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    padding: 20px 0;
+    font-family: "DM Sans", sans-serif;
+    color: #000;
+    font-weight: 500;
+  }
+
