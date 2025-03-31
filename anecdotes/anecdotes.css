@@ -1,0 +1,382 @@
+/* Ajouter l'import de DM Sans en haut du fichier */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
+
+/* Ajout de la police Scale VF */
+@font-face {
+  font-family: "Scale VF";
+  src: url("path-to-scale-vf-font/ScaleVF.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+:root {
+  --primary-color: #4caf50;
+  --accent-color: #ff9800;
+  --background-color: #fdf7eb; /* Changement de la couleur de fond */
+  --text-color: #333;
+  --ghibli-blue: #4a90e2;
+  --ghibli-green: #50c878;
+  --ghibli-pink: #ff6b6b;
+  --ghibli-yellow: #ffd700;
+}
+
+/* Style de base du body */
+body {
+  font-family: "DM Sans", sans-serif; /* Remplacer Helvetica Neue */
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Garder Scale VF pour h1 uniquement */
+h1 {
+  font-size: 3.5rem;
+  text-align: center;
+  margin-bottom: 10px; /* Réduit la marge pour rapprocher le sous-titre */
+  font-weight: bold;
+  font-family: "Scale VF", sans-serif; /* Ajout de la police Scale VF */
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #666;
+  font-weight: normal;
+  font-family: "DM Sans", sans-serif; /* Changement de la police pour DM Sans */
+}
+
+/* Images layout */
+.characters-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Réduit de 30px à 20px */
+  margin: 30px 0 40px; /* Réduit les marges */
+  justify-content: center;
+  width: 100%;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Réduit de 30px à 20px */
+  flex: 1;
+  max-width: 500px; /* Réduit de 600px à 500px */
+}
+
+.right-column {
+  flex: 0 0 auto;
+  max-width: 350px; /* Réduit de 450px à 350px */
+}
+
+.small-images-container {
+  display: flex;
+  gap: 20px; /* Réduit de 30px à 20px */
+  width: 100%;
+}
+
+.character-card {
+  position: relative;
+  border-radius: 15px; /* Légèrement augmenté */
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Ombre plus prononcée */
+  transition: all 0.4s ease; /* Transition plus fluide */
+  background-color: #fff; /* Ajout d'un fond */
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.character-card:hover {
+  transform: translateY(-8px); /* Plus prononcé */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.character-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Garantit que l'image couvre bien l'espace */
+  object-position: center;
+  display: block;
+  min-height: 100%;
+}
+
+.character-name {
+  position: absolute;
+  padding: 8px 16px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--text-color);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  font-family: "DM Sans", sans-serif;
+}
+
+.character-name.top-left {
+  top: 20px;
+  left: 20px;
+}
+
+.character-name.right-bottom {
+  bottom: 20px;
+  right: 20px;
+}
+
+.large-card {
+  height: 300px; /* Réduit de 400px à 300px */
+  max-width: 100%;
+}
+
+.small-card {
+  height: 200px; /* Réduit de 250px à 200px */
+  flex: 1;
+  min-width: 150px; /* Réduit de 200px à 150px */
+  max-width: calc(50% - 15px); /* Tenir compte du gap */
+}
+
+.tall-card {
+  height: 520px; /* Réduit de 680px à 520px */
+  width: 100%;
+}
+
+/* Mise à jour de la section des graphiques */
+.graphs-section {
+  padding: 40px;
+  margin-top: 60px;
+  /* Supprimé: background-color: white; */
+}
+
+.graphs-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 40px;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.graph-card {
+  border-radius: 16px;
+  padding: 30px;
+  transition: transform 0.3s ease;
+  /* Supprimé: background: linear-gradient(145deg, #ffffff, #f8f9fa); */
+  /* Modifié: box-shadow plus subtile */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.graph-card:hover {
+  transform: translateY(-5px);
+}
+
+.graph-title {
+  font-size: 1.4rem;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 700;
+  color: #2c3e50;
+  font-family: "DM Sans", sans-serif;
+}
+
+/* Style des traits */
+.traits-container {
+  margin-top: 40px;
+  border-radius: 12px;
+  padding: 20px;
+  /* Supprimé: background-color: #f8f9fa; */
+}
+
+.traits-title {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+  color: #2c3e50;
+  font-family: "DM Sans", sans-serif;
+}
+
+.traits-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.traits-list li {
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease;
+  /* Supprimé: background-color: white; */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  font-family: "DM Sans", sans-serif;
+}
+
+.traits-list li:hover {
+  transform: translateX(5px);
+}
+
+.traits-list li:before {
+  content: "●";
+  color: var(--accent-color);
+  font-weight: bold;
+  margin-right: 12px;
+  font-size: 0.8rem;
+}
+
+/* Style des statistiques de sauvetage */
+.rescue-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.rescue-card {
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease;
+  /* Supprimé: background: linear-gradient(145deg, #ffffff, #f8f9fa); */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.rescue-card:hover {
+  transform: translateY(-3px);
+}
+
+.rescue-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 8px;
+  font-family: "DM Sans", sans-serif;
+}
+
+.rescue-label {
+  font-size: 1rem;
+  color: #6c757d;
+  line-height: 1.4;
+  font-family: "DM Sans", sans-serif;
+}
+
+/* Citation source */
+.source-citation {
+  margin-top: 50px;
+  text-align: center;
+  font-style: italic;
+  color: #6c757d;
+  font-size: 0.95rem;
+  padding: 20px;
+  border-top: 1px solid #dee2e6;
+  font-family: "DM Sans", sans-serif;
+}
+
+.quote-section {
+  margin-top: 80px;
+  padding: 40px;
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.miyazaki-quote {
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.6;
+  color: #333;
+  font-style: italic;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.quote-author {
+  font-family: "DM Sans", sans-serif;
+  font-size: 1rem;
+  color: #666;
+  display: block;
+  margin-top: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .characters-container {
+    gap: 20px;
+  }
+
+  .left-column,
+  .right-column {
+    max-width: 100%;
+  }
+
+  .small-images-container {
+    flex-direction: row;
+  }
+
+  .small-card {
+    max-width: 48%;
+  }
+
+  .tall-card {
+    height: 300px; /* Réduit pour mobile */
+  }
+
+  .large-card {
+    height: 250px;
+  }
+
+  .small-card {
+    height: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .graphs-container {
+    grid-template-columns: 1fr;
+  }
+
+  .graph-card {
+    padding: 20px;
+  }
+
+  .rescue-stats {
+    gap: 15px;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .miyazaki-quote {
+    font-size: 1.2rem;
+  }
+
+  .quote-section {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .small-images-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .small-card {
+    max-width: 100%;
+    height: 250px; /* Augmenté pour mobile en colonne */
+  }
+
+  .large-card,
+  .tall-card {
+    height: 350px; /* Uniformisé pour mobile */
+  }
+}

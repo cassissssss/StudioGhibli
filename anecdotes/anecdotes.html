@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anecdotes Studio Ghibli</title>
+    <link rel="stylesheet" href="anecdotes.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.2/d3.min.js"></script>
+    <!-- Ajout du lien vers la police Scale VF -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Scale+VF:wght@400&display=swap"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Anecdotes</h1>
+      <h2 class="subtitle">La représentation des femmes chez Ghibli</h2>
+
+      <div class="characters-container">
+        <div class="left-column">
+          <div class="character-card large-card">
+            <img src="img/chihiro.jpg" alt="Chihiro" />
+            <div class="character-name top-left">Chihiro</div>
+          </div>
+          <div class="small-images-container">
+            <div class="character-card small-card">
+              <img src="img/kiki.jpg" alt="Kiki" />
+              <div class="character-name top-left">Kiki</div>
+            </div>
+            <div class="character-card small-card">
+              <img src="img/nausicaa.jpg" alt="Nausicaä" />
+              <div class="character-name top-left">Nausicaä</div>
+            </div>
+          </div>
+        </div>
+        <div class="right-column">
+          <div class="character-card tall-card">
+            <img src="img/arrietty.jpg" alt="Arrietty" />
+            <div class="character-name right-bottom">Arrietty</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="graphs-section">
+        <div class="graphs-container">
+          <div class="graph-card">
+            <div class="graph-title">Personnages masculins</div>
+            <div id="male-chart"></div>
+            <div class="traits-container">
+              <div class="traits-column">
+                <div class="traits-title">Traits principaux</div>
+                <ul class="traits-list" id="male-traits-list"></ul>
+              </div>
+            </div>
+            <div class="rescue-stats">
+              <div class="rescue-card">
+                <div class="rescue-number" id="male-rescues"></div>
+                <div class="rescue-label">Sauvetages effectués</div>
+              </div>
+              <div class="rescue-card">
+                <div class="rescue-number" id="male-rescued"></div>
+                <div class="rescue-label">Fois secourus</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="graph-card">
+            <div class="graph-title">Personnages féminins</div>
+            <div id="female-chart"></div>
+            <div class="traits-container">
+              <div class="traits-column">
+                <div class="traits-title">Traits principaux</div>
+                <ul class="traits-list" id="female-traits-list"></ul>
+              </div>
+            </div>
+            <div class="rescue-stats">
+              <div class="rescue-card">
+                <div class="rescue-number" id="female-rescues"></div>
+                <div class="rescue-label">Sauvetages effectués</div>
+              </div>
+              <div class="rescue-card">
+                <div class="rescue-number" id="female-rescued"></div>
+                <div class="rescue-label">Fois secourues</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="source-citation" id="source-citation"></div>
+      </div>
+    </div>
+
+    <script src="anecdotes.js"></script>
+  </body>
+</html>
