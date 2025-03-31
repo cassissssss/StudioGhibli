@@ -1,12 +1,81 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Studio ghibli</title>
+    <link rel="stylesheet" href="/src/accueil/accueil.css" />
+    <link rel="stylesheet" href="/src/historique/historique.css" />
+    <link rel="stylesheet" href="/src/map/map.css" />
+<link rel="stylesheet" href="/src/characters/characters.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Scale+VF:wght@700&display=swap"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <!-- Section hero -->
+      <div class="hero">
+        <div class="background"></div>
+        <div class="overlay"></div>
+        <div class="content">
+          <div class="logo-container">
+            <div class="japanese-text">スタジオジブリ</div>
+            <div class="main-title">
+              <div class="studio">STUDIO</div>
+              <div class="ghibli">GHIBLI</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section historique -->
+      <div class="historique-container">
+        <header>
+          <h1>HISTORIQUE</h1>
+          <div class="timeline">
+            <div class="timeline-line"></div>
+            <div id="year-markers"></div>
+            <div id="active-marker" class="active-marker"></div>
+           
+          </div> 
+          <button id="skipButton">▼</button>
+        </header>
+
+        <div class="sections-container" id="sections-container"></div>
+      </div>
+
+      <!-- Section map avec ancre -->
+      <section id="map-section">
+        <div id="map-anchor"></div>
+       
+        <div id="map-container">
+          <svg id="map"></svg>
+          <div class="tooltip"></div>
+        </div>
+
+        <div class="map-sections-container">
+          
+          <!-- Les sections pour chaque lieu seront générées dynamiquement via JavaScript -->
+        </div>
+      </section>
+      <section id="characters-section">
+        <div class="characters-container">
+          <h1>Personnages</h1>
+          <div id="carousel-container"></div>
+        </div>
+   
+      </section>
+    </div>
+
+    <script type="module" src="src/historique/historique.js"></script>
     <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/map/map.js"></script>
+    <script type="module" src="/src/characters/characters.js"></script>
   </body>
 </html>
