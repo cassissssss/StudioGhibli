@@ -50,9 +50,12 @@ function initTimeline() {
 
         // Ajouter un événement de clic pour naviguer
         yearMarker.addEventListener('click', () => {
+            updateActiveYear(index);
+    
             scrollToSection(index);
         });
     });
+    updateTimelinePosition(0);
 }
 
 function createSections() {
@@ -78,7 +81,7 @@ function createSections() {
         // Image réelle au lieu du placeholder
         const image = document.createElement('img'); // Changé de div à img
         image.className = 'year-image';
-        image.src = `img/ghibli-${item.year}.jpg`; // Utiliser une convention de nommage pour les images
+        image.src = `historique-img/ghibli-${item.year}.jpg`; // Utiliser une convention de nommage pour les images
         image.alt = `Studio Ghibli en ${item.year}`; // Ajouter un texte alternatif pour l'accessibilité
 
         // Description
@@ -190,13 +193,23 @@ function updateActiveYear(index) {
     updateTimelinePosition(index);
 }
 
-// Fonction pour scroll vers une section spécifique
 function scrollToSection(index) {
     const section = document.getElementById(`section-${index}`);
+    
     if (section) {
-        window.scrollTo({
-            top: section.offsetTop - 200,
-            behavior: 'smooth'
+        // 1. Ajouter une marge temporaire pour le scroll
+        // Cette marge crée un espace au-dessus de la section pour compenser le header
+        section.style.scrollMarginTop = '250px'; // Ajustez cette valeur à la hauteur de votre header + espace souhaité
+        
+        // 2. Utiliser scrollIntoView avec block: 'start'
+        section.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start' // Aligner le haut de la section (avec la marge)
         });
+        
+        // 3. Option: Restaurer la marge après le scroll
+        // setTimeout(() => {
+        //    section.style.scrollMarginTop = '0';
+        // }, 1000);
     }
 }

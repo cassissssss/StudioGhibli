@@ -1,172 +1,151 @@
-
 body {
   position: relative;
 }
 
 .subtitle {
-    font-size: 1.2rem;
-    margin-top: 0.5rem;
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+  
 }
 #map {
-    width: 100%;
-    height: 100%;
-    background-color: #f0f8ff;
+  width: 100%;
+  height: 100%;
+  background-color: #c1e0fa;
 }
 #map-container {
-    position: sticky; /* Changé de absolute à fixed */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    background-color: #f0f8ff;
-  }
-  
-  /* Conteneur pour les sections qui se superposent à la carte */
-  .map-sections-container {
-    position: relative;
-    z-index: 2;
-    padding-top: 0; /* Modifié de 100vh à 0 */
-    margin-top: -100vh; /* Ajout d'une marge négative pour superposer sur la carte */
-  }
-  
-  /* Section de carte */
-  #map-section {
-    position: relative;
-    width: 100%;
-    min-height: calc(100vh * 4);
-    overflow: visible;
-  }
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.map-sections-container {
+  position: relative;
+  z-index: 2;
+  padding-top: 0;
+  margin-top: -100vh; 
+}
+
+/* Section de carte */
+#map-section {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh * 4);
+  overflow: visible;
+  font-family: "DM Sans", sans-serif;
+}
+
 .step {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    padding: 0 5%;
-    position: relative; /* Ajouté pour positionner correctement les éléments */
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding: 0 5%;
+  position: relative; 
+  
 }
 
 .info-box {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    padding: 2rem 2rem 1.5rem 2rem;
-    width: 350px;
-    height: 550px;
-    max-width: 100%;
-    transition: all 0.5s ease-out;
-    opacity: 0;
-    transform: translateY(20px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 2rem 2rem 1.5rem 2rem;
+  width: 350px;
+  height: 550px;
+  max-width: 100%;
+  transition: all 0.5s ease-out;
+  opacity: 0;
+  transform: translateY(20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .info-box.active {
-    opacity: 1;
-    transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.intro{
-    width: 350px;
-    height: 350px;       
+.intro {
+  width: 350px;
+  height: 350px;
 }
 
 .location-name {
-    color: #2c3e50;
-    margin-top: 1rem;
-    font-size: 1.8rem;
-    border-bottom: 3px solid;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
+  color: #2c3e50;
+  margin-top: 1rem;
+  font-size: 1.8rem;
+  border-bottom: 3px solid;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  font-family: "Scale VF", sans-serif;
 }
 
 .film-title {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .country {
-    font-weight: 600;
-    margin-bottom: 0;
+  font-weight: 600;
+  margin-bottom: 0;
 }
 
 .tooltip {
-    position: absolute;
-    background: white;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s;
-    z-index: 100;
+  position: absolute;
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 100;
+  
 }
 
-/* Pour s'assurer que le contenu est par-dessus la carte */
-.content-wrapper {
-    position: relative;
-    z-index: 5;
-}
 
 .location-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 0px 0px 8px 8px;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 0px 0px 8px 8px;
 }
 
-.film-image{
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 8px 8px 0px 0px;
+.film-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px 8px 0px 0px;
 }
 
 #skipButtonMap {
-    position: absolute; /* Changé de fixed à absolute */
-    bottom: 30px;
-    right: 30px;
-    background-color: #ca9ea9;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    transition: background-color 0.3s ease;
+  position: absolute; 
+  bottom: 30px;
+  right: 30px;
+  background-color: #ca9ea9;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: background-color 0.3s ease;
 }
 
 #skipButtonMap:hover {
-    background-color: #d9a9b5;
+  background-color: #d9a9b5;
 }
 
-/* Ajout de styles pour améliorer l'intégration */
 .map-section {
-    padding-top: 80px;
-    padding-bottom: 80px;
-    min-height: 100vh;
-    position: relative;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  min-height: 100vh;
+  position: relative;
 }
 
-/* Styles pour un scrolling fluide */
-html, body {
-    scroll-behavior: smooth;
-}
-
-/* Media queries pour la responsivité */
-@media (max-width: 768px) {
-    .info-box {
-        width: 90%;
-        height: auto;
-        min-height: 350px;
-    }
-    
-    .intro {
-        height: auto;
-        width: 90%;
-    }
-}
 

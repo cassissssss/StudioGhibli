@@ -1,31 +1,31 @@
 [
     { "name": "Yakushima", "film": "Princesse Mononoké", "country": "Japon", "coords": [130.5508, 30.3714], 
-    "color": "#ffcc00", "image_film": "/src/map/map-images/monoke.jpg", "image_reel": "/src/map/map-images/monoke2.jpg" },
+    "color": "#ffcc00", "image_film": "map-images/monoke.jpg", "image_reel": "map-images/monoke2.jpg" },
 
     { "name": "Tokorozawa", "film": "Mon voisin Totoro", "country": "Japon", "coords": [139.4696, 35.7992], 
-    "color": "#ff6600", "image_film": "/src/map/map-images/totoro.jpg", "image_reel": "/src/map/map-images/totoro2.jpg" },
+    "color": "#ff6600", "image_film": "map-images/totoro.jpg", "image_reel": "map-images/totoro2.jpg" },
 
     { "name": "Jiufen", "film": "Le Voyage de Chihiro", "country": "Taïwan", "coords": [121.8422, 25.1075], 
-    "color": "#ff0000", "image_film": "/src/map/map-images/chihiro.jpg", "image_reel": "/src/map/map-images/chihiro2.jpg" },
+    "color": "#ff0000", "image_film": "map-images/chihiro.jpg", "image_reel": "map-images/chihiro2.jpg" },
 
     { "name": "Paronella Park", "film": "Le Château dans le ciel", "country": "Australie", "coords": [145.8689, -17.6090], 
-    "color": "#0099cc", "image_film": "/src/map/map-images/chateau-australie.jpg", "image_reel": "/src/map/map-images/chateau-australie2.jpg" },
+    "color": "#0099cc", "image_film": "map-images/chateau-australie.jpg", "image_reel": "map-images/chateau-australie2.jpg" },
 
     { "name": "Ross Bakery", "film": "Kiki la Petite Sorcière", "country": "Australie", "coords": [147.4880, -41.8895], 
-    "color": "#ff9900", "image_film": "/src/map/map-images/bakery.webp", "image_reel": "/src/map/map-images/bakery2.jpg" },
+    "color": "#ff9900", "image_film": "map-images/bakery.webp", "image_reel": "map-images/bakery2.jpg" },
 
     { "name": "Stockholm", "film": "Kiki la Petite Sorcière", "country": "Suède", "coords": [18.0686, 59.3293], 
-    "color": "#33cc33", "image_film": "/src/map/map-images/kiki.jpg", "image_reel": "/src/map/map-images/kiki2.jpg" },
+    "color": "#33cc33", "image_film": "map-images/kiki.jpg", "image_reel": "map-images/kiki2.jpg" },
 
     { "name": "Vallée de Rhondda", "film": "Le Château dans le ciel", "country": "Pays de Galles", "coords": [-3.4490, 51.6592], 
-    "color": "#6600cc", "image_film": "/src/map/map-images/chateau-ciel.jpg", "image_reel": "/src/map/map-images/chateau-ciel2.jpg" },
+    "color": "#6600cc", "image_film": "map-images/chateau-ciel.jpg", "image_reel": "map-images/chateau-ciel2.jpg" },
 
     { "name": "Colmar", "film": "Le Château Ambulant", "country": "France", "coords": [7.3561, 48.0798], 
-    "color": "#0033cc", "image_film": "/src/map/map-images/ambulant.jpg", "image_reel": "/src/map/map-images/ambulant2.jpg" },
+    "color": "#0033cc", "image_film": "map-images/ambulant.jpg", "image_reel": "map-images/ambulant2.jpg" },
 
     { "name": "Le Palais d'Hofburg", "film": "Le Château Ambulant", "country": "Autriche", "coords": [16.3665, 48.2075], 
-    "color": "#cc00ff", "image_film": "/src/map/map-images/palais.jpg", "image_reel": "/src/map/map-images/palais2.jpg" },
+    "color": "#cc00ff", "image_film": "map-images/palais.jpg", "image_reel": "map-images/palais2.jpg" },
 
     { "name": "Ile de Vis", "film": "Porco Rosso", "country": "Croatie", "coords": [16.1826, 43.0481], 
-    "color": "#009999", "image_film": "/src/map/map-images/porco-rosso.jpg", "image_reel": "/src/map/map-images/porco-rosso2.jpg" }
+    "color": "#009999", "image_film": "map-images/porco-rosso.jpg", "image_reel": "map-images/porco-rosso2.jpg" }
 ]

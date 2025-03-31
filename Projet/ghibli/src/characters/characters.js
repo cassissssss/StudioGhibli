@@ -14,39 +14,39 @@ const fetchCharacters = async () => {
 
 const initCarousel = () => {
     const container = document.getElementById("carousel-container");
-    
+
     // Créer un wrapper pour le carrousel
     const wrapper = document.createElement("div");
     wrapper.className = "carousel-wrapper";
-    
+
     // Créer les éléments du carrousel
     for (let i = 0; i < 5; i++) {
         const itemDiv = document.createElement("div");
         itemDiv.className = "carousel-item";
         itemDiv.id = `item-${i}`;
         itemDiv.innerHTML = '<img src="" alt="">';
-        
+
         // Ajouter l'événement de clic à chaque élément
-        itemDiv.addEventListener("click", function() {
+        itemDiv.addEventListener("click", function () {
             // Déterminer le décalage par rapport à l'élément central (index 2)
             const offset = i - 2;
-            
+
             // Si on clique sur l'élément central, ne rien faire
             if (offset === 0) return;
-            
+
             // Mettre à jour l'index courant en fonction du décalage
             currentIndex = (currentIndex + offset + characters.length) % characters.length;
             updateCarousel();
         });
-        
+
         wrapper.appendChild(itemDiv);
     }
-    
+
     // Créer la zone d'information du personnage
     const infoDiv = document.createElement("div");
     infoDiv.className = "character-info";
     infoDiv.innerHTML = '<h3></h3><p></p>';
-    
+
     // Créer les flèches de navigation
     const navDiv = document.createElement("div");
     navDiv.className = "carousel-nav";
@@ -58,23 +58,23 @@ const initCarousel = () => {
             <span class="arrow-icon"></span>
         </div>
     `;
-        
+
     // Ajouter tous les éléments au container
     container.appendChild(wrapper);
     container.appendChild(navDiv);
     container.appendChild(infoDiv);
-    
+
     // Ajouter les écouteurs d'événements pour les flèches
     document.getElementById("prev-arrow").addEventListener("click", prevSlide);
     document.getElementById("next-arrow").addEventListener("click", nextSlide);
-    
+
     // Ajouter la navigation par glissement (swipe)
     let startX, endX;
-    wrapper.addEventListener("mousedown", function(e) {
+    wrapper.addEventListener("mousedown", function (e) {
         startX = e.clientX;
     });
-    
-    wrapper.addEventListener("mouseup", function(e) {
+
+    wrapper.addEventListener("mouseup", function (e) {
         endX = e.clientX;
         if (startX - endX > 50) { // Swipe gauche
             nextSlide();
@@ -82,7 +82,7 @@ const initCarousel = () => {
             prevSlide();
         }
     });
-    
+
     // Initialiser l'affichage
     updateCarousel();
 };
@@ -115,6 +115,7 @@ const updateCarousel = () => {
         // Mettre à jour l'image après un court délai
         setTimeout(() => {
             const img = itemElement.querySelector("img");
+            // Ajouter le préfixe complet au chemin de l'image
             img.src = character.image;
             img.alt = character.name;
         }, 100);
