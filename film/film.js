@@ -125,8 +125,8 @@ function updateFilmDisplay(index) {
     const title = film.name;
     document.querySelector('.film-info h1').textContent = title;
     
-    document.querySelector('.description').textContent = film.description || 'Description non disponible.';
-    document.querySelector('.year').textContent = film.year;
+    document.querySelector('.film-description').textContent = film.description || 'Description non disponible.';
+    document.querySelector('.film-year').textContent = film.year;
     document.querySelector('.japanese-title').textContent = film.japanese_title || '';
 }
 
@@ -147,8 +147,8 @@ function updateFilmDisplay(index) {
     const title = film.name;
     document.querySelector('.film-info h1').textContent = title;
     
-    document.querySelector('.description').textContent = film.description || 'Description non disponible.';
-    document.querySelector('.year').textContent = film.year;
+    document.querySelector('.film-description').textContent = film.description || 'Description non disponible.';
+    document.querySelector('.film-year').textContent = film.year;
     document.querySelector('.japanese-title').textContent = film.japanese_title || '';
 }
 
