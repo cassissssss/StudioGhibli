@@ -130,5 +130,66 @@ function updateFilmDisplay(index) {
     document.querySelector('.japanese-title').textContent = film.japanese_title || '';
 }
 
+function updateFilmDisplay(index) {
+    const film = films[index];
+    
+    // Ajouter la classe fade-in pour l'animation
+    const filmCard = document.querySelector('.film-card');
+    filmCard.classList.remove('fade-in');
+    void filmCard.offsetWidth; // Force reflow
+    filmCard.classList.add('fade-in');
+    
+    // Mettre à jour les éléments
+    document.querySelector('.main-image').src = film.image || 'placeholder.jpg';
+    document.querySelector('.main-image').alt = film.name;
+    
+    // Gérer le saut de ligne dans le titre
+    const title = film.name;
+    document.querySelector('.film-info h1').textContent = title;
+    
+    document.querySelector('.description').textContent = film.description || 'Description non disponible.';
+    document.querySelector('.year').textContent = film.year;
+    document.querySelector('.japanese-title').textContent = film.japanese_title || '';
+}
+
+// Initialiser l'application quand le DOM est chargé
+document.addEventListener('DOMContentLoaded', () => {
+    loadFilms();
+    setupPopup();
+});
+
+// Configuration du popup
+function setupPopup() {
+    const popup = document.getElementById('popup-overlay');
+    const closeBtn = document.querySelector('.close-popup');
+    const exploreBtn = document.querySelector('.explore');
+    
+    // Ouvrir le popup au clic sur le bouton Explorer
+    exploreBtn.addEventListener('click', () => {
+        const film = films[currentIndex];
+        // Pour l'instant, pop-up vide
+        popup.classList.add('popup-show');
+    });
+    
+    // Fermer le popup au clic sur le bouton de fermeture
+    closeBtn.addEventListener('click', () => {
+        popup.classList.remove('popup-show');
+    });
+    
+    // Fermer le popup en cliquant en dehors du contenu
+    popup.addEventListener('click', (e) => {
+        if (e.target === popup) {
+            popup.classList.remove('popup-show');
+        }
+    });
+    
+    // Fermer le popup avec la touche Echap
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && popup.classList.contains('popup-show')) {
+            popup.classList.remove('popup-show');
+        }
+    });
+}
+
 // Initialiser l'application quand le DOM est chargé
 document.addEventListener('DOMContentLoaded', loadFilms);
