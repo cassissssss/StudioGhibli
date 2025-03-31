@@ -139,5 +139,4 @@ const prevSlide = () => {
 };
 
 
-
 document.addEventListener("DOMContentLoaded", fetchCharacters);

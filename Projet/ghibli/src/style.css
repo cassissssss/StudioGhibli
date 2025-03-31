@@ -15,10 +15,8 @@ html {
   display: flex;
   flex-direction: column;
 }
-#skipButton {
-  position: absolute; 
-  bottom: 170px;
-  right: 30px;
+.skip-button {
+
   background-color: #ca9ea9;
   color: white;
   border: none;
@@ -28,13 +26,27 @@ html {
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  position: absolute;
 }
 
-#skipButton:hover {
+.skip-button:hover {
   background-color: #d9a9b5;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
+/* Boutons qui naviguent vers le bas */
+.skip-down {
+  top: 30px;
+  right: 50px;
+}
+
+/* Boutons qui naviguent vers le haut */
+.skip-up {
+  top: 30px;
+  left: 50px;
+}
 .intro-text {
   display: flex;
   flex-direction: column;
@@ -51,5 +63,9 @@ html {
   line-height: 1.5;
   font-weight: 300;
   letter-spacing: 0.05em;
+  color: #333;
+}
+
+h1{
   color: #333;
 }

@@ -11,7 +11,16 @@
     font-family: "DM Sans", sans-serif;
   }
   
-  
+  #skipHistorique {
+    position: absolute;
+    top: 20px;
+    right: 50px;
+  }
+  #skipHistoriqueReverse {
+    position: absolute;
+    bottom: 20px;
+    right: 50px;
+  }
   
   header {
     position: sticky; /* Changé de fixed à sticky pour un meilleur scrolling */

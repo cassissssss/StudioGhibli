@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="/src/accueil/accueil.css" />
     <link rel="stylesheet" href="/src/historique/historique.css" />
     <link rel="stylesheet" href="/src/map/map.css" />
-<link rel="stylesheet" href="/src/characters/characters.css" />
+    <link rel="stylesheet" href="/src/characters/characters.css" />
+    <link rel="stylesheet" href="/src/film/film.css" />
+    <link rel="stylesheet" href="/src/film/popup.css" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Scale+VF:wght@700&display=swap"
@@ -52,49 +54,98 @@
         </p>
       </div>
 
-      <!-- Section historique -->
-      <div class="historique-container">
+      <div class="historique-container" id="historique-section">
         <header>
           <h1>HISTORIQUE</h1>
           <div class="timeline">
             <div class="timeline-line"></div>
             <div id="year-markers"></div>
             <div id="active-marker" class="active-marker"></div>
-           
-          </div> 
-          <button id="skipButton">▼</button>
+          </div>
+          <button id="skipToMap" class="skip-button skip-down">▼ Passer à la carte</button>
         </header>
-
+          <!-- Bouton pour sauter à la section map -->
+          
+        </header>
         <div class="sections-container" id="sections-container"></div>
       </div>
-
+      
       <!-- Section map avec ancre -->
       <section id="map-section">
+        <!-- Bouton pour revenir à l'historique -->
+        <button id="backToHistorique" class="skip-button skip-up">▲ Retour à l'historique</button>
+        
         <div id="map-anchor"></div>
-       
         <div id="map-container">
           <svg id="map"></svg>
           <div class="tooltip"></div>
         </div>
-
+        
         <div class="map-sections-container">
-          
           <!-- Les sections pour chaque lieu seront générées dynamiquement via JavaScript -->
+           
         </div>
+        <button id="skipToCharacters" class="skip-button skip-down">▼ Voir les personnages</button>
+        <!-- Bouton pour sauter à la section personnages -->
+       
       </section>
-
+      
+      <!-- Section characters -->
       <section id="characters-section">
+        <!-- Bouton pour revenir à la carte -->
+        <button id="backToMap" class="skip-button skip-up">▲ Retour à la carte</button>
+        
         <div class="characters-container">
           <h1>Personnages</h1>
           <div id="carousel-container"></div>
         </div>
-   
+        
+        <!-- Bouton pour passer à la section films -->
       </section>
+       <h1>Films</h1>
+      <!-- Section films -->
+      <section id="film-section">
+        <!-- Bouton pour revenir aux personnages -->
+        
+       
+     
+  
+  <div id="popup-overlay" class="popup-overlay">
+    <div class="popup-content">
+        <span class="close-popup">&times;</span>
+        <div class="popup-body">
+            <!-- Le contenu du pop-up sera ajouté ici dynamiquement -->
+        </div>
+    </div>
+</div>
+
+<div class="film-container">
+
+    <div class="film-carousel">
+        <div class="film-carousel-wheel" id="film-carousel">
+        </div>
+    </div>
+    
+    <div class="film-card">
+        <img src="" alt="" class="film-main-image">
+        <div class="film-info">
+            <h1></h1>
+            <p class="film-description"></p>
+            <span class="film-year"></span>
+            <button class="film-explore">Explorer</button>
+        </div>
+        <span class="film-japanese-title"></span>
+    </div>
+</div>
+
+</section>
 
     <script type="module" src="src/historique/historique.js"></script>
     <script type="module" src="/src/main.js"></script>
     <script type="module" src="/src/map/map.js"></script>
     <script type="module" src="/src/characters/characters.js"></script>
+    <script type="module" src="/src/film/film.js"></script>
+    <script type="module" src="/src/film/popup.js"></script>
 
   </body>
 </html>

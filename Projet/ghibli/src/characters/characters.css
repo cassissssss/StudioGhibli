@@ -1,5 +1,6 @@
 /* 🌟 Styles généraux */
 #characters-section {
+    position : relative;
     padding: 100px 0;
 }
 
@@ -12,7 +13,12 @@
     overflow: visible;
     text-align: center;
 }
-
+#skipMapReverse {
+    /* Position à côté du titre */
+    position: absolute;
+    top: 0; /* Aligné avec le haut du titre */
+    right: 50px;
+}
 /* 🎡 Wrapper du carrousel */
 .carousel-wrapper {
     position: relative;
@@ -95,11 +101,14 @@
 
 /* ℹ️ Informations sur le personnage */
 .character-info {
+    font-family: "DM Sans", sans-serif;
     margin-top: -150px; 
 }
 
 .character-info h3 {
+   
     font-size: 2rem; /* Taille responsive */
+    color: #333;
 }
 
 .character-info p {
@@ -107,3 +116,4 @@
     color: #555;
     margin-top: -20px;
 }
+

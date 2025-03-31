@@ -98,10 +98,7 @@ function createSections() {
 
         container.appendChild(section);
     });
-    document.getElementById("skipButton").addEventListener("click", () => {
-        document.querySelector("#map-section").scrollIntoView({ behavior: "smooth" });
-    });
-    
+  
 }
 
 // Initialiser GSAP ScrollTrigger

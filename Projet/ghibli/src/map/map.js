@@ -76,11 +76,10 @@ function createSections(locations) {
                 mondes d'animation légendaires.
             </p>
         </div>
-        <button id="skipButtonMap">▼</button>
+
     `);
-    document.getElementById("skipButtonMap").addEventListener("click", () => {
-        document.querySelector("#characters-section").scrollIntoView({ behavior: "smooth" });
-      });
+
+    
     // Ajouter une section pour chaque lieu
     locations.forEach((location, i) => {
         container.append("div")
