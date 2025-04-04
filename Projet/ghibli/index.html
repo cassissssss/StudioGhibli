@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/src/characters/characters.css" />
     <link rel="stylesheet" href="/src/film/film.css" />
     <link rel="stylesheet" href="/src/film/popup.css" />
+    <link rel="stylesheet" href="/src/classement/classement.css" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Scale+VF:wght@700&display=swap"
@@ -105,11 +106,7 @@
        <h1>Films</h1>
       <!-- Section films -->
       <section id="film-section">
-        <!-- Bouton pour revenir aux personnages -->
-        
-       
-     
-  
+
   <div id="popup-overlay" class="popup-overlay">
     <div class="popup-content">
         <span class="close-popup">&times;</span>
@@ -137,7 +134,11 @@
         <span class="film-japanese-title"></span>
     </div>
 </div>
+</section>
 
+<section id="graphique-section">
+  <h1>Classement</h1>
+  <div id="chart-container"></div>
 </section>
 
     <script type="module" src="src/historique/historique.js"></script>
@@ -146,6 +147,6 @@
     <script type="module" src="/src/characters/characters.js"></script>
     <script type="module" src="/src/film/film.js"></script>
     <script type="module" src="/src/film/popup.js"></script>
-
+    <script type="module" src="/src/classement/classement.js"></script>
   </body>
 </html>

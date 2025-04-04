@@ -1,0 +1,13 @@
+#graphique-section {
+    margin-top: 100px;
+    padding: 0 20px;
+  }
+  
+  #chart-container {
+    max-width: 100%;
+    overflow-x: auto;
+    background: #fffaf0;
+    border-radius: 20px;
+    padding: 20px 0;
+  }
+  

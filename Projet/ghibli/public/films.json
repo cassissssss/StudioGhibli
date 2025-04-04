@@ -12,7 +12,8 @@
         "genre_3": "Animation",
         "duration": "2h 14m",
         "description": "Dans un Japon médiéval fantastique, le jeune prince Ashitaka est maudit après avoir tué un démon. Il part en quête d’un remède et découvre un conflit entre les humains, qui exploitent la nature pour survivre, et les esprits de la forêt, menés par la farouche San, la Princesse Mononoke. Entre guerre et harmonie, Ashitaka cherche un moyen de réconcilier ces deux mondes.",
-        "image": "film-img/princesseMononoke.jpg"
+        "image": "film-img/princesseMononoke.jpg",
+        "rating" : 8.6
     },
     {
         "name": "Porco Rosso",
@@ -27,7 +28,8 @@
         "genre_3": "Animation",
         "duration": "1h 33m",
         "description": "Dans l’Italie des années 1920, Marco Pagot, un ancien pilote de guerre transformé en cochon anthropomorphe, vit comme chasseur de primes sous le nom de Porco Rosso. Il affronte des pirates de l’air et un pilote américain rival, tout en naviguant entre son amour pour Gina, une chanteuse de cabaret, et son amitié avec la jeune ingénieure Fio.",
-        "image": "film-img/porcoRosso.jpg"
+        "image": "film-img/porcoRosso.jpg",
+        "rating" : 7.7
     },
     {
         "name": "Le Voyage de Chihiro",
@@ -42,7 +44,8 @@
         "genre_3": "Fantasy",
         "duration": "2h 5m",
         "description": "Chihiro, une fillette capricieuse, se retrouve piégée dans un monde magique après que ses parents ont été transformés en cochons. Elle doit travailler dans un bain public dirigé par la sorcière Yubaba et trouver un moyen de retrouver sa liberté. Aidée par le mystérieux Haku, elle traverse de nombreuses épreuves qui la feront grandir et s’affirmer.",
-        "image": "film-img/voyageDeChihiro.jpg"
+        "image": "film-img/voyageDeChihiro.jpg",
+        "rating" : 8.6
     },
     {
         "name": "Le Château dans le ciel",
@@ -57,7 +60,8 @@
         "genre_3": "Animation",
         "duration": "2h 5m",
         "description": "Sheeta, une jeune orpheline, possède un cristal magique qui la relie à la légendaire cité volante de Laputa. Poursuivie par des agents du gouvernement et des pirates, elle s’allie avec Pazu, un garçon rêveur, pour percer le secret de la ville céleste et empêcher sa destruction par des forces malveillantes.",
-        "image": "film-img/chateauDansLeCiel.jpg"
+        "image": "film-img/chateauDansLeCiel.jpg",
+        "rating" : 8.0
     },
     {
         "name": "Mon voisin Totoro",
@@ -72,7 +76,8 @@
         "genre_3": "Famille",
         "duration": "1h 26m",
         "description": "Deux sœurs, Satsuki et Mei, emménagent à la campagne avec leur père tandis que leur mère est hospitalisée. Elles découvrent une nature enchantée peuplée d’esprits bienveillants, dont le doux et géant Totoro, qui les aide à affronter les défis de la vie avec émerveillement et espoir.",
-        "image": "film-img/voisinTotoro.jpg"
+        "image": "film-img/voisinTotoro.jpg",
+        "rating" : 8.1
     },
     {
         "name": "Kiki la petite sorcière",
@@ -87,7 +92,8 @@
         "genre_3": "Fantasy",
         "duration": "1h 43m",
         "description": "À 13 ans, la jeune sorcière Kiki quitte sa famille pour accomplir son apprentissage en autonomie. Avec son chat Jiji, elle s’installe dans une ville côtière et crée un service de livraison en balai volant. Entre doutes et épreuves, elle apprend à trouver sa place dans le monde des humains.",
-        "image": "film-img/kikiLaPetiteSorciere.jpg"
+        "image": "film-img/kikiLaPetiteSorciere.jpg",
+        "rating" : 7.8
     },
     {
         "name": "Le Château ambulant",
@@ -102,7 +108,8 @@
         "genre_3": "Aventure",
         "duration": "1h 59m",
         "description": "Sophie, une jeune femme transformée en vieille dame par une sorcière jalouse, rencontre le mystérieux magicien Hauru et trouve refuge dans son château mouvant. Dans un monde en guerre, elle découvre le passé tourmenté de Hauru et sa propre capacité à briser la malédiction qui l’affecte.",
-        "image": "film-img/chateauAmbulant.jpg"
+        "image": "film-img/chateauAmbulant.jpg",
+        "rating" : 8.2
     },
     {
         "name": "Arrietty, le petit monde des chapardeurs",
@@ -117,7 +124,8 @@
         "genre_3": "Famille",
         "duration": "1h 34m",
         "description": "Arrietty est une minuscule chapardeuse vivant discrètement sous le plancher d’une maison humaine avec sa famille. Elle se lie d’amitié avec un jeune garçon malade, Sho, malgré les dangers que représente la découverte de leur existence par les humains.",
-        "image": "film-img/arrietty.jpg"
+        "image": "film-img/arrietty.jpg",
+        "rating" : 7.6
     },
     {
         "name": "Ponyo sur la falaise",
@@ -132,7 +140,8 @@
         "genre_3": "Famille",
         "duration": "1h 40m",
         "description": "Ponyo, une petite fille-poisson, s’échappe de l’océan et se lie d’amitié avec un garçon nommé Sôsuke. En voulant devenir humaine, elle perturbe l’équilibre du monde. Son père, un sorcier marin, tente de la ramener, tandis que la nature elle-même réagit à ses transformations.",
-        "image": "film-img/ponyo.jpg"
+        "image": "film-img/ponyo.jpg",
+        "rating" : 7.6
     },
     {
         "name": "Nausicaä de la Vallée du Vent",
@@ -147,6 +156,7 @@
         "genre_3": "Fantasy",
         "duration": "1h 57m",
         "description": "Dans un monde post-apocalyptique envahi par une jungle toxique, la princesse Nausicaä cherche à comprendre et apaiser la nature au lieu de la combattre. Son royaume pacifique est menacé par des empires belliqueux, et elle doit trouver un moyen d’éviter une nouvelle catastrophe.",
-        "image": "film-img/Nausicaa.jpg"
+        "image": "film-img/Nausicaa.jpg",
+        "rating" : 8.0
     }
 ]
