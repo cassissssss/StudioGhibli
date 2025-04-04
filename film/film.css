@@ -218,7 +218,7 @@ body {
     position: relative;
     background-size: cover;
     background-position: center;
-    height: 250px;
+    height: 300px;
     border-radius: 15px 15px 0 0;
     color: white;
     padding: 20px;
@@ -286,9 +286,12 @@ body {
     align-items: center;
     gap: 8px;
     font-weight: bold;
+    margin-top : -40px;
+    margin-right: 30px;
+
 }
 
-.score {
+.film-rating-score {
     font-size: 18px;
 }
 
@@ -297,10 +300,36 @@ body {
     font-size: 20px;
 }
 
+/* Structure à deux colonnes pour le popup */
+.popup-two-columns {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    width: 100%;
+}
+
+.popup-left-column, .popup-right-column {
+    flex: 1;
+    min-width: 300px;
+    padding: 20px;
+}
+
+/* Ajustements de la description dans la nouvelle structure */
+.popup-left-column .popup-description {
+    padding: 0 0 20px 0;
+}
+
 .popup-description {
-    padding: 30px;
     font-size: 16px;
     line-height: 1.6;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Ajustements des détails dans la nouvelle structure */
+.popup-left-column .popup-details {
+    padding: 0;
+    margin-bottom: 20px;
 }
 
 .popup-details {
@@ -329,6 +358,21 @@ body {
 .small {
     font-size: 14px;
     color: #777;
+}
+
+/* Ajustements pour la section trailer dans la colonne droite */
+.popup-right-column .section-title {
+    margin: 0 0 15px 0;
+}
+
+.popup-right-column .trailer-container {
+    padding: 0;
+    margin-bottom: 30px;
+}
+
+.popup-right-column .music-player {
+    padding: 0;
+    margin-bottom: 30px;
 }
 
 .section-title {
@@ -423,10 +467,11 @@ body {
     justify-content: center;
 }
 
+/* Correction du style pour la section personnages (maintenant en bas) */
 .characters-container {
     display: flex;
     overflow-x: auto;
-    padding: 0 30px 30px;
+    padding: 0 20px 30px;
     gap: 20px;
 }
 
@@ -483,5 +528,13 @@ body {
     
     .video-placeholder {
         height: 250px;
+    }
+    
+    .popup-two-columns {
+        flex-direction: column;
+    }
+    
+    .popup-left-column, .popup-right-column {
+        width: 100%;
     }
 }
