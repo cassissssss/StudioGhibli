@@ -1,15 +1,20 @@
+function formatDuration(duration) {
+    if (!duration) return "N/A";
+    return duration.replace('h', ' h ').replace('m', ' min');
+}
 
-
-// Modification de la fonction setupPopup pour charger les données du film dans le pop-up
-function setupPopup() {
+export function setupFilmPopup(filmsData, getCurrentIndex) {
     const popup = document.getElementById('popup-overlay');
     const popupBody = document.querySelector('.popup-body');
     const closeBtn = document.querySelector('.close-popup');
-    const exploreBtn = document.querySelector('.explore');
+    const exploreBtn = document.querySelector('.film-explore');
     
     // Ouvrir le popup au clic sur le bouton Explorer
     exploreBtn.addEventListener('click', () => {
-        const film = films[filmCurrentIndex];
+
+        // Obtenir l'index actuel au moment du clic
+        const currentIndex = getCurrentIndex();
+        const film = filmsData[currentIndex];
         
         // Créer le contenu du pop-up
         const popupContent = `
@@ -23,58 +28,64 @@ function setupPopup() {
                     </div>
                 </div>
                 <div class="popup-rating">
-                    <span class="score">8,0/10</span>
+                    <span class="film-rating-score">${film.rating}</span>
                     <span class="star">⭐</span>
                 </div>
             </div>
             
-            <div class="popup-description">
-                <p>${film.description}</p>
-            </div>
-            
-            <div class="popup-details">
-                <div class="popup-detail-item">
-                    <h3>Producteur</h3>
-                    <div class="detail-value">${film.director === "Hayao Miyazaki" ? "Isao Takahata" : "Toshio Suzuki"}</div>
-                </div>
-                <div class="popup-detail-item">
-                    <h3>Année de sortie</h3>
-                    <div class="detail-value">${film.year}</div>
-                </div>
-            </div>
-            
-            <div class="popup-details">
-                <div class="popup-detail-item">
-                    <h3>Directeur</h3>
-                    <div class="detail-value">${film.director}</div>
-                </div>
-                <div class="popup-detail-item">
-                    <h3>Durée</h3>
-                    <div class="detail-value">${film.duration.replace('h', '').replace('m', '')}<div class="small">minutes</div></div>
-                </div>
-            </div>
-            
-            <h2 class="section-title">Bande annonce</h2>
-            <div class="trailer-container">
-                <div class="video-placeholder">
-                    <div class="play-button">▶</div>
-                </div>
-            </div>
-            
-            <h2 class="section-title">Musiques du film</h2>
-            <div class="music-player">
-                <div class="spotify-player">
-                    <div class="music-album-art">
-                        <img src="${film.image}" alt="${film.name} soundtrack">
+            <div class="popup-two-columns">
+                <div class="popup-left-column">
+                    <div class="popup-description">
+                        <p>${film.description}</p>
                     </div>
-                    <div class="music-info">
-                        <div class="music-title">The Girl Who Fell From the Sky</div>
-                        <div class="music-artist">Joe Hisaishi</div>
+                    
+                    <div class="popup-details">
+                        <div class="popup-detail-item">
+                            <h3>Producteur</h3>
+                            <div class="detail-value">${film.director === "Hayao Miyazaki" ? "Isao Takahata" : "Toshio Suzuki"}</div>
+                        </div>
+                        <div class="popup-detail-item">
+                            <h3>Année de sortie</h3>
+                            <div class="detail-value">${film.year}</div>
+                        </div>
                     </div>
-                    <div class="music-controls">
-                        <span class="add-button">+</span>
-                        <span class="more-button">...</span>
-                        <span class="play-button">▶</span>
+                    
+                    <div class="popup-details">
+                        <div class="popup-detail-item">
+                            <h3>Directeur</h3>
+                            <div class="detail-value">${film.director}</div>
+                        </div>
+                        <div class="popup-detail-item">
+                            <h3>Durée</h3>
+                            <div class="detail-value">${formatDuration(film.duration)}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="popup-right-column">
+                    <h2 class="section-title">Bande annonce</h2>
+                    <div class="trailer-container">
+                        <div class="video-placeholder">
+                            <div class="play-button">▶</div>
+                        </div>
+                    </div>
+                    
+                    <h2 class="section-title">Musiques du film</h2>
+                    <div class="music-player">
+                        <div class="spotify-player">
+                            <div class="music-album-art">
+                                <img src="${film.image}" alt="${film.name} soundtrack">
+                            </div>
+                            <div class="music-info">
+                                <div class="music-title">The Girl Who Fell From the Sky</div>
+                                <div class="music-artist">Joe Hisaishi</div>
+                            </div>
+                            <div class="music-controls">
+                                <span class="add-button">+</span>
+                                <span class="more-button">...</span>
+                                <span class="play-button">▶</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

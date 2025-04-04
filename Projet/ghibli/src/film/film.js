@@ -1,4 +1,5 @@
-// Variables globales
+import { setupFilmPopup }  from "./popup";   
+
 let films = [];
 let filmCurrentIndex = 0; // Renommé pour être cohérent
 const filmCarouselRadius = 300; // Rayon du cercle ajusté
@@ -13,6 +14,8 @@ async function loadFilms() {
         
         // Charger les données du premier film
         updateFilmDisplay(0);
+
+        setupFilmPopup(films, () => filmCurrentIndex);
     } catch (error) {
         console.error('Erreur lors du chargement des films:', error);
     }
@@ -139,87 +142,8 @@ function setupPopup() {
     exploreBtn.addEventListener('click', () => {
         // CORRECTION ICI: utiliser filmCurrentIndex au lieu de currentIndex
         const film = films[filmCurrentIndex];
-        
-        // Créer le contenu du pop-up
-        const popupContent = `
-            <div class="popup-header" style="background-image: url('${film.image}');">
-                <div class="popup-title-bar">
-                    <div class="popup-japanese-title">
-                        ${film.japanese_title}
-                    </div>
-                    <div class="popup-french-title">
-                        <h1 class="popup-title">${film.name}</h1>
-                    </div>
-                </div>
-                <div class="popup-rating">
-                    <span class="score">8,0/10</span>
-                    <span class="star">⭐</span>
-                </div>
-            </div>
-            
-            <div class="popup-description">
-                <p>${film.description}</p>
-            </div>
-            
-            <div class="popup-details">
-                <div class="popup-detail-item">
-                    <h3>Producteur</h3>
-                    <div class="detail-value">${film.director === "Hayao Miyazaki" ? "Isao Takahata" : "Toshio Suzuki"}</div>
-                </div>
-                <div class="popup-detail-item">
-                    <h3>Année de sortie</h3>
-                    <div class="detail-value">${film.year}</div>
-                </div>
-            </div>
-            
-            <div class="popup-details">
-                <div class="popup-detail-item">
-                    <h3>Directeur</h3>
-                    <div class="detail-value">${film.director}</div>
-                </div>
-                <div class="popup-detail-item">
-                    <h3>Durée</h3>
-                    <div class="detail-value">${film.duration ? film.duration.replace('h', '').replace('m', '') : ''}
-                    <div class="small">minutes</div></div>
-                </div>
-            </div>
-            
-            <h2 class="section-title">Bande annonce</h2>
-            <div class="trailer-container">
-                <div class="video-placeholder">
-                    <div class="play-button">▶</div>
-                </div>
-            </div>
-            
-            <h2 class="section-title">Musiques du film</h2>
-            <div class="music-player">
-                <div class="spotify-player">
-                    <div class="music-album-art">
-                        <img src="${film.image}" alt="${film.name} soundtrack">
-                    </div>
-                    <div class="music-info">
-                        <div class="music-title">The Girl Who Fell From the Sky</div>
-                        <div class="music-artist">Joe Hisaishi</div>
-                    </div>
-                    <div class="music-controls">
-                        <span class="add-button">+</span>
-                        <span class="more-button">...</span>
-                        <span class="play-button">▶</span>
-                    </div>
-                </div>
-            </div>
-            
-            <h2 class="section-title">Personnages du film</h2>
-            <div class="characters-container">
-                ${createCharacterGrid(film.name)}
-            </div>
-        `;
-        
-        // Insérer le contenu dans le popup
-        popupBody.innerHTML = popupContent;
-        
-        // Afficher le popup
         popup.classList.add('popup-show');
+        
     });
     
     // Fermer le popup au clic sur le bouton de fermeture
@@ -256,5 +180,4 @@ function createCharacterGrid(filmName) {
 // Initialiser l'application quand le DOM est chargé
 document.addEventListener('DOMContentLoaded', () => {
     loadFilms();
-    setupPopup();
 });
