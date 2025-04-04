@@ -1,13 +1,27 @@
-body,
-html {
-  height: 100%;
+
+:root {
+  --primary-color: #4a7a6d;
+  --secondary-color: #ca9ea9;
+  --background-color: #fffaf0;
+  --text-color: #333;
+  --font-family-main: 'Scale VF', Arial, sans-serif;
+}
+
+/* Reset de base */
+* {
   margin: 0;
   padding: 0;
-  font-family: "Scale VF", sans-serif;
-  overflow-x: hidden;
-  background-color: #fffaee; 
-  scroll-behavior: smooth;
+  box-sizing: border-box;
 }
+
+body,
+html  {
+  font-family: var(--font-family-main);
+  color: var(--text-color);
+  background-color: var(--background-color);
+  line-height: 1.6;
+}
+
 
 #app {
   position: relative;
