@@ -1,10 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
 
 :root {
   --primary-color: #4a7a6d;
   --secondary-color: #ca9ea9;
-  --background-color: #fffaf0;
+  --accent-color: #ff9800;
+  --background-color: #fdf7eb;
   --text-color: #333;
-  --font-family-main: 'Scale VF', Arial, sans-serif;
+  --ghibli-blue: #4a90e2;
+  --ghibli-green: #50c878;
+  --ghibli-pink: #ff6b6b;
+  --ghibli-yellow: #ffd700;
+  --font-family-main: 'DM Sans', Arial, sans-serif; 
 }
 
 /* Reset de base */
@@ -14,6 +21,11 @@
   box-sizing: border-box;
 }
 
+h1, h2 {
+  font-family: "scale-variable", sans-serif;
+  font-weight: 700; 
+}
+
 body,
 html  {
   font-family: var(--font-family-main);
@@ -21,7 +33,6 @@ html  {
   background-color: var(--background-color);
   line-height: 1.6;
 }
-
 
 #app {
   position: relative;
@@ -62,6 +73,7 @@ html  {
   left: 50px;
 }
 .intro-text {
+  font-family: scale-variable, sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;

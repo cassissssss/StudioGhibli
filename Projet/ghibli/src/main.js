@@ -1,6 +1,5 @@
 import './style.css'
 
-import './style.css'
 
 // Navigation vers le bas
 document.getElementById("skipToMap").addEventListener("click", () => {

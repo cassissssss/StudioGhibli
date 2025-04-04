@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap");
-
+/* page de titre */
 
 .hero {
   position: relative;
@@ -46,7 +45,7 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 25px; /* Augmenté de 5px à 25px pour plus d'espace entre le japonais et STUDIO GHIBLI */
+  gap: 25px; 
 }
 
 .japanese-text {
@@ -67,17 +66,17 @@
 }
 
 .studio {
-  font-family: "Montserrat", sans-serif;
-  font-size: 12vw;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 12vw !important; 
   font-weight: 900;
   color: transparent;
   -webkit-text-stroke: 3px #000;
-  line-height: 0.65; /* Réduit de 0.8 à 0.65 pour superposer avec GHIBLI */
-  margin-bottom: -0.5vw; /* Ajoute une marge négative pour rapprocher STUDIO et GHIBLI */
+  line-height: 0.65; 
+  margin-bottom: -0.5vw; 
 }
 
 .ghibli {
-  font-family: "Scale VF", sans-serif;
+  font-family: "scale-variable", sans-serif !important;
   font-size: 10vw;
   font-weight: 900;
   color: #000;

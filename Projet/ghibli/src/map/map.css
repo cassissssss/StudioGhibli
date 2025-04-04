@@ -51,7 +51,7 @@ body {
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  padding: 2rem 2rem 1.5rem 2rem;
+  padding: 2rem 2rem 2rem 2rem;
   width: 350px;
   height: 550px;
   max-width: 100%;
@@ -61,6 +61,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  line-height: 1.3;
 }
 
 .info-box.active {
@@ -71,6 +72,10 @@ body {
 .intro {
   width: 350px;
   height: 350px;
+}
+.country {
+  margin-top: -0.5rem;
+  color: #2c3e50;
 }
 
 .location-name {
@@ -107,18 +112,12 @@ body {
 }
 
 
-.location-image {
+.location-image, .film-image {
   width: 100%;
   height: 200px;
   object-fit: cover;
-  border-radius: 0px 0px 8px 8px;
-}
-
-.film-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px 8px 0px 0px;
+  border-radius: 8px; /* Ajout d'un espace après les deux-points pour plus de cohérence */
+  margin-top: 10px; /* Utilisation de margin au lieu de padding */
 }
 
 #skipButtonMap {
