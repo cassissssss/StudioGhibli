@@ -99,17 +99,12 @@
     z-index: 1;
 }
 
-/* ℹ️ Informations sur le personnage */
+
 .character-info {
-    font-family: "DM Sans", sans-serif;
-    margin-top: -150px; 
+    margin-top: -130px; 
 }
 
-.character-info h3 {
-   
-    font-size: 2rem; /* Taille responsive */
-    color: #333;
-}
+
 
 .character-info p {
     font-size: 1.25rem;

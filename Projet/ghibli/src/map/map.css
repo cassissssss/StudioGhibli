@@ -1,6 +1,4 @@
-body {
-  position: relative;
-}
+
 
 .subtitle {
   font-size: 1.2rem;
@@ -34,7 +32,6 @@ body {
   width: 100%;
   min-height: calc(100vh * 4);
   overflow: visible;
-  font-family: "DM Sans", sans-serif;
 }
 
 .step {
@@ -73,6 +70,13 @@ body {
   width: 350px;
   height: 350px;
 }
+.map-intro-title {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+ 
+}
+
 .country {
   margin-top: -0.5rem;
   color: #2c3e50;
@@ -85,7 +89,6 @@ body {
   border-bottom: 3px solid;
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
-  font-family: "Scale VF", sans-serif;
 }
 
 .film-title {
@@ -108,16 +111,14 @@ body {
   opacity: 0;
   transition: opacity 0.3s;
   z-index: 100;
-  
 }
-
 
 .location-image, .film-image {
   width: 100%;
   height: 200px;
   object-fit: cover;
-  border-radius: 8px; /* Ajout d'un espace après les deux-points pour plus de cohérence */
-  margin-top: 10px; /* Utilisation de margin au lieu de padding */
+  border-radius: 8px; 
+  margin-top: 10px; 
 }
 
 #skipButtonMap {

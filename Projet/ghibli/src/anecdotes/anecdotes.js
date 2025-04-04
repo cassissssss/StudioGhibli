@@ -78,7 +78,7 @@ function createAnecdotesSection() {
     
     const header = createElement('header', 'anecdotes__header');
     const title = createElement('h1', 'anecdotes__title', 'Anecdotes');
-    const subtitle = createElement('h2', 'anecdotes__subtitle', 'La représentation des femmes chez Ghibli');
+    const subtitle = createElement('h3', 'anecdotes__subtitle', 'La représentation des femmes chez Ghibli');
     
     header.appendChild(title);
     header.appendChild(subtitle);
@@ -365,7 +365,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function createComparisonChart() {
     const section = createElement('section', 'comparison-section');
 
-    const title = createElement('h2', 'comparison-title', 
+    const title = createElement('h3', 'comparison-title', 
         'Pourcentage de personnages féminins dans les films Disney vs Studio Ghibli');
     
     const container = createElement('div', 'comparison-container');

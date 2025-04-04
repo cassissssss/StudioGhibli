@@ -45,7 +45,7 @@ const initCarousel = () => {
     // Créer la zone d'information du personnage
     const infoDiv = document.createElement("div");
     infoDiv.className = "character-info";
-    infoDiv.innerHTML = '<h3></h3><p></p>';
+    infoDiv.innerHTML = '<h4></h4><p></p>';
 
     // Créer les flèches de navigation
     const navDiv = document.createElement("div");
@@ -88,7 +88,7 @@ const initCarousel = () => {
 };
 const updateCarousel = () => {
     const positions = ["left-2", "left-1", "center", "right-1", "right-2"];
-    const infoTitle = document.querySelector(".character-info h3");
+    const infoTitle = document.querySelector(".character-info h4");
     const infoText = document.querySelector(".character-info p");
 
     for (let i = 0; i < 5; i++) {

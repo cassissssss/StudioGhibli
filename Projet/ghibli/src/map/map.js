@@ -66,7 +66,7 @@ function createSections(locations) {
         .attr("id", "step-intro")
         .html(`
         <div class="info-box intro">
-            <h2>10 films inspirés par des lieux réels</h2>
+            <h4>10 films inspirés par des lieux réels</h4>
             <p>
                 Faites défiler pour explorer les lieux à travers le monde qui ont
                 inspiré les films emblématiques du Studio Ghibli.
@@ -89,7 +89,7 @@ function createSections(locations) {
                 <div class="info-box">
                     <img src="${location.image_film}" alt="${location.name}" class="film-image">
                     <img src="${location.image_reel}" alt="${location.name}" class="location-image">
-                    <h2 class="location-name" style="border-color: ${location.color}">${location.name}</h2>
+                    <h4 class="location-name" style="border-color: ${location.color}">${location.name}</h4>
                     <div class="film-title">Film : ${location.film}</div>
                     <div class="country">Pays : ${location.country}</div>
                     

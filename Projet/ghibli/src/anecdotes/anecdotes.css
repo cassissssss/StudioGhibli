@@ -1,5 +1,4 @@
 
-
 .anecdotes-layout {
   max-width: 1200px;
   margin: 0 auto;
@@ -11,19 +10,10 @@
 }
 
 .anecdotes__title {
-  font-size: 3.5rem;
   text-align: center;
   margin-bottom: 10px;
-  font-weight: bold;
 }
 
-.anecdotes__subtitle {
-  font-size: 1.5rem;
-  text-align: center;
-  margin-bottom: 40px;
-  color: #666;
-  font-weight: normal;
-}
 
 .anecdotes-characters {
   display: flex;
@@ -268,13 +258,6 @@
   margin-top: 40px;
 }
 
-.comparison-title {
-  font-size: 1.5rem;
-  text-align: center;
-  margin-bottom: 40px;
-  color: #666;
-  font-weight: normal;
-}
 
 .comparison-container {
   display: flex;

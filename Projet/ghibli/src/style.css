@@ -11,23 +11,37 @@
   --ghibli-green: #50c878;
   --ghibli-pink: #ff6b6b;
   --ghibli-yellow: #ffd700;
-  --font-family-main: 'DM Sans', Arial, sans-serif; 
+  --font-family-main: "DM Sans", Arial, sans-serif;
 }
 
-/* Reset de base */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-h1, h2 {
+h1,
+h2 {
   font-family: "scale-variable", sans-serif;
-  font-weight: 700; 
+  font-weight: 600;
+}
+h3 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #666;
+  font-weight: 400;
+}
+h4 {
+  font-size: 2rem; 
+  color: #333;
+  margin-bottom: 1rem;
+  line-height: 1.2;
 }
 
 body,
-html  {
+html {
   font-family: var(--font-family-main);
   color: var(--text-color);
   background-color: var(--background-color);
@@ -41,7 +55,6 @@ html  {
   flex-direction: column;
 }
 .skip-button {
-
   background-color: #ca9ea9;
   color: white;
   border: none;
@@ -73,25 +86,23 @@ html  {
   left: 50px;
 }
 .intro-text {
-  font-family: scale-variable, sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 50%; 
+  max-width: 50%;
   padding-top: 70px;
   padding-bottom: 100px;
-  margin: 0 auto; 
-  text-align: center; 
+  margin: 0 auto;
+  text-align: center;
 }
 
 .intro-text p {
   font-size: 1.5rem;
-  line-height: 1.5;
-  font-weight: 300;
-  letter-spacing: 0.05em;
+  line-height: 1.4;
+  font-weight: 400;
   color: #333;
 }
 
-h1{
+h1 {
   color: #333;
 }
