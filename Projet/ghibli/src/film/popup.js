@@ -1,3 +1,36 @@
+// Ajoutez cette fonction au début de votre fichier popup.js
+async function loadCharactersForFilm(filmName) {
+    try {
+        // Charger le fichier JSON contenant les personnages
+        const response = await fetch('src/characters/characters.json');
+        const data = await response.json();
+        
+        // Filtrer les personnages pour ce film spécifique (insensible à la casse)
+        const filmCharacters = data.characters.filter(character => 
+            character.film.toLowerCase() === filmName.toLowerCase()
+        );
+        
+        // Si aucun personnage n'est trouvé pour ce film
+        if (filmCharacters.length === 0) {
+            return `<p>Personnages du film "${filmName}" non disponibles actuellement.</p>`;
+        }
+        
+        // Générer le HTML pour la grille de personnages avec vos classes existantes
+        return filmCharacters.map(character => `
+            <div class="film-character-card">
+                <div class="film-character-image">
+                    <img src="${character.image}" alt="${character.name}">
+                </div>
+                <div class="film-character-name">${character.name}</div>
+            </div>
+        `).join('');
+        
+    } catch (error) {
+        console.error("Erreur lors du chargement des personnages:", error);
+        return `<p>Impossible de charger les personnages.</p>`;
+    }
+}
+
 function formatDuration(duration) {
     if (!duration) return "N/A";
     return duration.replace('h', ' h ').replace('m', ' min');
@@ -7,28 +40,33 @@ export function setupFilmPopup(filmsData, getCurrentIndex) {
     const popup = document.getElementById('popup-overlay');
     const popupBody = document.querySelector('.popup-body');
     const closeBtn = document.querySelector('.close-popup');
-    const exploreBtn = document.querySelector('.film-explore');
     
-    // Ouvrir le popup au clic sur le bouton Explorer
-    exploreBtn.addEventListener('click', () => {
-
+    document.addEventListener('click', async event => {
+        const exploreBtn = event.target.closest('.film-explore');
+        if (!exploreBtn) return;
+        
         // Obtenir l'index actuel au moment du clic
         const currentIndex = getCurrentIndex();
         const film = filmsData[currentIndex];
         
-        // Créer le contenu du pop-up
+        console.log("Affichage du popup pour:", film.name);
+        
+        // Obtenir le HTML de la grille de personnages
+        const characterGridHTML = await loadCharactersForFilm(film.name);
+        
+        // Créer le contenu du pop-up avec TOUT le contenu
         const popupContent = `
             <div class="popup-header" style="background-image: url('${film.image}');">
                 <div class="popup-title-bar">
                     <div class="popup-japanese-title">
-                        ${film.japanese_title}
+                        ${film.japanese_title || ''}
                     </div>
                     <div class="popup-french-title">
                         <h1 class="popup-title">${film.name}</h1>
                     </div>
                 </div>
                 <div class="popup-rating">
-                    <span class="film-rating-score">${film.rating}</span>
+                    <span class="film-rating-score">${film.rating || '?'}/10</span>
                     <span class="star">⭐</span>
                 </div>
             </div>
@@ -36,7 +74,7 @@ export function setupFilmPopup(filmsData, getCurrentIndex) {
             <div class="popup-two-columns">
                 <div class="popup-left-column">
                     <div class="popup-description">
-                        <p>${film.description}</p>
+                        <p>${film.description || 'Pas de description disponible.'}</p>
                     </div>
                     
                     <div class="popup-details">
@@ -46,14 +84,14 @@ export function setupFilmPopup(filmsData, getCurrentIndex) {
                         </div>
                         <div class="popup-detail-item">
                             <h3>Année de sortie</h3>
-                            <div class="detail-value">${film.year}</div>
+                            <div class="detail-value">${film.year || 'N/A'}</div>
                         </div>
                     </div>
                     
                     <div class="popup-details">
                         <div class="popup-detail-item">
                             <h3>Directeur</h3>
-                            <div class="detail-value">${film.director}</div>
+                            <div class="detail-value">${film.director || 'N/A'}</div>
                         </div>
                         <div class="popup-detail-item">
                             <h3>Durée</h3>
@@ -91,8 +129,8 @@ export function setupFilmPopup(filmsData, getCurrentIndex) {
             </div>
             
             <h2 class="section-title">Personnages du film</h2>
-            <div class="characters-container">
-                ${createCharacterGrid(film.name)}
+            <div class="film-popup-characters-container">
+                ${characterGridHTML}
             </div>
         `;
         
@@ -123,48 +161,3 @@ export function setupFilmPopup(filmsData, getCurrentIndex) {
     });
 }
 
-// Fonction pour créer la grille de personnages en fonction du film
-function createCharacterGrid(filmName) {
-    let characters = [];
-    
-    // Définir les personnages en fonction du film
-    switch(filmName) {
-        case "Le Château dans le ciel":
-            characters = [
-                { name: "Sheeta", image: "../data/characters/sheeta.jpg" },
-                { name: "Pazu", image: "../data/characters/pazu.jpg" },
-                { name: "Dola", image: "../data/characters/dola.jpg" },
-                { name: "Muska", image: "../data/characters/muska.jpg" },
-                { name: "Le Général", image: "../data/characters/general.jpg" }
-            ];
-            break;
-        case "Princesse Mononoké":
-            characters = [
-                { name: "San", image: "../data/characters/san.jpg" },
-                { name: "Ashitaka", image: "../data/characters/ashitaka.jpg" },
-                { name: "Dame Eboshi", image: "../data/characters/eboshi.jpg" },
-                { name: "Jiko", image: "../data/characters/jiko.jpg" },
-                { name: "Moro", image: "../data/characters/moro.jpg" }
-            ];
-            break;
-        // Ajouter d'autres films au besoin
-        default:
-            characters = [
-                { name: "Personnage 1", image: "../data/characters/default.jpg" },
-                { name: "Personnage 2", image: "../data/characters/default.jpg" },
-                { name: "Personnage 3", image: "../data/characters/default.jpg" },
-                { name: "Personnage 4", image: "../data/characters/default.jpg" },
-                { name: "Personnage 5", image: "../data/characters/default.jpg" }
-            ];
-    }
-    
-    // Créer les éléments HTML pour chaque personnage
-    return characters.map(character => `
-        <div class="film-character-card">
-            <div class="film-character-image">
-                <img src="${character.image}" alt="${character.name}">
-            </div>
-            <div class="film-character-name">${character.name}</div>
-        </div>
-    `).join('');
-}
