@@ -24,6 +24,7 @@ h1,
 h2 {
   font-family: "scale-variable", sans-serif;
   font-weight: 600;
+  color: #333;
 }
 h3 {
   font-family: "Montserrat", sans-serif;
@@ -103,6 +104,4 @@ html {
   color: #333;
 }
 
-h1 {
-  color: #333;
-}
+
