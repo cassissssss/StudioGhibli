@@ -65,8 +65,6 @@
     { "name": "Kôichi", "film": "Ponyo sur la falaise", "image": "characters-img/kôichi.jpg" },
     { "name": "Fujimoto", "film": "Ponyo sur la falaise", "image": "characters-img/fujimoto.jpg" },
     { "name": "Gran Mamare", "film": "Ponyo sur la falaise", "image": "characters-img/granMamare.jpg" },
-    
-
     { "name": "Kiki", "film": "Kiki la petite sorcière", "image": "characters-img/kiki.jpg" },
     { "name": "Osono", "film": "Kiki la petite sorcière", "image": "characters-img/osono.jpg" },
     { "name": "Ursula", "film": "Kiki la petite sorcière", "image": "characters-img/ursula.jpg" },
