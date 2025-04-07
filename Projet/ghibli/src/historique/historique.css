@@ -62,7 +62,7 @@ h1 {
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  background-color: #2b6d9e;
+  background-color: #ca9ea9;
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -75,7 +75,7 @@ h1 {
   transform: translate(-50%, -50%);
   width: 60px;
   height: 60px;
-  background-color: #2b6d9e;
+  background-color: #ca9ea9;
   border-radius: 50%;
   z-index: 10;
 }
