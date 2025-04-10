@@ -5,15 +5,15 @@
     },
     {
         "year": "1986",
-        "description": "Sortie du premier film Ghibli, Le Château dans le ciel (Tenkū no Shiro Rapyuta), un film d'aventure steampunk qui pose les bases du style Ghibli."
+        "description": "Le Studio Ghibli fait ses débuts avec Le Château dans le ciel, premier film du studio réalisé par Hayao Miyazaki. Ce film introduit des thèmes récurrents du studio, tels que la relation entre l’humanité et la nature, ainsi que des personnages forts et attachants. Bien que son succès initial soit modéré, il marque le commencement d’une carrière légendaire pour le studio."
     },
     {
         "year": "1988",
-        "description": "Double sortie marquante avec Mon voisin Totoro et Le Tombeau des lucioles. Totoro devient l'emblème du studio."
+        "description": "Double sortie marquante avec Mon voisin Totoro et Le Tombeau des lucioles. Totoro devient l'emblème du studio, notamment grâce à son succès auprès des enfants et aux produits dérivés."
     },
     {
         "year": "1989",
-        "description": "Succès de Kiki la petite sorcière, qui confirme la capacité du studio à toucher un large public."
+        "description": "Succès de Kiki la petite sorcière, qui confirme la capacité du studio à toucher un large public. Il est le premier film de Ghibli à dépasser le million d’entrées au box-office national, marquant un tournant commercial pour le studio, qui commence à s’imposer durablement dans l’industrie de l’animation."
     },
     {
         "year": "1991",
@@ -21,15 +21,15 @@
     },
     {
         "year": "1996",
-        "description": "Ghibli signe un accord de distribution avec Disney, ce qui aide à populariser les films en dehors du Japon."
+        "description": "Le Studio Ghibli signe un accord de distribution international avec The Walt Disney Company, permettant la diffusion de ses films hors du Japon avec un doublage de qualité. Cet accord marque une étape décisive dans la reconnaissance mondiale du studio, rendant ses œuvres accessibles à un public beaucoup plus large."
     },
     {
         "year": "1997",
-        "description": "Princesse Mononoké marque un tournant avec un succès critique et commercial immense au Japon (premier film à dépasser 100 millions $)."
+        "description": "Princesse Mononoké marque un tournant avec un succès critique et commercial immense au Japon (premier film à dépasser 100 millions $). Il impose Ghibli comme un acteur incontournable de l’animation, y compris à l’international grâce à l’accord avec Disney."
     },
     {
         "year": "2001",
-        "description": "Sortie de Le Voyage de Chihiro, qui devient un phénomène mondial et remporte l'Oscar du meilleur film d'animation en 2003."
+        "description": "Sortie du film Le Voyage de Chihiro, qui devient un phénomène mondial. Le film est sélectionné en compétition officielle au Festival de Cannes et remporte l'Oscar du meilleur film d'animation en 2003."
     },
     {
         "year": "2004",
@@ -37,19 +37,23 @@
     },
     {
         "year": "2013",
-        "description": "Miyazaki annonce sa retraite après Le Vent se lève."
+        "description": "Sortie du film Le Vent se lève. Peu après sa sortie, Miyazaki annonce sa retraite, laissant croire à un point final dans l’histoire du studio. L’annonce fait grand bruit et marque la fin d’une époque pour Ghibli."
     },
     {
         "year": "2015",
-        "description": "Le studio entre en hiatus après la retraite de Miyazaki. Takahata décède en 2018."
+        "description": "Le studio entre en hiatus en 2015. Cela signifie qu'il suspend ses projets de production majeurs, se concentrant sur des projets annexes, des rééditions et des expositions. Le futur immédiat du studio est incertain notamment après l'annonce de Miyasaki."
+    },
+    {
+        "year": "2018", 
+        "description": "Le Studio Ghibli traverse une année tragique avec la disparition d’Isao Takahata, cofondateur du studio et réalisateur de chefs-d'œuvre tels que Le Tombeau des lucioles et Le Conte de la princesse Kaguya. Sa mort marque la fin d'une ère pour le studio, qui perd une de ses figures créatives les plus importantes."
     },
     {
         "year": "2023",
-        "description": "Sortie de Le Garçon et le Héron, premier film Ghibli à gagner un Golden Globe et un BAFTA."
+        "description": " Miyazaki revient finalement avec son dernier film, Le Garçon et le Héron. Il devient le premier film du studio à remporter un Golden Globe et un BAFTA, reconnaissant ainsi l'influence de Miyazaki sur le cinéma d'animation mondial. Sa sortie coïncide avec un retour triomphal de Ghibli après plusieurs années d'incertitude, renforçant encore son statut légendaire dans le monde du cinéma."
     },
     {
         "year": "2024",
-        "description": "Le film remporte l'Oscar du meilleur film d'animation, confirmant l'héritage du studio."
+        "description": "Le succès de Le Garçon et le Héron continue d'impacter positivement Ghibli, avec l'Oscar du meilleur film d'animation et de nouveaux projets en développement. Bien que Miyazaki ait annoncé sa retraite, le studio se concentre sur la préservation de son héritage et la gestion de son catalogue, tout en explorant de nouvelles avenues de distribution."
     },
     {
         "year": "2025",
