@@ -71,7 +71,7 @@ function createAnecdotesSection() {
 
     // Header
     const header = createElement('header', 'anecdotes__header');
-    const title = createElement('h1', 'anecdotes__title', 'Les personnages féminines');
+    const title = createElement('h1', 'anecdotes__title', 'Les personnages féminins');
     const subtitle = createElement('h3', 'anecdotes__subtitle', 'Leur représentation chez Ghibli');
 
     header.appendChild(title);
@@ -237,9 +237,7 @@ function createDonutChart(selector, data, colors) {
 function createComparisonChart() {
     const section = createElement('section', 'comparison-section');
 
-    const title = createElement('h3', 'comparison-title',
-        'Pourcentage de personnages féminins dans les films Disney vs Studio Ghibli');
-
+    
     const container = createElement('div', 'comparison-container');
 
     const dataStudios = [
@@ -250,8 +248,13 @@ function createComparisonChart() {
     dataStudios.forEach(({ studio, percentage, logo }) => {
         const card = createElement('div', 'comparison-card');
 
-        const bar = createElement('div', 'comparison-bar');
-        bar.style.height = (percentage / 100 * 250) + 'px';
+        // Créer un wrapper pour l'animation
+        const barWrapper = createElement('div', 'comparison-bar-wrapper');
+        
+        // La barre elle-même commence avec une hauteur de 0
+        const bar = createElement('div', 'comparison-bar animated-bar');
+        // On définit la hauteur finale comme attribut data
+        bar.setAttribute('data-height', (percentage / 100 * 250) + 'px');
         bar.textContent = `${percentage}%`;
 
         const logoImg = createElement('img', 'comparison-logo', '', {
@@ -259,17 +262,17 @@ function createComparisonChart() {
             alt: studio
         });
 
-        card.appendChild(bar);
+        barWrapper.appendChild(bar);
+        card.appendChild(barWrapper);
         card.appendChild(logoImg);
         container.appendChild(card);
     });
 
     const source = createElement('div', 'comparison-source',
         data.source, {
-        id: 'comparison-source'
-    });
+            id: 'comparison-source'
+        });
 
-    section.appendChild(title);
     section.appendChild(container);
     section.appendChild(source);
 
@@ -347,4 +350,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Ajouter cette ligne à la fin
     initScrollObserver();
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Déclencher l'animation lorsque la section devient visible
+                const bars = entry.target.querySelectorAll('.animated-bar');
+                bars.forEach(bar => {
+                    // Petit délai pour un effet plus agréable
+                    setTimeout(() => {
+                        bar.style.height = bar.getAttribute('data-height');
+                        bar.classList.add('animated');
+                    }, 200);
+                });
+                // Désactiver l'observer après l'animation
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.01 }); // Déclencher lorsque 20% de la section est visible
+
+    // Observer la section de comparaison
+    const comparisonSection = document.querySelector('.comparison-section');
+    if (comparisonSection) {
+        observer.observe(comparisonSection);
+    }
 });

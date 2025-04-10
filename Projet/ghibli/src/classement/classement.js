@@ -169,7 +169,7 @@ fetch("/films.json")
       .attr("text-anchor", "middle")
       .attr("x", margin.left + width / 2)
       .attr("y", height + 80)
-      .text("Du mieux noté au moins bien noté")
+      .text("Du mieux noté au moins bien noté (IMDB)")
       .style("font-size", "14px")
       .style("fill",  `${infoColor}`)
       .style("font-weight", "bold");

@@ -241,7 +241,7 @@
   line-height: 1.4;
 }
 
-.stats__source {
+.stats__source, .comparison-source {
   margin-top: 50px;
   text-align: center;
   font-style: italic;
@@ -255,7 +255,8 @@
 
 .comparison-section {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 100px;
+  margin-bottom: 100px;
 }
 
 
@@ -265,6 +266,7 @@
   gap: 40px;
   align-items: flex-end;
   height: 300px;
+  margin-bottom: 50px;
 }
 
 .comparison-card {
@@ -288,9 +290,19 @@
   object-fit: contain;
 }
 
-.comparison-source {
-  margin-top: 20px;
-  font-size: 12px;
-  color: #666;
-  font-style: italic; 
+.comparison-bar-wrapper {
+  height: 250px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.animated-bar {
+  height: 0px; 
+  transition: height 3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
 }
