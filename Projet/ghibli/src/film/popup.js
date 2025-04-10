@@ -15,7 +15,7 @@ async function loadCharactersForFilm(filmName) {
             return `<p>Personnages du film "${filmName}" non disponibles actuellement.</p>`;
         }
         
-        // Générer le HTML pour la grille de personnages avec vos classes existantes
+        // Ajouter une div englobante avec une classe pour le scroll horizontal
         return filmCharacters.map(character => `
             <div class="film-character-card">
                 <div class="film-character-image">
@@ -40,7 +40,11 @@ export function setupFilmPopup(filmsData, getCurrentIndex) {
     const popup = document.getElementById('popup-overlay');
     const popupBody = document.querySelector('.popup-body');
     const closeBtn = document.querySelector('.close-popup');
-    
+
+    // Supprimer cette ligne qui cause l'erreur
+    // const thumbnailUrl = `https://img.youtube.com/vi/${film.youtubeTrailerId}/maxresdefault.jpg`;
+
+    // Gestionnaire pour l'ouverture du popup
     document.addEventListener('click', async event => {
         const exploreBtn = event.target.closest('.film-explore');
         if (!exploreBtn) return;
@@ -51,10 +55,13 @@ export function setupFilmPopup(filmsData, getCurrentIndex) {
         
         console.log("Affichage du popup pour:", film.name);
         
+        // Générer l'URL de la miniature ici, après que film soit défini
+        const thumbnailUrl = `https://img.youtube.com/vi/${film.youtubeTrailerId || 'dQw4w9WgXcQ'}/maxresdefault.jpg`;
+        
         // Obtenir le HTML de la grille de personnages
         const characterGridHTML = await loadCharactersForFilm(film.name);
         
-        // Créer le contenu du pop-up avec TOUT le contenu
+        // Créer le contenu du pop-up
         const popupContent = `
             <div class="popup-header" style="background-image: url('${film.image}');">
                 <div class="popup-title-bar">
@@ -103,8 +110,10 @@ export function setupFilmPopup(filmsData, getCurrentIndex) {
                 <div class="popup-right-column">
                     <h2 class="section-title">Bande annonce</h2>
                     <div class="trailer-container">
-                        <div class="video-placeholder">
-                            <div class="play-button">▶</div>
+                        <div class="youtube-embed" data-id="${film.youtubeTrailerId || ''}">
+                            <div class="video-placeholder" style="background-image: url('${thumbnailUrl}')">
+                                <div class="film-play-button">▶</div>
+                            </div>
                         </div>
                     </div>
                     
@@ -140,6 +149,30 @@ export function setupFilmPopup(filmsData, getCurrentIndex) {
         // Afficher le popup
         popup.classList.add('popup-show');
     });
+    
+    // Gestionnaire pour la vidéo YouTube - UN SEUL, en dehors du gestionnaire d'ouverture
+    document.addEventListener('click', function(event) {
+        // Vérifier si on clique sur le bouton de lecture
+        if (event.target.closest('.film-play-button') && event.target.closest('.youtube-embed')) {
+            const container = event.target.closest('.youtube-embed');
+            const videoId = container.dataset.id;
+            
+            if (!videoId) return;
+            
+            // Créer l'iframe YouTube
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+            iframe.allowFullscreen = true;
+            
+            // Remplacer le placeholder par l'iframe
+            container.innerHTML = '';
+            container.appendChild(iframe);
+            
+            // Ajouter une classe pour le style
+            container.classList.add('active');
+        }
+    }, { capture: true }); // Utilisation de capture pour s'assurer que l'événement est capturé
     
     // Fermer le popup au clic sur le bouton de fermeture
     closeBtn.addEventListener('click', () => {
