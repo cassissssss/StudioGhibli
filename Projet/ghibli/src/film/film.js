@@ -167,14 +167,45 @@ function setupPopup() {
 }
 
 // Fonction pour créer la grille de personnages en fonction du film
-function createCharacterGrid(filmName) {
-    // Cette fonction devra être implémentée pour afficher les personnages du film
-    // Pour l'instant, on retourne une version simple
-    return `
-        <div class="character-grid">
-            <p>Personnages du film "${filmName}" (à implémenter)</p>
-        </div>
-    `;
+async function createCharacterGrid(filmName) {
+    try {
+        // Charger les données des personnages
+        const response = await fetch('/src/characters/characters.json');
+        const data = await response.json();
+        
+        // Filtrer les personnages pour ce film spécifique
+        const filmCharacters = data.characters.filter(character => character.film === filmName);
+        
+        // Si aucun personnage n'est trouvé pour ce film
+        if (filmCharacters.length === 0) {
+            return `
+                <div class="film-popup-character-grid">
+                    <p>Personnages du film "${filmName}" non disponibles actuellement.</p>
+                </div>
+            `;
+        }
+        
+        // Générer le HTML pour la grille de personnages
+        return `
+            <div class="film-popup-character-grid">
+                ${filmCharacters.map(character => `
+                    <div class="film-popup-character-card">
+                        <div class="fil-popup-character-image">
+                            <img src="${character.image}" alt="${character.name}">
+                        </div>
+                        <div class="film-popup-character-name">${character.name}</div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    } catch (error) {
+        console.error("Erreur lors du chargement des personnages:", error);
+        return `
+            <div class="film-popup-character-grid">
+                <p>Impossible de charger les personnages.</p>
+            </div>
+        `;
+    }
 }
 
 // Initialiser l'application quand le DOM est chargé

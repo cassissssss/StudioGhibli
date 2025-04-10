@@ -4,9 +4,11 @@
   }
   
   #chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     max-width: 100%;
     overflow-x: auto;
-    background: #fffaf0;
     border-radius: 20px;
     padding: 20px 0;
   }

@@ -237,91 +237,7 @@ function createDonutChart(selector, data, colors) {
         .text(d => `Traits ${d.name === "masculine" ? "masculins" : "féminins"}`)
         .style("font-size", "12px");
 }
-// function createGenderComparisonChart() {
-//     // Données pour la comparaison des genres
-//     const comparisonData = [
-//         { studio: "Disney", female: 37},
-//         { studio: "Ghibli", female: 65}
-//     ];
-    
-//     // Sélectionner le conteneur existant et vider son contenu
-//     const container = d3.select("#gender-comparison-root");
-//     container.html("");
-    
-//     const margin = { top: 30, right: 30, bottom: 70, left: 60 },
-//         width = 600 - margin.left - margin.right,
-//         height = 400 - margin.top - margin.bottom;
-    
-//     // Créer le SVG
-//     const svg = container
-//         .append("svg")
-//         .attr("width", width + margin.left + margin.right)
-//         .attr("height", height + margin.top + margin.bottom)
-//         .append("g")
-//         .attr("transform", `translate(${margin.left},${margin.top})`);
-    
-//     // Échelles X et Y
-//     const x = d3.scaleBand()
-//         .range([0, width])
-//         .domain(comparisonData.map(d => d.studio))
-//         .padding(0.4); // Augmenter le padding pour des barres plus fines
-    
-//     const y = d3.scaleLinear()
-//         .domain([0, 100])
-//         .range([height, 0]);
-    
 
-  
-    
-//     // Créer les barres pour les pourcentages féminins
-//     svg.selectAll(".bar-female")
-//         .data(comparisonData)
-//         .enter()
-//         .append("rect")
-//         .attr("class", "bar-female")
-//         .attr("x", d => x(d.studio))
-//         .attr("y", d => y(d.female))
-//         .attr("width", x.bandwidth())
-//         .attr("height", d => height - y(d.female))
-//         .attr("fill", colors.primary)
-//         .attr("rx", 4)
-//         .attr("ry", 4);
-    
-//     // Ajouter les étiquettes de pourcentage féminin
-//     svg.selectAll(".label-female")
-//         .data(comparisonData)
-//         .enter()
-//         .append("text")
-//         .attr("class", "label-female")
-//         .attr("x", d => x(d.studio) + x.bandwidth() / 2)
-//         .attr("y", d => y(d.female) - 10)
-//         .attr("text-anchor", "middle")
-//         .attr("font-size", "16px")
-//         .attr("font-weight", "bold")
-//         .attr("fill", colors.primary)
-//         .text(d => d.female + "%");
-    
-    
-    
-//     // Ajouter une étiquette pour la ligne de référence
-//     svg.append("text")
-//         .attr("x", width + 10)
-//         .attr("y", y(50) + 5)
-//         .attr("text-anchor", "start")
-//         .attr("font-size", "12px")
-//         .text("50% - Parité");
-    
-//     // Ajouter un titre pour le graphique
-//     svg.append("text")
-//         .attr("x", width / 2)
-//         .attr("y", -10)
-//         .attr("text-anchor", "middle")
-//         .attr("font-size", "18px")
-//         .attr("font-weight", "bold")
-//         .text("Représentation féminine");
-
-        
-// }
 document.addEventListener("DOMContentLoaded", () => {
     const anecdotesContainer = document.querySelector(".anecdotes-container");
     const anecdotesContent = createAnecdotesSection();
@@ -393,7 +309,9 @@ function createComparisonChart() {
     });
 
     const source = createElement('div', 'comparison-source',
-        'Source : "A Content Analysis: Gender Roles in Studio Ghibli Films (2022)"');
+        data.source, {
+            id: 'comparison-source'
+        });
 
     section.appendChild(title);
     section.appendChild(container);
