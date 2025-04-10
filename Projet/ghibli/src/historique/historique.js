@@ -1,13 +1,11 @@
-// Données des années Ghibli
-let ghibliTimeline = [];
 
-// Variable pour suivre l'index actif
+let ghibliTimeline = [];
 let activeIndex = 0;
-// Constante qui définit le marqueur central (point médian)
 const CENTER_POSITION = 50;
 
+// Charge et initialise la timeline à partir des données JSON
 document.addEventListener('DOMContentLoaded', async function () {
-    // Charger les données JSON
+
     try {
         const response = await fetch('/src/historique/data_timeline.json');
         if (!response.ok) {
@@ -16,7 +14,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         ghibliTimeline = await response.json();
         console.log('Données chargées:', ghibliTimeline);
         
-        // Initialiser l'interface après avoir chargé les données
         initTimeline();
         createSections();
         initScrollTrigger();
@@ -30,25 +27,21 @@ function initTimeline() {
     const yearMarkersContainer = document.getElementById('year-markers');
 
     ghibliTimeline.forEach((item, index) => {
-        // Calculer la position horizontale (pourcentage)
+
         const position = (index / (ghibliTimeline.length - 1)) * 100;
 
-        // Créer le marqueur d'année
         const yearMarker = document.createElement('div');
         yearMarker.className = 'year-marker';
         yearMarker.setAttribute('data-index', index);
         yearMarker.style.left = `${position}%`;
 
-        // Ajouter l'étiquette d'année
         const yearLabel = document.createElement('div');
         yearLabel.className = 'year-label';
         yearLabel.textContent = item.year;
         yearMarker.appendChild(yearLabel);
 
-        // Ajouter le marqueur au conteneur
         yearMarkersContainer.appendChild(yearMarker);
 
-        // Ajouter un événement de clic pour naviguer
         yearMarker.addEventListener('click', () => {
             updateActiveYear(index);
     
@@ -58,6 +51,7 @@ function initTimeline() {
     updateTimelinePosition(0);
 }
 
+// Génère les sections de contenu pour chaque année
 function createSections() {
     const container = document.getElementById('sections-container');
 
@@ -66,30 +60,24 @@ function createSections() {
         section.className = 'year-section';
         section.id = `section-${index}`;
 
-        // Définir l'opacité à 1 initialement au lieu de 0
         section.style.opacity = "1";
 
-        // Affichage de l'année
         const yearDisplay = document.createElement('div');
         yearDisplay.className = 'year-display';
         yearDisplay.textContent = item.year;
 
-        // Contenu (image + description)
         const content = document.createElement('div');
         content.className = 'year-content';
 
-        // Image réelle au lieu du placeholder
-        const image = document.createElement('img'); // Changé de div à img
+        const image = document.createElement('img'); 
         image.className = 'year-image';
-        image.src = `historique-img/ghibli-${item.year}.jpg`; // Utiliser une convention de nommage pour les images
-        image.alt = `Studio Ghibli en ${item.year}`; // Ajouter un texte alternatif pour l'accessibilité
+        image.src = `historique-img/ghibli-${item.year}.jpg`; 
+        image.alt = `Studio Ghibli en ${item.year}`; 
 
-        // Description
         const description = document.createElement('div');
         description.className = 'year-description';
         description.textContent = item.description;
 
-        // Assembler les éléments
         content.appendChild(image);
         content.appendChild(description);
 
@@ -103,12 +91,10 @@ function createSections() {
 
 // Initialiser GSAP ScrollTrigger
 function initScrollTrigger() {
-    // Enregistrer le plugin ScrollTrigger
+
     gsap.registerPlugin(ScrollTrigger);
 
-    // Animation pour chaque section
     document.querySelectorAll('.year-section').forEach((section, index) => {
-        // Créer un timeline pour chaque section
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: section,
@@ -120,14 +106,12 @@ function initScrollTrigger() {
             }
         });
 
-        // Animation modifiée pour ne pas affecter l'opacité
         tl.fromTo(section,
             { y: 100 },
             { y: 0, duration: 1 }
         );
     });
 
-    // Animation pour les marqueurs de la timeline
     gsap.to('.year-marker', {
         scrollTrigger: {
             trigger: '.sections-container',
@@ -135,34 +119,28 @@ function initScrollTrigger() {
             end: "bottom bottom",
             scrub: true,
             onUpdate: self => {
-                // Calculer la progression entre 0 et 1
                 const progress = self.progress;
 
-                // Calculer l'index approximatif basé sur la progression
                 const targetIndex = Math.round(progress * (ghibliTimeline.length - 1));
 
-                // Mettre à jour la position des marqueurs
                 updateTimelinePosition(targetIndex);
             }
         }
     });
 }
 
-// Mettre à jour la position des marqueurs sur la timeline
+// Ajuste la position des marqueurs d'années pour centrer l'année active
 function updateTimelinePosition(activeIndex) {
     const totalYears = ghibliTimeline.length;
     const yearMarkers = document.querySelectorAll('.year-marker');
 
-    // Calculer le décalage pour centrer l'année active
     const offset = CENTER_POSITION - (activeIndex / (totalYears - 1)) * 100;
 
-    // Déplacer tous les marqueurs
     yearMarkers.forEach((marker, index) => {
         const basePosition = (index / (totalYears - 1)) * 100;
         const newPosition = basePosition + offset;
         marker.style.left = `${newPosition}%`;
 
-        // Vérifier si ce marqueur est au centre ou très proche du centre
         const isCentral = Math.abs(newPosition - CENTER_POSITION) < 1;
 
         if (isCentral) {
@@ -173,11 +151,10 @@ function updateTimelinePosition(activeIndex) {
     });
 }
 
-// Mettre à jour l'année active
+// Met à jour l'interface quand une nouvelle année devient active
 function updateActiveYear(index) {
     activeIndex = index;
 
-    // Mettre à jour les sections (sans changer l'opacité)
     document.querySelectorAll('.year-section').forEach((section, i) => {
         if (i === index) {
             section.classList.add('active');
@@ -186,27 +163,21 @@ function updateActiveYear(index) {
         }
     });
 
-    // Mettre à jour la timeline
     updateTimelinePosition(index);
 }
 
+// Fait défiler la page jusqu'à la section de l'année sélectionnée
 function scrollToSection(index) {
     const section = document.getElementById(`section-${index}`);
     
     if (section) {
-        // 1. Ajouter une marge temporaire pour le scroll
-        // Cette marge crée un espace au-dessus de la section pour compenser le header
-        section.style.scrollMarginTop = '250px'; // Ajustez cette valeur à la hauteur de votre header + espace souhaité
+
+        section.style.scrollMarginTop = '250px';
         
-        // 2. Utiliser scrollIntoView avec block: 'start'
         section.scrollIntoView({ 
             behavior: 'smooth',
-            block: 'start' // Aligner le haut de la section (avec la marge)
+            block: 'start' 
         });
         
-        // 3. Option: Restaurer la marge après le scroll
-        // setTimeout(() => {
-        //    section.style.scrollMarginTop = '0';
-        // }, 1000);
     }
 }

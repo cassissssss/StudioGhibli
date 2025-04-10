@@ -21,7 +21,7 @@
 }
 
 header {
-  position: sticky; /* Changé de fixed à sticky pour un meilleur scrolling */
+  position: sticky; 
   top: 0;
   left: 0;
   width: 100%;
@@ -89,7 +89,6 @@ h1 {
   font-size: 14px;
 }
 
-/* Cache l'étiquette année pour le marqueur central */
 .year-marker[data-central="true"] .year-label {
   display: none;
 }
@@ -99,12 +98,12 @@ h1 {
 }
 
 .year-section {
-  min-height: 80vh; /* Changé de height à min-height pour plus de flexibilité */
+  min-height: 80vh; 
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 20px; /* Ajout de padding vertical */
-  margin-bottom: 40px; /* Espace entre les sections */
+  padding: 40px 20px; 
+  margin-bottom: 40px; 
   opacity: 1;
   transition: transform 0.5s ease;
 }
@@ -127,7 +126,7 @@ h1 {
   width: 100%;
   gap: 40px;
   align-items: center;
-  flex-wrap: wrap; /* Permet de passer en colonne sur mobile */
+  flex-wrap: wrap;
 }
 
 .year-image {

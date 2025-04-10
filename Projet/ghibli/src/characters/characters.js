@@ -1,6 +1,7 @@
 let characters = [];
 let currentIndex = 0;
 
+// Récupère les données des personnages depuis le fichier JSON
 const fetchCharacters = async () => {
     try {
         const response = await fetch("/src/characters/characters.json");
@@ -12,29 +13,22 @@ const fetchCharacters = async () => {
     }
 };
 
+// Initialise le carrousel avec les éléments nécessaires
 const initCarousel = () => {
     const container = document.getElementById("carousel-container");
 
-    // Créer un wrapper pour le carrousel
     const wrapper = document.createElement("div");
     wrapper.className = "carousel-wrapper";
 
-    // Créer les éléments du carrousel
     for (let i = 0; i < 5; i++) {
         const itemDiv = document.createElement("div");
         itemDiv.className = "carousel-item";
         itemDiv.id = `item-${i}`;
         itemDiv.innerHTML = '<img src="" alt="">';
 
-        // Ajouter l'événement de clic à chaque élément
         itemDiv.addEventListener("click", function () {
-            // Déterminer le décalage par rapport à l'élément central (index 2)
             const offset = i - 2;
-
-            // Si on clique sur l'élément central, ne rien faire
             if (offset === 0) return;
-
-            // Mettre à jour l'index courant en fonction du décalage
             currentIndex = (currentIndex + offset + characters.length) % characters.length;
             updateCarousel();
         });
@@ -42,12 +36,10 @@ const initCarousel = () => {
         wrapper.appendChild(itemDiv);
     }
 
-    // Créer la zone d'information du personnage
     const infoDiv = document.createElement("div");
     infoDiv.className = "character-info";
     infoDiv.innerHTML = '<h4></h4><p></p>';
 
-    // Créer les flèches de navigation
     const navDiv = document.createElement("div");
     navDiv.className = "carousel-nav";
     navDiv.innerHTML = `
@@ -59,16 +51,13 @@ const initCarousel = () => {
         </div>
     `;
 
-    // Ajouter tous les éléments au container
     container.appendChild(wrapper);
     container.appendChild(navDiv);
     container.appendChild(infoDiv);
 
-    // Ajouter les écouteurs d'événements pour les flèches
     document.getElementById("prev-arrow").addEventListener("click", prevSlide);
     document.getElementById("next-arrow").addEventListener("click", nextSlide);
 
-    // Ajouter la navigation par glissement (swipe)
     let startX, endX;
     wrapper.addEventListener("mousedown", function (e) {
         startX = e.clientX;
@@ -76,16 +65,17 @@ const initCarousel = () => {
 
     wrapper.addEventListener("mouseup", function (e) {
         endX = e.clientX;
-        if (startX - endX > 50) { // Swipe gauche
+        if (startX - endX > 50) {
             nextSlide();
-        } else if (endX - startX > 50) { // Swipe droite
+        } else if (endX - startX > 50) {
             prevSlide();
         }
     });
 
-    // Initialiser l'affichage
     updateCarousel();
 };
+
+// Met à jour l'affichage du carrousel et les informations du personnage sélectionné
 const updateCarousel = () => {
     const positions = ["left-2", "left-1", "center", "right-1", "right-2"];
     const infoTitle = document.querySelector(".character-info h4");
@@ -96,47 +86,39 @@ const updateCarousel = () => {
         const character = characters[itemIndex];
         const itemElement = document.getElementById(`item-${i}`);
 
-        // Appliquer une classe temporaire pour la transition
         itemElement.classList.add("moving");
 
-        // Utiliser requestAnimationFrame pour attendre la prochaine frame
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
-                // Appliquer la nouvelle classe avec position mise à jour
                 itemElement.className = `carousel-item ${positions[i]}`;
-
-                // Supprimer la classe après la transition
                 setTimeout(() => {
                     itemElement.classList.remove("moving");
-                }, 600); // La durée doit être légèrement supérieure à la transition CSS
+                }, 600);
             });
         });
 
-        // Mettre à jour l'image après un court délai
         setTimeout(() => {
             const img = itemElement.querySelector("img");
-            // Ajouter le préfixe complet au chemin de l'image
             img.src = character.image;
             img.alt = character.name;
         }, 100);
     }
 
-    // Mettre à jour les informations du personnage central
     const centerCharacter = characters[currentIndex];
     infoTitle.textContent = centerCharacter.name;
     infoText.textContent = centerCharacter.film;
 };
 
-
+// Avance au personnage suivant
 const nextSlide = () => {
     currentIndex = (currentIndex + 1) % characters.length;
     updateCarousel();
 };
 
+// Revient au personnage précédent
 const prevSlide = () => {
     currentIndex = (currentIndex - 1 + characters.length) % characters.length;
     updateCarousel();
 };
-
 
 document.addEventListener("DOMContentLoaded", fetchCharacters);

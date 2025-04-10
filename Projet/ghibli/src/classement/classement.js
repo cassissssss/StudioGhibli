@@ -1,5 +1,6 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
+// Récupère et affiche les données des films triées par note
 fetch("/films.json")
   .then(res => res.json())
   .then(data => {
@@ -8,7 +9,6 @@ fetch("/films.json")
     const margin = { top: 100, right: 30, bottom: 100, left: 60 },
       width = 1000 - margin.left - margin.right,
       height = 650 - margin.top - margin.bottom;
-
 
     const svg = d3.select("#chart-container")
       .append("svg")
@@ -27,6 +27,7 @@ fetch("/films.json")
       .range([height, 0])
       .base(10);
 
+    // Création des barres du graphique
     svg.selectAll("rect")
       .data(films)
       .enter()
@@ -44,19 +45,17 @@ fetch("/films.json")
       .attr("fill", "#ca9ea9")
       .attr("rx", 8);
 
-    // Fonction pour diviser le texte en plusieurs lignes
+    // Divise le texte en plusieurs lignes pour s'adapter à la largeur disponible
     function wrapTextInRect(text, width) {
       const words = text.split(/\s+/);
-      if (words.length <= 1) return [text]; // Si un seul mot, pas besoin de wrap
+      if (words.length <= 1) return [text];
       
       const lines = [];
       let currentLine = words[0];
       
       for (let i = 1; i < words.length; i++) {
         const testLine = currentLine + " " + words[i];
-        // Estimation de la longueur de texte (ajustez selon votre police)
-        // En réalité, on devrait mesurer, mais c'est une approximation
-        if (testLine.length * 6 > width) { // 7 pixels par caractère est une estimation
+        if (testLine.length * 6 > width) {
           lines.push(currentLine);
           currentLine = words[i];
         } else {
@@ -67,40 +66,41 @@ fetch("/films.json")
       return lines;
     }
 
-   // Ajout des étiquettes des films avec support multi-lignes
-svg.selectAll(".film-label-group")
-.data(films)
-.enter()
-.append("g")
-.attr("class", "film-label-group")
-.attr("transform", d => {
-  const xPos = x(d.name) + x.bandwidth() / 2;
-  // Position constante en partant du bas de la barre
-  const yPos = y(5e5) - 10; // Position fixe pour tous les films
-  return `translate(${xPos}, ${yPos}) rotate(-90)`;
-})
-.each(function(d) {
-  const g = d3.select(this);
-  const barHeight = y(5e5) - y(parseFloat(d.revenue.replace(/\$/g, '')));
-  const lines = wrapTextInRect(d.name, barHeight * 0.8); // 80% de la hauteur de la barre
-  
-  lines.forEach((line, i) => {
-    g.append("text")
-      .text(line)
-      .attr("x", 0)
-      .attr("y", i * 15) // Espacement entre les lignes
-      .attr("text-anchor", "start") // Changement de "middle" à "start" pour aligner au début
-      .style("fill", "#fff")
-      .style("font-size", "14px")
-      .style("font-family", "Montserrat")
-      .style("font-weight", "500");
-  });
-});
+   // Ajoute les titres des films avec rotation et gestion multi-lignes
+    svg.selectAll(".film-label-group")
+      .data(films)
+      .enter()
+      .append("g")
+      .attr("class", "film-label-group")
+      .attr("transform", d => {
+        const xPos = x(d.name) + x.bandwidth() / 2;
+        const yPos = y(5e5) - 10;
+        return `translate(${xPos}, ${yPos}) rotate(-90)`;
+      })
+      .each(function(d) {
+        const g = d3.select(this);
+        const barHeight = y(5e5) - y(parseFloat(d.revenue.replace(/\$/g, '')));
+        const lines = wrapTextInRect(d.name, barHeight * 0.8);
+        
+        lines.forEach((line, i) => {
+          g.append("text")
+            .text(line)
+            .attr("x", 0)
+            .attr("y", i * 15)
+            .attr("text-anchor", "start")
+            .style("fill", "#fff")
+            .style("font-size", "14px")
+            .style("font-family", "Montserrat")
+            .style("font-weight", "500");
+        });
+      });
+
+    // Ajoute les numéros de classement au-dessus des barres
     svg.selectAll(".top-label")
-      .data(films) // Top 3
+      .data(films)
       .enter()
       .append("text")
-      .text((d, i) => `${i + 1}`) // 1, 2, 3
+      .text((d, i) => `${i + 1}`)
       .attr("x", d => x(d.name) + x.bandwidth() / 2-20)
       .attr("y", d => y(parseFloat(d.revenue.replace(/\$/g, ''))) - 20)
       .attr("text-anchor", "middle")
@@ -110,18 +110,20 @@ svg.selectAll(".film-label-group")
       .style("font-weight", "900")
       .style("opacity", 0.2);
 
-      svg.selectAll(".film-icon")
-      .data(films) // Top 3
+    // Ajoute les icônes de films au-dessus des barres
+    svg.selectAll(".film-icon")
+      .data(films)
       .enter()
       .append("image")
       .attr("class", "film-icon")
       .attr("xlink:href", d => d.icon)
-      .attr("x", d => x(d.name) + x.bandwidth() / 2 -50) // Centrer l'icône, -20 pour décaler de la moitié de sa largeur
-      .attr("y", d => y(parseFloat(d.revenue.replace(/\$/g, ''))) - 110) // Positionner au-dessus du numéro
+      .attr("x", d => x(d.name) + x.bandwidth() / 2 -50)
+      .attr("y", d => y(parseFloat(d.revenue.replace(/\$/g, ''))) - 110)
       .attr("width", 130)
       .attr("height", 130)
-      .style("filter", "drop-shadow(0px 0px 3px rgba(0,0,0,0.3))"); // Ajouter une ombre subtile
+      .style("filter", "drop-shadow(0px 0px 3px rgba(0,0,0,0.1))");
     
+    // Ajoute les valeurs des revenus sous les barres
     svg.selectAll(".revenue-label")
       .data(films)
       .enter()
@@ -134,17 +136,17 @@ svg.selectAll(".film-label-group")
       .style("fill", "#9C6173")
       .style("font-weight", "700");
 
-      const infoColor = "#9C6173";
+    // Configuration des éléments de légende et axes
+    const infoColor = "#9C6173";
 
-      svg.append("line")
+    svg.append("line")
       .attr("x1", margin.left-80)
       .attr("y1", margin.top-500)
       .attr("x2", margin.left-80)
-      .attr("y2", margin.top + height -50) // un petit dépassement
+      .attr("y2", margin.top + height -50)
       .attr("stroke", `${infoColor}`)
       .attr("opacity", 0.1)
       .attr("stroke-width", 3)
-
 
     svg.append("text")
       .attr("text-anchor", "middle")
@@ -162,7 +164,6 @@ svg.selectAll(".film-label-group")
       .attr("stroke", `${infoColor}`)
       .attr("opacity", 0.1)
       .attr("stroke-width", 3)
-
 
     svg.append("text")
       .attr("text-anchor", "middle")
