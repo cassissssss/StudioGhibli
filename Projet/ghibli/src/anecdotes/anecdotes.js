@@ -40,11 +40,11 @@ function createElement(type, className, textContent = "", attributes = {}) {
     const element = document.createElement(type);
     if (className) element.className = className;
     if (textContent) element.textContent = textContent;
-    
+
     Object.entries(attributes).forEach(([attr, value]) => {
         element.setAttribute(attr, value);
     });
-    
+
     return element;
 }
 
@@ -52,120 +52,120 @@ function createCharacterCard(character) {
     const { name, image, position, size, column } = character;
     const cardClass = `anecdotes-character-card anecdotes-character-card--${size}`;
     const nameClass = `anecdotes-character-card__name anecdotes-character-card__name--${position}`;
-    
+
     const card = createElement('div', cardClass);
     const img = createElement('img', '', '', {
         src: `${IMG_PATH}${image}`,
         alt: name
     });
     const nameDiv = createElement('div', nameClass, name);
-    
+
     card.appendChild(img);
     card.appendChild(nameDiv);
-    
+
     return card;
 }
 
 function createAnecdotesSection() {
     const layoutDiv = createElement('div', 'anecdotes-layout');
-    
+
     // Header
     const header = createElement('header', 'anecdotes__header');
-    const title = createElement('h1', 'anecdotes__title', 'Anecdotes');
-    const subtitle = createElement('h3', 'anecdotes__subtitle', 'La représentation des femmes chez Ghibli');
-    
+    const title = createElement('h1', 'anecdotes__title', 'Les personnages féminines');
+    const subtitle = createElement('h3', 'anecdotes__subtitle', 'Leur représentation chez Ghibli');
+
     header.appendChild(title);
     header.appendChild(subtitle);
     layoutDiv.appendChild(header);
-    
+
     // Characters
     const charactersSection = createElement('section', 'anecdotes-characters');
-    
+
     const leftCharacters = data.characters.filter(char => char.column === 'left');
     const rightCharacters = data.characters.filter(char => char.column === 'right');
-    
+
     const leftColumn = createElement('div', 'anecdotes-characters__column anecdotes-characters__column--left');
-    
+
     const largeCard = leftCharacters.find(char => char.size === 'large');
     if (largeCard) {
         leftColumn.appendChild(createCharacterCard(largeCard));
     }
-    
+
     const smallCards = leftCharacters.filter(char => char.size === 'small');
     if (smallCards.length > 0) {
         const thumbnails = createElement('div', 'anecdotes-character-card__thumbnails');
         smallCards.forEach(card => thumbnails.appendChild(createCharacterCard(card)));
         leftColumn.appendChild(thumbnails);
     }
-    
+
     const rightColumn = createElement('div', 'anecdotes-characters__column anecdotes-characters__column--right');
-    
+
     const tallCard = rightCharacters.find(char => char.size === 'tall');
     if (tallCard) {
         rightColumn.appendChild(createCharacterCard(tallCard));
     }
-    
+
     charactersSection.appendChild(leftColumn);
     charactersSection.appendChild(rightColumn);
     layoutDiv.appendChild(charactersSection);
-    
+
     // Quote
     const quoteSection = createElement('section', 'quote');
     const blockquote = createElement('blockquote', 'quote__text', data.quote.text);
     const cite = createElement('cite', 'quote__author', data.quote.author);
-    
+
     quoteSection.appendChild(blockquote);
     quoteSection.appendChild(cite);
     layoutDiv.appendChild(quoteSection);
-    
+
     // Stats
     const statsSection = createElement('section', 'stats');
     const statsGrid = createElement('div', 'stats__grid');
-    
+
     ['male', 'female'].forEach(gender => {
         const genderData = data.protagonists[gender];
         const genderTranslated = gender === 'male' ? 'masculins' : 'féminins';
-        
+
         const card = createElement('article', 'stats__card');
         const title = createElement('h3', 'stats__title', `Personnages ${genderTranslated}`);
         const chart = createElement('div', 'stats__chart', '', { id: `chart-${gender}-traits` });
-        
+
         const traits = createElement('div', 'stats__traits');
         const traitsTitle = createElement('h4', 'stats__traits-title', 'Traits principaux');
         const traitsList = createElement('ul', 'stats__traits-list', '', { id: `list-${gender}-top-traits` });
-        
+
         traits.appendChild(traitsTitle);
         traits.appendChild(traitsList);
-        
+
         const rescue = createElement('div', 'stats__rescue');
-        
+
         const rescueBox1 = createElement('div', 'rescue-box');
         const rescueValue1 = createElement('div', 'rescue-box__value', '', { id: `stat-${gender}-rescues` });
         const rescueLabel1 = createElement('div', 'rescue-box__label', 'Sauvetages effectués');
-        
+
         rescueBox1.appendChild(rescueValue1);
         rescueBox1.appendChild(rescueLabel1);
-        
+
         const rescueBox2 = createElement('div', 'rescue-box');
         const rescueValue2 = createElement('div', 'rescue-box__value', '', { id: `stat-${gender}-rescued` });
         const rescueLabel2 = createElement('div', 'rescue-box__label', `Fois secour${gender === 'male' ? 'us' : 'ues'}`);
-        
+
         rescueBox2.appendChild(rescueValue2);
         rescueBox2.appendChild(rescueLabel2);
-        
+
         rescue.appendChild(rescueBox1);
         rescue.appendChild(rescueBox2);
-        
+
         card.appendChild(title);
         card.appendChild(chart);
         card.appendChild(traits);
         card.appendChild(rescue);
-        
+
         statsGrid.appendChild(card);
     });
-    
+
     const statsFooter = createElement('footer', 'stats__source', '', { id: 'data-source' });
-    
+
     statsSection.appendChild(statsGrid);
     statsSection.appendChild(statsFooter);
     layoutDiv.appendChild(statsSection);
@@ -173,7 +173,7 @@ function createAnecdotesSection() {
     // Comparison
     const comparisonChart = createComparisonChart();
     layoutDiv.appendChild(comparisonChart);
-    
+
     return layoutDiv;
 }
 
@@ -237,9 +237,9 @@ function createDonutChart(selector, data, colors) {
 function createComparisonChart() {
     const section = createElement('section', 'comparison-section');
 
-    const title = createElement('h3', 'comparison-title', 
+    const title = createElement('h3', 'comparison-title',
         'Pourcentage de personnages féminins dans les films Disney vs Studio Ghibli');
-    
+
     const container = createElement('div', 'comparison-container');
 
     const dataStudios = [
@@ -266,8 +266,8 @@ function createComparisonChart() {
 
     const source = createElement('div', 'comparison-source',
         data.source, {
-            id: 'comparison-source'
-        });
+        id: 'comparison-source'
+    });
 
     section.appendChild(title);
     section.appendChild(container);
@@ -276,13 +276,44 @@ function createComparisonChart() {
     return section;
 }
 
+// Ajouter cette fonction pour observer le scroll
+function initScrollObserver() {
+    const subtitle = document.querySelector('.anecdotes__subtitle');
+    const comparisonSection = document.querySelector('.comparison-section');
+    const statsSection = document.querySelector('.stats');
+    const originalSubtitle = "Leur représentation chez Ghibli";
+    const comparisonSubtitle = "Pourcentage de personnages féminins dans les films Disney vs Studio Ghibli";
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            // Vérifie si on est dans la section de comparaison
+            const comparisonRect = comparisonSection.getBoundingClientRect();
+            const statsRect = statsSection.getBoundingClientRect();
+
+            if (entry.isIntersecting && comparisonRect.top <= window.innerHeight / 2) {
+                // On est dans la section de comparaison
+                subtitle.textContent = comparisonSubtitle;
+            } else if (statsRect.top <= window.innerHeight / 2) {
+                // On est dans la section des stats ou avant
+                subtitle.textContent = originalSubtitle;
+            }
+        });
+    }, {
+        threshold: [0, 0.5, 1],
+        rootMargin: "-20% 0px"
+    });
+
+    observer.observe(comparisonSection);
+}
+
+// Modifier l'event listener DOMContentLoaded pour inclure l'initialisation de l'observer
 document.addEventListener("DOMContentLoaded", () => {
     const anecdotesContainer = document.querySelector(".anecdotes-container");
     const anecdotesContent = createAnecdotesSection();
-    
+
     anecdotesContainer.innerHTML = '';
     anecdotesContainer.appendChild(anecdotesContent);
-    
+
     // Initialize charts
     createDonutChart("#chart-male-traits", data.protagonists.male.traits, [colors.secondary, colors.primary]);
     createDonutChart("#chart-female-traits", data.protagonists.female.traits, [colors.secondary, colors.primary]);
@@ -296,7 +327,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const li = createElement('li', '', trait);
             traitsList.appendChild(li);
         });
-        
+
         document.getElementById(`stat-${gender}-rescues`).textContent = data.protagonists[gender].rescues;
         document.getElementById(`stat-${gender}-rescued`).textContent = data.protagonists[gender].rescued;
     });
@@ -313,4 +344,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   `;
     document.head.appendChild(style);
+
+    // Ajouter cette ligne à la fin
+    initScrollObserver();
 });
