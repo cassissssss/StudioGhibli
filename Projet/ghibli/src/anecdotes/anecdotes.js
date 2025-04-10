@@ -1,23 +1,16 @@
 import * as d3 from 'd3';
 
-
 const data = {
     studio: "Ghibli",
     protagonists: {
         male: {
-            traits: {
-                masculine: 62.65,
-                feminine: 37.35
-            },
+            traits: { masculine: 62.65, feminine: 37.35 },
             top_traits: ["Athlétique", "Exprime ses émotions", "Affirmé", "Physiquement fort", "Peu émotif"],
             rescues: 4,
             rescued: 6
         },
         female: {
-            traits: {
-                masculine: 48.58,
-                feminine: 51.42
-            },
+            traits: { masculine: 48.58, feminine: 51.42 },
             top_traits: ["Exprime ses émotions", "Athlétique", "Affirmée", "Affectueuse", "Peu émotive"],
             rescues: 11,
             rescued: 4
@@ -76,6 +69,7 @@ function createCharacterCard(character) {
 function createAnecdotesSection() {
     const layoutDiv = createElement('div', 'anecdotes-layout');
     
+    // Header
     const header = createElement('header', 'anecdotes__header');
     const title = createElement('h1', 'anecdotes__title', 'Anecdotes');
     const subtitle = createElement('h3', 'anecdotes__subtitle', 'La représentation des femmes chez Ghibli');
@@ -84,6 +78,7 @@ function createAnecdotesSection() {
     header.appendChild(subtitle);
     layoutDiv.appendChild(header);
     
+    // Characters
     const charactersSection = createElement('section', 'anecdotes-characters');
     
     const leftCharacters = data.characters.filter(char => char.column === 'left');
@@ -114,6 +109,7 @@ function createAnecdotesSection() {
     charactersSection.appendChild(rightColumn);
     layoutDiv.appendChild(charactersSection);
     
+    // Quote
     const quoteSection = createElement('section', 'quote');
     const blockquote = createElement('blockquote', 'quote__text', data.quote.text);
     const cite = createElement('cite', 'quote__author', data.quote.author);
@@ -122,7 +118,7 @@ function createAnecdotesSection() {
     quoteSection.appendChild(cite);
     layoutDiv.appendChild(quoteSection);
     
-    // Create stats section
+    // Stats
     const statsSection = createElement('section', 'stats');
     const statsGrid = createElement('div', 'stats__grid');
     
@@ -174,9 +170,9 @@ function createAnecdotesSection() {
     statsSection.appendChild(statsFooter);
     layoutDiv.appendChild(statsSection);
 
+    // Comparison
     const comparisonChart = createComparisonChart();
     layoutDiv.appendChild(comparisonChart);
-    
     
     return layoutDiv;
 }
@@ -238,46 +234,6 @@ function createDonutChart(selector, data, colors) {
         .style("font-size", "12px");
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const anecdotesContainer = document.querySelector(".anecdotes-container");
-    const anecdotesContent = createAnecdotesSection();
-    
-    anecdotesContainer.innerHTML = '';
-    anecdotesContainer.appendChild(anecdotesContent);
-    
-    
-    // Create the charts
-    createDonutChart("#chart-male-traits", data.protagonists.male.traits, [colors.secondary, colors.primary]);
-    createDonutChart("#chart-female-traits", data.protagonists.female.traits, [colors.secondary, colors.primary]);
-
-    createComparisonChart();
-
-    ['male', 'female'].forEach(gender => {
-        const traitsList = document.getElementById(`list-${gender}-top-traits`);
-        data.protagonists[gender].top_traits.forEach(trait => {
-            const li = createElement('li', '', trait);
-            traitsList.appendChild(li);
-        });
-        
-        document.getElementById(`stat-${gender}-rescues`).textContent = data.protagonists[gender].rescues;
-        document.getElementById(`stat-${gender}-rescued`).textContent = data.protagonists[gender].rescued;
-    });
-
-    document.getElementById("data-source").textContent = data.source;
-
-    const style = document.createElement("style");
-    style.textContent = `
-    .stats__traits-list li::before {
-      color: ${colors.primary} !important;
-    }
-    .rescue-box__value {
-      color: ${colors.secondary} !important;
-    }
-  `;
-    document.head.appendChild(style);
-});
-
-
 function createComparisonChart() {
     const section = createElement('section', 'comparison-section');
 
@@ -319,3 +275,42 @@ function createComparisonChart() {
 
     return section;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const anecdotesContainer = document.querySelector(".anecdotes-container");
+    const anecdotesContent = createAnecdotesSection();
+    
+    anecdotesContainer.innerHTML = '';
+    anecdotesContainer.appendChild(anecdotesContent);
+    
+    // Initialize charts
+    createDonutChart("#chart-male-traits", data.protagonists.male.traits, [colors.secondary, colors.primary]);
+    createDonutChart("#chart-female-traits", data.protagonists.female.traits, [colors.secondary, colors.primary]);
+
+    createComparisonChart();
+
+    // Populate content
+    ['male', 'female'].forEach(gender => {
+        const traitsList = document.getElementById(`list-${gender}-top-traits`);
+        data.protagonists[gender].top_traits.forEach(trait => {
+            const li = createElement('li', '', trait);
+            traitsList.appendChild(li);
+        });
+        
+        document.getElementById(`stat-${gender}-rescues`).textContent = data.protagonists[gender].rescues;
+        document.getElementById(`stat-${gender}-rescued`).textContent = data.protagonists[gender].rescued;
+    });
+
+    document.getElementById("data-source").textContent = data.source;
+
+    const style = document.createElement("style");
+    style.textContent = `
+    .stats__traits-list li::before {
+      color: ${colors.primary} !important;
+    }
+    .rescue-box__value {
+      color: ${colors.secondary} !important;
+    }
+  `;
+    document.head.appendChild(style);
+});

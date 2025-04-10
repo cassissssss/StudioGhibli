@@ -1,4 +1,4 @@
-/* 🌟 Styles généraux */
+
 #characters-section {
     position : relative;
     padding: 100px 0;
@@ -14,12 +14,11 @@
     text-align: center;
 }
 #skipMapReverse {
-    /* Position à côté du titre */
     position: absolute;
-    top: 0; /* Aligné avec le haut du titre */
+    top: 0; 
     right: 50px;
 }
-/* 🎡 Wrapper du carrousel */
+
 .carousel-wrapper {
     position: relative;
     height: 400px;
@@ -31,14 +30,13 @@
     cursor: grabbing;
 }
 
-/* 📸 Élément du carrousel */
 .carousel-item {
     position: absolute;
     top: 0;
     left: 50%;
     width: 250px;
     height: 250px;
-    margin-left: -125px; /* Centrage */
+    margin-left: -125px;
     transition: transform 0.6s ease-in-out, opacity 0.5s ease-in-out, filter 0.5s ease;
     filter: grayscale(100%);
     z-index: 1;
@@ -47,27 +45,23 @@
     overflow: hidden;
 }
 
-/* 🌊 Animation fluide pendant le déplacement */
 .carousel-item.moving {
     transform: scale(0.95);
     opacity: 0.85;
 }
 
-/* ✨ Effet au survol */
 .carousel-item:hover {
     transform: translateY(-5px);
 }
 
-/* 🖼️ Image à l'intérieur du carrousel */
 .carousel-item img {
     width: 100%;
-    height: 100%; /* Ajustement dynamique */
+    height: 100%; 
     object-fit: cover;
-    border-radius: inherit; /* Évite la répétition de border-radius */
+    border-radius: inherit;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* 📍 Positions ajustées */
 .carousel-item.left-2 {
     transform: translateX(-400px) scale(0.7);
     z-index: 1;
@@ -99,12 +93,9 @@
     z-index: 1;
 }
 
-
 .character-info {
     margin-top: -130px; 
 }
-
-
 
 .character-info p {
     font-size: 1.25rem;
