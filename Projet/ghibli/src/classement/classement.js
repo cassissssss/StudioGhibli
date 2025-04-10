@@ -49,10 +49,10 @@ fetch("/films.json")
     function wrapTextInRect(text, width) {
       const words = text.split(/\s+/);
       if (words.length <= 1) return [text];
-      
+
       const lines = [];
       let currentLine = words[0];
-      
+
       for (let i = 1; i < words.length; i++) {
         const testLine = currentLine + " " + words[i];
         if (testLine.length * 6 > width) {
@@ -66,7 +66,7 @@ fetch("/films.json")
       return lines;
     }
 
-   // Ajoute les titres des films avec rotation et gestion multi-lignes
+    // Ajoute les titres des films avec rotation et gestion multi-lignes
     svg.selectAll(".film-label-group")
       .data(films)
       .enter()
@@ -77,11 +77,11 @@ fetch("/films.json")
         const yPos = y(5e5) - 10;
         return `translate(${xPos}, ${yPos}) rotate(-90)`;
       })
-      .each(function(d) {
+      .each(function (d) {
         const g = d3.select(this);
         const barHeight = y(5e5) - y(parseFloat(d.revenue.replace(/\$/g, '')));
         const lines = wrapTextInRect(d.name, barHeight * 0.8);
-        
+
         lines.forEach((line, i) => {
           g.append("text")
             .text(line)
@@ -101,7 +101,7 @@ fetch("/films.json")
       .enter()
       .append("text")
       .text((d, i) => `${i + 1}`)
-      .attr("x", d => x(d.name) + x.bandwidth() / 2-20)
+      .attr("x", d => x(d.name) + x.bandwidth() / 2 - 20)
       .attr("y", d => y(parseFloat(d.revenue.replace(/\$/g, ''))) - 20)
       .attr("text-anchor", "middle")
       .style("font-size", "60px")
@@ -117,12 +117,12 @@ fetch("/films.json")
       .append("image")
       .attr("class", "film-icon")
       .attr("xlink:href", d => d.icon)
-      .attr("x", d => x(d.name) + x.bandwidth() / 2 -50)
+      .attr("x", d => x(d.name) + x.bandwidth() / 2 - 50)
       .attr("y", d => y(parseFloat(d.revenue.replace(/\$/g, ''))) - 110)
       .attr("width", 130)
       .attr("height", 130)
       .style("filter", "drop-shadow(0px 0px 3px rgba(0,0,0,0.1))");
-    
+
     // Ajoute les valeurs des revenus sous les barres
     svg.selectAll(".revenue-label")
       .data(films)
@@ -136,31 +136,44 @@ fetch("/films.json")
       .style("fill", "#9C6173")
       .style("font-weight", "700");
 
+    // Ajoute les notes IMDB au-dessus des revenus
+    svg.selectAll(".rating-label")
+      .data(films)
+      .enter()
+      .append("text")
+      .text(d => `★ ${d.rating}`)
+      .attr("x", d => x(d.name) + x.bandwidth() / 2)
+      .attr("y", d => y(5e5) + 45) // Position en dessous des revenus
+      .attr("text-anchor", "middle")
+      .style("font-size", "14px")
+      .style("fill", "#9C6173")
+      .style("font-weight", "bold");
+
     // Configuration des éléments de légende et axes
     const infoColor = "#9C6173";
 
     svg.append("line")
-      .attr("x1", margin.left-80)
-      .attr("y1", margin.top-500)
-      .attr("x2", margin.left-80)
-      .attr("y2", margin.top + height -50)
+      .attr("x1", margin.left - 80)
+      .attr("y1", margin.top - 500)
+      .attr("x2", margin.left - 80)
+      .attr("y2", margin.top + height - 50)
       .attr("stroke", `${infoColor}`)
       .attr("opacity", 0.1)
       .attr("stroke-width", 3)
 
     svg.append("text")
       .attr("text-anchor", "middle")
-      .attr("transform", `translate(-50, ${margin.top + 250}) rotate(-90)`)
+      .attr("transform", `translate(-50, ${height / 2})rotate(-90)`) // Modifié pour centrer verticalement
       .text("Revenus des films ($)")
       .style("font-size", "14px")
-      .style("fill",  `${infoColor}`)
+      .style("fill", `${infoColor}`)
       .style("font-weight", "bold");
 
     svg.append("line")
-      .attr("x1", margin.left-80)
-      .attr("y1", margin.top + height-50)
+      .attr("x1", margin.left - 80)
+      .attr("y1", margin.top + height - 50)
       .attr("x2", margin.left + width + 10)
-      .attr("y2", margin.top + height-50)
+      .attr("y2", margin.top + height - 50)
       .attr("stroke", `${infoColor}`)
       .attr("opacity", 0.1)
       .attr("stroke-width", 3)
@@ -171,6 +184,6 @@ fetch("/films.json")
       .attr("y", height + 80)
       .text("Du mieux noté au moins bien noté (IMDB)")
       .style("font-size", "14px")
-      .style("fill",  `${infoColor}`)
+      .style("fill", `${infoColor}`)
       .style("font-weight", "bold");
   });
