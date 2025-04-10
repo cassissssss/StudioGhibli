@@ -1,56 +1,74 @@
 #museeparc-section {
   position: relative;
-  height: 300vh; /* Hauteur pour permettre le défilement */
+  height: 200vh;
   background-color: #fdf7eb;
-  overflow: hidden;
-  padding-top: 100px; /* Espace pour le titre */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5vh; /* Réduit encore plus l'espace avec la section précédente */
+  padding-top: 10px; /* Réduit l'espace en haut */
+}
+
+/* Header style similaire à anecdotes */
+.museeparc-header {
+  z-index: 900;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 #museeparc-section h1 {
   position: sticky;
-  top: 0;
+  top: 0; /* Colle le titre tout en haut */
   width: 100%;
   text-align: center;
-  font-size: 3.5rem;
+  font-size: 3rem; /* Légèrement plus petit */
   color: #333;
   z-index: 10;
   background-color: #fdf7eb;
-  padding: 20px 0;
-  margin: 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 5px 0; /* Réduit le padding */
+  margin-bottom: 10px;
+  transition: opacity 0.3s ease; /* Transition plus rapide pour le titre */
 }
 
-.museeparc-grid {
+.museeparc-container {
   position: sticky;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  justify-content: center;
-  gap: 80px;
+  top: 100px; /* Augmenté pour laisser plus d'espace avec le titre h1 */
+  height: 80vh;
+  width: 100%;
   max-width: 1400px;
-  margin: 0 auto;
   padding: 0 40px;
 }
 
+.museeparc-grid {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+}
+
 .museeparc-column {
-  width: 450px; /* Légèrement plus petit */
+  width: 900px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .museeparc-column h2 {
+  position: sticky;
+  top: 50px; /* Position sous le h1 */
   font-size: 2.5rem;
   color: #333;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   text-align: center;
+  background-color: #fdf7eb;
+  padding: 10px 0;
+  z-index: 9; /* Juste en-dessous du h1 */
 }
 
 .image-stack {
   position: relative;
   width: 100%;
-  height: 60vh; /* Taille fixe pour les images */
-  overflow: hidden;
+  height: 60vh;
 }
 
 .image-wrapper {
@@ -59,24 +77,24 @@
   left: 0;
   width: 100%;
   height: 100%;
-  transition: all 0.5s ease;
+  transition: all 1.5s ease; /* Ralentissement de la transition */
 }
 
 .image-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 15px;
+  border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .image-wrapper.hidden {
   opacity: 0;
-  transform: translateY(-30px); /* Animation vers le haut */
-  pointer-events: none;
+  transform: translateY(-20px); /* Réduction du déplacement */
+  transition: all 1.2s ease-in-out; /* Transition plus lente et plus fluide */
 }
 
-/* Empilement des images avec z-index */
+/* Z-index pour l'empilement */
 .image-wrapper:nth-child(1) {
   z-index: 5;
 }
@@ -91,9 +109,4 @@
 }
 .image-wrapper:nth-child(5) {
   z-index: 1;
-}
-
-/* Effet de survol */
-.image-wrapper:hover img {
-  transform: scale(1.02);
 }

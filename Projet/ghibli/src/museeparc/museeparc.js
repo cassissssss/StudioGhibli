@@ -72,7 +72,6 @@ function initScrollEffect() {
     const imageStacks = document.querySelectorAll('.image-stack');
 
     window.addEventListener('scroll', () => {
-        // Vérifier si la section est dans le viewport
         const sectionRect = section.getBoundingClientRect();
 
         // Ne rien faire si la section n'est pas visible
@@ -80,19 +79,20 @@ function initScrollEffect() {
             return;
         }
 
-        // Calculer la position relative dans la section
-        const sectionProgress = Math.max(0, Math.min(1,
-            -sectionRect.top / (section.offsetHeight - window.innerHeight)
-        ));
+        // Calculer la progression du scroll dans la section
+        const scrollStart = section.offsetTop;
+        const scrollEnd = scrollStart + section.offsetHeight - window.innerHeight;
+        const currentScroll = window.pageYOffset;
+        const scrollProgress = (currentScroll - scrollStart) / (scrollEnd - scrollStart);
 
         imageStacks.forEach(stack => {
             const images = stack.querySelectorAll('.image-wrapper');
             const totalImages = images.length;
 
             images.forEach((img, index) => {
-                const threshold = index / totalImages;
+                const threshold = (index / totalImages) * 0.8; // 80% de la section pour l'animation
 
-                if (sectionProgress > threshold) {
+                if (scrollProgress > threshold) {
                     img.style.opacity = '0';
                     img.style.transform = 'translateY(-30px)';
                 } else {
