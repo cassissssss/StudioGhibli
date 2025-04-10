@@ -155,26 +155,34 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
+    margin-top: -10px;
 }
 
 .popup-left-column {
     flex: 6;
     min-width: 300px;
-    padding: 20px;
+    padding: 20px 30px;
+    display: flex;           
+    flex-direction: column;  
+    justify-content: center; 
 }
 
 .popup-right-column {
     flex: 4;
     min-width: 250px;
-    padding: 20px;
+    padding: 20px 30px;
 }
 
 .popup-description {
     font-size: 16px;
     line-height: 1.6;
     color: #555;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     padding: 0 0 20px 0;
+    max-width: 80%; 
+    margin-left: auto; 
+    margin-right: auto;
+    text-align: center; 
 }
 
 .popup-details {
@@ -188,25 +196,29 @@
 }
 
 .popup-detail-item h3 {
-    font-size: 14px;
+    font-size: 18px;
     color: #777;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 .detail-value {
     font-size: 28px;
     font-weight: 300;
     color: #000;
+    text-align: center;
+    
 }
 
 
 .section-title {
     font-size: 24px;
     font-weight: bold;
-    margin: 30px 20px 20px;
+    margin: 25px 0 20px;
     color: #333;
     border-bottom: 2px solid #ca9ea9;
     padding-bottom: 8px;
+    text-align: center;
 }
 
 
@@ -322,7 +334,7 @@
     width: 100%;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 /* Lecteur de musique alternatif */
@@ -434,7 +446,7 @@
     justify-content: flex-start;
     gap: 20px;
     padding: 20px 40px 40px 40px;
-    margin: 0 auto;
+    margin-top: -5px;
     max-width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
