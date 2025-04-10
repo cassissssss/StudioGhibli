@@ -317,42 +317,79 @@
     display: none;
 }
 
-.spotify-player {
-    display: flex;
-    align-items: center;
-    background-color: #000;
+/* Style pour le lecteur Spotify embeddé */
+.spotify-iframe {
+    width: 100%;
     border-radius: 10px;
-    padding: 10px;
-    color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     margin-bottom: 30px;
 }
 
-.music-album-art {
-    width: 60px;
-    height: 60px;
-    border-radius: 5px;
+/* Lecteur de musique alternatif */
+.spotify-player {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(to right, #1a1a1a, #333);
+    border-radius: 10px;
+    padding: 15px;
+    color: #fff;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    position: relative;
     overflow: hidden;
-    margin-right: 15px;
+}
+
+.spotify-player::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #ca9ea9, #778c82);
+}
+
+.music-album-art {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-right: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.spotify-player:hover .music-album-art {
+    transform: scale(1.05);
 }
 
 .music-album-art img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.spotify-player:hover .music-album-art img {
+    transform: scale(1.1);
 }
 
 .music-info {
     flex: 1;
+    padding-right: 15px;
 }
 
 .music-title {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
+    margin-bottom: 6px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .music-artist {
     font-size: 14px;
-    color: #ccc;
+    color: #ddd;
+    opacity: 0.8;
 }
 
 .music-controls {
@@ -363,13 +400,33 @@
 
 .add-button, .more-button, .music-controls .play-button {
     cursor: pointer;
-    width: 30px;
-    height: 30px;
-    background-color: rgba(255, 255, 255, 0.2);
+    width: 36px;
+    height: 36px;
+    background-color: rgba(255, 255, 255, 0.15);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    color: #fff;
+}
+
+.add-button:hover, .more-button:hover, .music-controls .play-button:hover {
+    background-color: rgba(202, 158, 169, 0.8);
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Animation au survol du lecteur */
+@keyframes pulse-subtle {
+    0% { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); }
+    50% { box-shadow: 0 6px 20px rgba(202, 158, 169, 0.3); }
+    100% { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); }
+}
+
+.spotify-player:hover {
+    animation: pulse-subtle 2s infinite;
 }
 
 .film-popup-characters-container {

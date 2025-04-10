@@ -15,7 +15,8 @@
         "image": "film-img/princesseMononoke.jpg",
         "icon": "icon-img/princesseMononoke.png",
         "rating" : 8.6,
-        "youtubeTrailerId":"4OiMOHRDs14"
+        "youtubeTrailerId":"4OiMOHRDs14",
+        "spotifyPlaylistId": "2ZHxPDTCRU5STetdmXeW6p"
     },
     {
         "name": "Porco Rosso",
@@ -33,7 +34,8 @@
         "image": "film-img/porcoRosso.jpg",
         "icon": "icon-img/porcoRosso.png",
         "rating" : 7.7,
-        "youtubeTrailerId":"awEC-aLDzjs"
+        "youtubeTrailerId":"awEC-aLDzjs",
+        "spotifyPlaylistId": "6NhWTFHoOj5n0UhbBkq5G3"
     },
     {
         "name": "Le Voyage de Chihiro",
@@ -51,7 +53,8 @@
         "image": "film-img/voyageDeChihiro.jpg",
         "icon": "icon-img/voyageDeChihiro.png",
         "rating" : 8.6,
-        "youtubeTrailerId":"ByXuk9QqQkk"
+        "youtubeTrailerId":"ByXuk9QqQkk",
+        "spotifyPlaylistId": "766a5fKJYFy9ii4Kz2bQy9"
     },
     {
         "name": "Le Château dans le ciel",
@@ -69,7 +72,8 @@
         "image": "film-img/chateauDansLeCiel.jpg",
         "icon": "icon-img/chateauCiel.png",
         "rating" : 8.0,
-        "youtubeTrailerId":"8ykEy-yPBFc"
+        "youtubeTrailerId":"8ykEy-yPBFc",
+        "spotifyPlaylistId": "1gmwJD2H9nSka3uCAlGC4P"
     },
     {
         "name": "Mon voisin Totoro",
@@ -87,7 +91,8 @@
         "image": "film-img/voisinTotoro.jpg",
         "icon": "icon-img/voisinTotoro.png",
         "rating" : 8.1,
-        "youtubeTrailerId":"92a7Hj0ijLs"
+        "youtubeTrailerId":"92a7Hj0ijLs",
+        "spotifyPlaylistId": "2Dn4ABFUYJbrlMF7K12RT3"
     },
     {
         "name": "Kiki la petite sorcière",
@@ -105,7 +110,8 @@
         "image": "film-img/kikiLaPetiteSorciere.jpg",
         "icon": "icon-img/kikiSorciere.png",
         "rating" : 7.8,
-        "youtubeTrailerId":"4bG17OYs-GA"
+        "youtubeTrailerId":"4bG17OYs-GA",
+        "spotifyPlaylistId": "2NO5lYWs4aWpsmHOjF4JHk"
     },
     {
         "name": "Le Château ambulant",
@@ -123,7 +129,8 @@
         "image": "film-img/chateauAmbulant.jpg",
         "icon": "icon-img/chateauAmbulant.png",
         "rating" : 8.2,
-        "youtubeTrailerId":"iwROgK94zcM"
+        "youtubeTrailerId":"iwROgK94zcM",
+        "spotifyPlaylistId": "5fqlZFKYqvkIe2jdDGt2nl"
     },
     {
         "name": "Arrietty, le petit monde des chapardeurs",
@@ -141,7 +148,8 @@
         "image": "film-img/arrietty.jpg",
         "icon": "icon-img/arrietty.png",
         "rating" : 7.6,
-        "youtubeTrailerId":"9CtIXPhPo0g"
+        "youtubeTrailerId":"9CtIXPhPo0g",
+        "spotifyPlaylistId": "0ldESLoQyyP80ynVU2gych"
     },
     {
         "name": "Ponyo sur la falaise",
@@ -159,7 +167,8 @@
         "image": "film-img/ponyo.jpg",
         "icon": "icon-img/ponyo.png",
         "rating" : 7.6,
-        "youtubeTrailerId":"CsR3KVgBzSM"
+        "youtubeTrailerId":"CsR3KVgBzSM",
+        "spotifyPlaylistId": "15rOJIfBtL56saE9EIlocm"
     },
     {
         "name": "Nausicaä de la Vallée du Vent",
@@ -177,6 +186,7 @@
         "image": "film-img/Nausicaa.jpg",
         "icon": "icon-img/nausicaa.png",
         "rating" : 8.0,
-        "youtubeTrailerId":"6zhLBe319KE"
+        "youtubeTrailerId":"6zhLBe319KE",
+        "spotifyPlaylistId": "1qHmdiWzKzuDWtEa1gQEW4"
     }
 ]

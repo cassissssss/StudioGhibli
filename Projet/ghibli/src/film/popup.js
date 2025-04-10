@@ -119,20 +119,31 @@ export function setupFilmPopup(filmsData, getCurrentIndex) {
                     
                     <h2 class="section-title">Musiques du film</h2>
                     <div class="music-player">
-                        <div class="spotify-player">
-                            <div class="music-album-art">
-                                <img src="${film.image}" alt="${film.name} soundtrack">
-                            </div>
-                            <div class="music-info">
-                                <div class="music-title">The Girl Who Fell From the Sky</div>
-                                <div class="music-artist">Joe Hisaishi</div>
-                            </div>
-                            <div class="music-controls">
-                                <span class="add-button">+</span>
-                                <span class="more-button">...</span>
-                                <span class="play-button">▶</span>
-                            </div>
-                        </div>
+                        ${film.spotifyPlaylistId ? 
+                            `<iframe 
+                                style="border-radius:12px" 
+                                src="https://open.spotify.com/embed/album/${film.spotifyPlaylistId}?utm_source=generator&theme=0" 
+                                width="100%" 
+                                height="352" 
+                                frameBorder="0" 
+                                allowfullscreen="" 
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                loading="lazy"
+                                class="spotify-iframe">
+                            </iframe>` : 
+                            `<div class="spotify-player">
+                                <div class="music-album-art">
+                                    <img src="${film.image}" alt="${film.name} soundtrack">
+                                </div>
+                                <div class="music-info">
+                                    <div class="music-title">Bande originale de ${film.name}</div>
+                                    <div class="music-artist">Joe Hisaishi</div>
+                                </div>
+                                <div class="music-controls">
+                                    <span class="play-button">▶</span>
+                                </div>
+                            </div>`
+                        }
                     </div>
                 </div>
             </div>
