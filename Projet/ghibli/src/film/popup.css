@@ -1,13 +1,8 @@
-
-
 /* Styles pour le popup */
 .popup-overlay {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0; 
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
     justify-content: flex-end;
@@ -36,7 +31,6 @@
     font-weight: bold;
     color: #fff;
     cursor: pointer;
-    transition: color 0.3s;
     z-index: 1001;
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 50%;
@@ -45,6 +39,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: color 0.3s;
 }
 
 .close-popup:hover {
@@ -60,7 +55,7 @@
     position: relative;
     background-size: cover;
     background-position: center;
-    height: 300px;
+    height: 250px;
     border-radius: 15px 15px 0 0;
     color: white;
     padding: 20px;
@@ -69,20 +64,15 @@
     justify-content: space-between;
 }
 
-/* Ajouter un overlay semi-transparent pour améliorer la lisibilité */
 .popup-header::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0; 
     background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.8));
-    border-radius: 15px 15px 0 0;
+    border-radius: inherit; 
     z-index: 1;
 }
 
-/* Barre de titre avec titre japonais et français */
 .popup-title-bar {
     display: flex;
     justify-content: space-between;
@@ -91,23 +81,37 @@
     z-index: 2;
 }
 
+.popup-japanese-title, .popup-french-title {
+    display: flex;
+    align-self: flex-start;
+}
+
 .popup-japanese-title {
     font-size: 28px;
     writing-mode: vertical-rl;
-    padding: 15px 10px;
-    background-color: rgba(255, 255, 255, 0.2);
+    padding: 15px 7px; 
+    background-color: rgba(255, 255, 255, 0.8); 
     border-radius: 8px;
-    align-self: flex-start;
     min-height: 140px;
-    display: flex;
     align-items: center;
+    font-family: 'Noto Sans JP', sans-serif;
+    letter-spacing: 2px;
+    font-weight: bold; 
+    color: #000; 
+    text-shadow: none; 
+    border-left: none; 
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    z-index: 2; 
+    position: relative; 
+    display: flex;
+    align-self: flex-start;
 }
 
 .popup-french-title {
     max-width: 60%;
     text-align: right;
-    /* Nouvelles propriétés pour contrôler la hauteur et la position */
-    padding-top: 100px; /* Ajuste l'espacement en haut */
+    padding-top: 60px;
+    margin-left: auto;
 }
 
 .popup-title {
@@ -116,12 +120,15 @@
     font-weight: bold;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
     color: #fff;
+    text-align: right;
+    line-height: 1.1;
 }
 
 .popup-rating {
-    position: relative;
+    position: absolute; 
+    right: 30px; 
+    top: 180px; 
     z-index: 2;
-    align-self: flex-end;
     background-color: rgba(255, 255, 255, 0.2);
     border-radius: 30px;
     padding: 8px 15px;
@@ -129,8 +136,6 @@
     align-items: center;
     gap: 8px;
     font-weight: bold;
-    margin-top : -40px;
-    margin-right: 30px;
 }
 
 .film-rating-score {
@@ -142,22 +147,23 @@
     font-size: 20px;
 }
 
+/* Structure à deux colonnes */
 .popup-two-columns {
     display: flex;
     flex-wrap: wrap;
-    margin: 0;
     width: 100%;
 }
 
-.popup-left-column, .popup-right-column {
-    flex: 1;
+.popup-left-column {
+    flex: 6;
     min-width: 300px;
     padding: 20px;
 }
 
-/* Ajustements de la description dans la nouvelle structure */
-.popup-left-column .popup-description {
-    padding: 0 0 20px 0;
+.popup-right-column {
+    flex: 4;
+    min-width: 250px;
+    padding: 20px;
 }
 
 .popup-description {
@@ -165,18 +171,13 @@
     line-height: 1.6;
     color: #555;
     margin-bottom: 20px;
-}
-
-.popup-left-column .popup-details {
-    padding: 0;
-    margin-bottom: 20px;
+    padding: 0 0 20px 0;
 }
 
 .popup-details {
     display: flex;
     justify-content: space-between;
-    padding: 0 30px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .popup-detail-item {
@@ -195,61 +196,39 @@
     color: #000;
 }
 
-.small {
-    font-size: 14px;
-    color: #777;
-}
-
-.popup-right-column .section-title {
-    margin: 0 0 15px 0;
-}
-
-.popup-right-column .trailer-container {
-    padding: 0;
-    margin-bottom: 30px;
-}
-
-.popup-right-column .music-player {
-    padding: 0;
-    margin-bottom: 30px;
-}
 
 .section-title {
     font-size: 24px;
     font-weight: bold;
-    margin: 30px 30px 20px;
+    margin: 30px 20px 20px;
+    color: #333;
+    border-bottom: 2px solid #ca9ea9;
+    padding-bottom: 8px;
 }
 
-.trailer-container {
-    padding: 0 30px;
-}
 
 .video-placeholder {
     width: 100%;
-    height: 400px;
+    height: 250px;
     background-color: #000;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
+    margin-bottom: 30px;
 }
 
 .play-button {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 20px;
     color: #fff;
     cursor: pointer;
-}
-
-.music-player {
-    padding: 0 30px;
-    margin-bottom: 30px;
 }
 
 .spotify-player {
@@ -259,6 +238,7 @@
     border-radius: 10px;
     padding: 10px;
     color: #fff;
+    margin-bottom: 30px;
 }
 
 .music-album-art {
@@ -306,66 +286,20 @@
     justify-content: center;
 }
 
-.film-characters-container {
-    display: flex;
-    overflow-x: auto;
-    padding: 0 20px 30px;
-    gap: 20px;
-}
 
-.film-character-card {
-    flex: 0 0 auto;
-    width: 120px;
-    text-align: center;
-}
-
-.film-character-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 10px;
-}
-
-.film-character-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.film-character-name {
-    font-weight: bold;
-}
-
-/* Animation pour le popup */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.popup-show {
-    display: flex;
-    animation: fadeIn 0.3s forwards;
-}
-
-/* Styles pour la grille de personnages des films */
 .film-popup-characters-container {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 20px;
-    justify-content: center;
     padding: 0 20px 30px;
 }
 
 .film-character-card {
-    flex: 0 0 auto;
-    width: 150px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 10px;
     overflow: hidden;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .film-character-card:hover {
@@ -374,7 +308,6 @@
 }
 
 .film-character-image {
-    width: 100%;
     height: 180px;
     overflow: hidden;
 }
@@ -394,23 +327,17 @@
     padding: 12px;
     font-weight: bold;
     color: #333;
+    text-align: center;
     background-color: rgba(255, 255, 255, 0.9);
 }
 
-/* Style pour le titre de section */
-.section-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin: 30px 20px 20px;
-    color: #333;
-    border-bottom: 2px solid #ca9ea9;
-    padding-bottom: 8px;
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-/* Style pour le message quand aucun personnage n'est disponible */
-.film-popup-character-grid p {
-    font-style: italic;
-    color: #777;
-    text-align: center;
-    padding: 20px;
+.popup-show {
+    display: flex;
+    animation: fadeIn 0.3s forwards;
 }
