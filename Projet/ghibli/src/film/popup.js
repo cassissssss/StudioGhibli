@@ -2,7 +2,7 @@
 async function loadCharactersForFilm(filmName) {
     try {
         // Charger le fichier JSON contenant les personnages
-        const response = await fetch('src/characters/characters.json');
+        const response = await fetch('data-json/characters.json');
         const data = await response.json();
         
         // Filtrer les personnages pour ce film spécifique (insensible à la casse)
@@ -156,9 +156,63 @@ export function setupFilmPopup(filmsData, getCurrentIndex) {
         
         // Insérer le contenu
         popupBody.innerHTML = popupContent;
+
+        
+        const detectArea = document.createElement('div');
+        detectArea.className = 'scroll-detection-area';
+        popupBody.appendChild(detectArea);
+
+        // Observer quand on approche de la fin du popup
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // L'utilisateur a scrollé jusqu'à la zone de détection
+                    enableHorizontalScrollWithWheel();
+                } else {
+                    // L'utilisateur n'est plus dans la zone de détection
+                    disableHorizontalScrollWithWheel();
+                }
+            });
+        }, { threshold: 0.1 });
+
+        observer.observe(detectArea);
+
+        // Référence à la section des personnages
+        const charactersContainer = document.querySelector('.film-popup-characters-container');
+        let horizontalScrollEnabled = false;
+
+        // Fonction pour activer le scroll horizontal avec la molette
+        function enableHorizontalScrollWithWheel() {
+            horizontalScrollEnabled = true;
+        }
+
+        // Fonction pour désactiver le scroll horizontal avec la molette
+        function disableHorizontalScrollWithWheel() {
+            horizontalScrollEnabled = false;
+        }
+
+        // Gestionnaire d'événement pour la molette de la souris
+        popupBody.addEventListener('wheel', function(event) {
+            if (horizontalScrollEnabled) {
+                const isAtStart = charactersContainer.scrollLeft <= 0;
+                const isScrollingUp = event.deltaY < 0;
+                
+                // Si on est au début et qu'on veut remonter, permettre le scroll vertical normal
+                if (isAtStart && isScrollingUp) {
+                    return; // Ne pas empêcher le comportement par défaut
+                }
+                event.preventDefault();
+                const scrollSpeed = 4;
+                
+                
+                // Utiliser le deltaY (mouvement vertical) pour faire défiler horizontalement
+                charactersContainer.scrollLeft += event.deltaY * scrollSpeed;
+            }
+        }, { passive: false });
         
         // Afficher le popup
         popup.classList.add('popup-show');
+        disableBodyScroll();
     });
     
     // Gestionnaire pour la vidéo YouTube - UN SEUL, en dehors du gestionnaire d'ouverture
@@ -188,12 +242,14 @@ export function setupFilmPopup(filmsData, getCurrentIndex) {
     // Fermer le popup au clic sur le bouton de fermeture
     closeBtn.addEventListener('click', () => {
         popup.classList.remove('popup-show');
+        enableBodyScroll();
     });
     
     // Fermer le popup en cliquant en dehors du contenu
     popup.addEventListener('click', (e) => {
         if (e.target === popup) {
             popup.classList.remove('popup-show');
+            enableBodyScroll();
         }
     });
     
@@ -201,7 +257,31 @@ export function setupFilmPopup(filmsData, getCurrentIndex) {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && popup.classList.contains('popup-show')) {
             popup.classList.remove('popup-show');
+            enableBodyScroll();
         }
     });
 }
 
+function disableBodyScroll() {
+    // Sauvegarder la position de défilement actuelle
+    const scrollY = window.scrollY;
+    
+    // Appliquer des styles pour empêcher le défilement tout en maintenant la position
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
+    document.body.dataset.scrollY = scrollY;
+}
+
+function enableBodyScroll() {
+    // Restaurer la position de défilement
+    const scrollY = parseInt(document.body.dataset.scrollY || '0');
+    
+    // Réinitialiser les styles
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    
+    // Restaurer la position de défilement
+    window.scrollTo(0, scrollY);
+}

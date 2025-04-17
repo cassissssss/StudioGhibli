@@ -1,4 +1,8 @@
 /* Styles pour le popup */
+body.no-scroll {
+    overflow: hidden;
+}
+
 .popup-overlay {
     display: none;
     position: fixed;
@@ -446,14 +450,23 @@
     justify-content: flex-start;
     gap: 20px;
     padding: 20px 40px 40px 40px;
-    margin-top: -5px;
+    margin: 0 auto;
     max-width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
     scrollbar-width: thin;
     scrollbar-color: #ca9ea9 #f0f0f0;
-    -webkit-overflow-scrolling: touch; 
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth; /* Pour un défilement fluide */
+}
+
+/* Ajouter un conteneur supplémentaire pour détecter quand on approche de la fin du popup */
+.scroll-detection-area {
+    height: 50px; /* Zone de détection */
+    width: 100%;
+    position: relative;
+    margin-top: -50px; /* Superposer sur le bas du popup */
 }
 
 .film-character-card {
