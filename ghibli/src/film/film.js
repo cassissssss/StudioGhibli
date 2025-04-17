@@ -13,7 +13,6 @@ async function loadFilms() {
         createFilmCarouselItems();
         updateFilmDisplay(0);
         initScrollRotation();
-        // Ne plus appeler addScrollToggle();
         setupFilmPopup(films, () => filmCurrentIndex);
     } catch (error) {
         console.error('Erreur lors du chargement des films:', error);
@@ -106,41 +105,18 @@ function updateFilmDisplay(index) {
 function initScrollRotation() {
     let isScrolling = false;
     let wheelEvents = 0;
-    let filmsViewed = 0;
-    let hasCompletedRotation = false;
-    let scrollTimeout = null;
-    let lastScrollTime = 0;
-    let scrollDebounceTime = 100; // Temps en ms pour considérer une nouvelle série de scrolls
+    let autoRotationInterval = null;
+    let autoRotationSpeed = 5000; // Temps en ms entre chaque rotation automatique
+    
+    // Indicateur pour savoir si la démonstration initiale a été faite
+    let initialDemoDone = false;
 
     function handleScroll(event) {
-        const currentTime = Date.now();
+        // Si autoRotation est en cours, l'arrêter car l'utilisateur interagit manuellement
+        stopAutoRotation();
+        stopInitialDemo(); // Arrêter aussi la démo initiale si elle est en cours
+        
         const scrollDirection = event.deltaY > 0 ? 1 : -1;
-        
-        // Réinitialiser le compteur si le scroll est trop rapide ou si on change de direction
-        if (currentTime - lastScrollTime > scrollDebounceTime) {
-            wheelEvents = 0;
-        }
-        lastScrollTime = currentTime;
-        
-        // Si on a déjà vu tous les films, passer à la section suivante
-        if (hasCompletedRotation) {
-            // Vérifier si c'est un nouveau geste de scroll (pas une continuation rapide)
-            if (scrollTimeout) {
-                clearTimeout(scrollTimeout);
-            }
-            
-            scrollTimeout = setTimeout(() => {
-                const nextSection = document.querySelector('.anecdotes-container') || 
-                                   document.querySelector('#anecdotes-section');
-                
-                if (nextSection) {
-                    event.preventDefault();
-                    nextSection.scrollIntoView({ behavior: 'smooth' });
-                }
-            }, 300); // Attendre un peu pour s'assurer que c'est intentionnel
-            
-            return;
-        }
         
         if (isScrolling) {
             wheelEvents += scrollDirection;
@@ -151,30 +127,6 @@ function initScrollRotation() {
         
         const newIndex = (filmCurrentIndex + scrollDirection + films.length) % films.length;
         selectFilm(newIndex);
-        
-        // Compter le nombre de films vus avec une meilleure logique
-        if (scrollDirection > 0) {
-            filmsViewed++;
-            // Éviter de compter plusieurs fois le même film lors de scrolls rapides
-            if (filmsViewed > films.length) {
-                filmsViewed = films.length;
-            }
-        } else {
-            // Si on revient en arrière, décrémenter le compteur mais pas en dessous de 0
-            filmsViewed = Math.max(0, filmsViewed - 1);
-        }
-        
-        // Vérifier si on a fait un tour complet et attendre un peu avant de confirmer
-        if (filmsViewed >= films.length) {
-            // Attendre un peu pour s'assurer que l'utilisateur a bien fini son exploration
-            if (scrollTimeout) {
-                clearTimeout(scrollTimeout);
-            }
-            
-            scrollTimeout = setTimeout(() => {
-                hasCompletedRotation = true;
-            }, 800); // Un délai raisonnable pour confirmer la fin du tour
-        }
         
         setTimeout(() => {
             isScrolling = false;
@@ -191,16 +143,213 @@ function initScrollRotation() {
         }, 800);
     }
     
+    // Variables pour la démo initiale
+    let initialDemoInterval = null;
+    
+    // Fonction pour démarrer la rotation automatique
+    function startAutoRotation() {
+        if (autoRotationInterval) return; // Éviter les doubles intervalles
+        
+        autoRotationInterval = setInterval(() => {
+            if (!isScrolling) {
+                const nextIndex = (filmCurrentIndex + 1) % films.length;
+                selectFilm(nextIndex);
+            }
+        }, autoRotationSpeed);
+    }
+    
+    // Fonction pour arrêter la rotation automatique
+    function stopAutoRotation() {
+        if (autoRotationInterval) {
+            clearInterval(autoRotationInterval);
+            autoRotationInterval = null;
+        }
+    }
+    
+    // Fonction pour démarrer la démonstration initiale immédiate
+    function startInitialDemo() {
+        if (initialDemoInterval || initialDemoDone) return; // Ne pas démarrer si déjà en cours ou déjà faite
+        initialDemoDone = true;
+        
+        let demoCount = 0;
+        const demoSpeed = 1200; // Rotation plus rapide pour la démo (1.2 secondes par film)
+        
+        // Démarrer immédiatement
+        initialDemoInterval = setInterval(() => {
+            if (demoCount >= Math.min(3, films.length)) {
+                // Arrêter après avoir montré 3 films ou tous les films si moins de 3
+                stopInitialDemo();
+                return;
+            }
+            
+            const nextIndex = (filmCurrentIndex + 1) % films.length;
+            selectFilm(nextIndex);
+            demoCount++;
+        }, demoSpeed);
+    }
+    
+    // Fonction pour arrêter la démo initiale
+    function stopInitialDemo() {
+        if (initialDemoInterval) {
+            clearInterval(initialDemoInterval);
+            initialDemoInterval = null;
+        }
+    }
+    
     const filmContainer = document.querySelector('.film-container');
     if (filmContainer) {
-        // Toujours activer la rotation par défaut (sans le besoin d'un bouton)
         filmContainer.classList.add('scroll-rotation-active');
+        
+        // Ajouter l'indicateur de swipe
+        addSwipeIndicator(filmContainer);
         
         filmContainer.addEventListener('wheel', (e) => {
             e.preventDefault();
             handleScroll(e);
         }, { passive: false });
+        
+        // Démarrer l'autorotation au survol
+        filmContainer.addEventListener('mouseenter', () => {
+            // Ne pas démarrer l'auto-rotation si la démo initiale est en cours
+            if (!initialDemoInterval) {
+                startAutoRotation();
+            }
+        });
+        
+        // Arrêter l'autorotation quand la souris quitte la zone
+        filmContainer.addEventListener('mouseleave', stopAutoRotation);
+        
+        // Démarrer la démonstration initiale immédiatement
+        // Avec un léger délai pour permettre au DOM de se stabiliser
+        setTimeout(startInitialDemo, 500);
+        
+        // Arrêter la démo initiale si l'utilisateur clique
+        filmContainer.addEventListener('click', stopInitialDemo);
     }
 }
 
-document.addEventListener('DOMContentLoaded', loadFilms);
+function addSwipeIndicator(container) {
+    // Créer l'élément indicateur
+    const indicator = document.createElement('div');
+    indicator.className = 'swipe-indicator';
+    
+    // Ajouter le contenu HTML avec icônes et texte
+    indicator.innerHTML = `
+        <div class="swipe-animation">
+            <svg class="swipe-arrow left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path fill="#fff" d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path>
+            </svg>
+            <svg class="mouse-wheel" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28">
+                <path fill="#fff" d="M12,3C8.59,3 6,5.61 6,9v6c0,3.39 2.61,6 6,6c3.39,0 6,-2.61 6,-6V9C18,5.61 15.39,3 12,3zM12,5c2.21,0 4,1.79 4,4v6c0,2.21 -1.79,4 -4,4c-2.21,0 -4,-1.79 -4,-4V9C8,6.79 9.79,5 12,5zM12,9c-0.55,0 -1,0.45 -1,1v2c0,0.55 0.45,1 1,1c0.55,0 1,-0.45 1,-1v-2C13,9.45 12.55,9 12,9z"/>
+            </svg>
+            <svg class="swipe-arrow right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path fill="#fff" d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
+            </svg>
+        </div>
+        <div class="swipe-text">Faites défiler pour explorer les films</div>
+    `;
+    
+    // Styles CSS injectés directement
+    const style = document.createElement('style');
+    style.textContent = `
+        .swipe-indicator {
+            position: absolute;
+            left: -180px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+            text-align: center;
+            max-width: 160px;
+            animation: fadeInOut 2s ease-in-out infinite;
+            z-index: 1000;
+        }
+        
+        .swipe-animation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        
+        .swipe-arrow {
+            animation: moveArrow 2s ease-in-out infinite;
+        }
+        
+        .swipe-arrow.left {
+            animation-delay: 0s;
+        }
+        
+        .swipe-arrow.right {
+            animation-delay: 1s;
+        }
+        
+        .mouse-wheel {
+            margin: 0 5px;
+        }
+        
+        .swipe-text {
+            font-weight: 500;
+        }
+        
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes moveArrow {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
+        }
+        
+        @media (max-width: 768px) {
+            .swipe-indicator {
+                left: 10px;
+                bottom: 20px;
+                top: auto;
+                transform: none;
+            }
+        }
+    `;
+    
+    // Ajouter les styles au document
+    document.head.appendChild(style);
+    
+    // Ajouter l'indicateur au conteneur
+    container.appendChild(indicator);
+    
+    // Faire disparaître l'indicateur après une interaction
+    const hideIndicatorAfterInteraction = () => {
+        const indicator = document.querySelector('.swipe-indicator');
+        if (indicator) {
+            indicator.style.animation = 'fadeOut 0.5s forwards';
+            setTimeout(() => {
+                if (indicator && indicator.parentNode) {
+                    indicator.parentNode.removeChild(indicator);
+                }
+            }, 500);
+        }
+        
+        // Supprimer les écouteurs après utilisation
+        container.removeEventListener('wheel', hideIndicatorAfterInteraction);
+        container.removeEventListener('click', hideIndicatorAfterInteraction);
+    };
+    
+    // Masquer l'indicateur après la première interaction
+    container.addEventListener('wheel', hideIndicatorAfterInteraction);
+    container.addEventListener('click', hideIndicatorAfterInteraction);
+    
+    // Masquer l'indicateur après un délai (10 secondes)
+    setTimeout(() => {
+        hideIndicatorAfterInteraction();
+    }, 10000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Supprimer la réinitialisation du sessionStorage, on n'en a plus besoin
+    loadFilms();
+});
