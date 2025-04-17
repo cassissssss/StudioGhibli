@@ -29,8 +29,8 @@ function createMuseeParcSection() {
     parcColumn.className = 'museeparc-column';
 
     // Ajouter les titres
-    museeColumn.innerHTML = '<h2>Musée</h2>';
-    parcColumn.innerHTML = '<h2>Parc</h2>';
+    museeColumn.innerHTML = '<h3>Musée</h3>';
+    parcColumn.innerHTML = '<h3>Parc</h3>';
 
     // Créer les conteneurs d'images
     const museeStack = document.createElement('div');
@@ -73,32 +73,54 @@ function initScrollEffect() {
 
     window.addEventListener('scroll', () => {
         const sectionRect = section.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
 
-        // Ne rien faire si la section n'est pas visible
-        if (sectionRect.bottom < 0 || sectionRect.top > window.innerHeight) {
+        // Ne rien faire si la section n'est pas encore complètement visible
+        if (sectionRect.top > 0) {
+            // Réinitialiser toutes les images à leur état initial
+            imageStacks.forEach(stack => {
+                const images = stack.querySelectorAll('.image-wrapper');
+                images.forEach(img => {
+                    img.style.opacity = 1;
+                    img.style.transform = 'translateY(0) scale(1)';
+                });
+            });
             return;
         }
 
-        // Calculer la progression du scroll dans la section
+        // Commence l'animation seulement quand la section est complètement visible
         const scrollStart = section.offsetTop;
-        const scrollEnd = scrollStart + section.offsetHeight - window.innerHeight;
+        const scrollEnd = scrollStart + section.offsetHeight - windowHeight;
         const currentScroll = window.pageYOffset;
-        const scrollProgress = (currentScroll - scrollStart) / (scrollEnd - scrollStart);
+        const scrollProgress = Math.max(0, Math.min(1,
+            (currentScroll - scrollStart) / (scrollEnd - scrollStart)
+        ));
 
         imageStacks.forEach(stack => {
             const images = stack.querySelectorAll('.image-wrapper');
             const totalImages = images.length;
 
             images.forEach((img, index) => {
-                const threshold = (index / totalImages) * 0.8; // 80% de la section pour l'animation
+                const startThreshold = (index / totalImages) * 0.8;
+                const endThreshold = ((index + 1) / totalImages) * 0.8;
 
-                if (scrollProgress > threshold) {
-                    img.style.opacity = '0';
-                    img.style.transform = 'translateY(-30px)';
-                } else {
-                    img.style.opacity = '1';
-                    img.style.transform = 'translateY(0)';
+                let opacity = 1;
+                let scale = 1;
+                let translateY = 0;
+
+                if (scrollProgress > startThreshold) {
+                    const progress = Math.min(1, (scrollProgress - startThreshold) / (endThreshold - startThreshold));
+                    opacity = 1 - progress;
+                    scale = 1 - (progress * 0.1);
+                    translateY = -30 * progress;
                 }
+
+                img.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                img.style.opacity = opacity;
+                img.style.transform = `
+                    translateY(${translateY}px) 
+                    scale(${scale})
+                `;
             });
         });
     });

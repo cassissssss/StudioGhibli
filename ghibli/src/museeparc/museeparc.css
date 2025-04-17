@@ -5,11 +5,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 5vh; /* Réduit encore plus l'espace avec la section précédente */
-  padding-top: 10px; /* Réduit l'espace en haut */
+  margin-top: 5vh;
+  padding-top: 10px;
 }
 
-/* Header style similaire à anecdotes */
 .museeparc-header {
   z-index: 900;
   width: 100%;
@@ -19,21 +18,21 @@
 
 #museeparc-section h1 {
   position: sticky;
-  top: 0; /* Colle le titre tout en haut */
+  top: 0;
   width: 100%;
   text-align: center;
-  font-size: 3rem; /* Légèrement plus petit */
+  font-size: 3rem;
   color: #333;
   z-index: 10;
   background-color: #fdf7eb;
-  padding: 5px 0; /* Réduit le padding */
+  padding: 5px 0;
   margin-bottom: 10px;
-  transition: opacity 0.3s ease; /* Transition plus rapide pour le titre */
+  transition: opacity 0.3s ease;
 }
 
 .museeparc-container {
   position: sticky;
-  top: 100px; /* Augmenté pour laisser plus d'espace avec le titre h1 */
+  top: 100px;
   height: 80vh;
   width: 100%;
   max-width: 1400px;
@@ -55,14 +54,29 @@
 
 .museeparc-column h2 {
   position: sticky;
-  top: 50px; /* Position sous le h1 */
+  top: 50px;
   font-size: 2.5rem;
   color: #333;
   margin-bottom: 2rem;
   text-align: center;
   background-color: #fdf7eb;
   padding: 10px 0;
-  z-index: 9; /* Juste en-dessous du h1 */
+  z-index: 9;
+}
+
+.museeparc-column h3 {
+  position: sticky;
+  top: 50px;
+  font-size: 1.5rem;
+  color: #666;
+  margin-bottom: 2rem;
+  text-align: center;
+  background-color: #fdf7eb;
+  padding: 10px 0;
+  z-index: 9;
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: 1px;
 }
 
 .image-stack {
@@ -77,24 +91,31 @@
   left: 0;
   width: 100%;
   height: 100%;
-  transition: all 1.5s ease; /* Ralentissement de la transition */
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
 }
 
 .image-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .image-wrapper.hidden {
   opacity: 0;
-  transform: translateY(-20px); /* Réduction du déplacement */
-  transition: all 1.2s ease-in-out; /* Transition plus lente et plus fluide */
+  transform: translateY(-20px);
+  transition: all 1.2s ease-in-out;
 }
 
-/* Z-index pour l'empilement */
+.image-wrapper:hover {
+  transform: scale(1.02);
+}
+
 .image-wrapper:nth-child(1) {
   z-index: 5;
 }
