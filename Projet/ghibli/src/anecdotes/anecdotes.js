@@ -248,12 +248,9 @@ function createComparisonChart() {
     dataStudios.forEach(({ studio, percentage, logo }) => {
         const card = createElement('div', 'comparison-card');
 
-        // Créer un wrapper pour l'animation
         const barWrapper = createElement('div', 'comparison-bar-wrapper');
         
-        // La barre elle-même commence avec une hauteur de 0
         const bar = createElement('div', 'comparison-bar animated-bar');
-        // On définit la hauteur finale comme attribut data
         bar.setAttribute('data-height', (percentage / 100 * 250) + 'px');
         bar.textContent = `${percentage}%`;
 
@@ -279,7 +276,6 @@ function createComparisonChart() {
     return section;
 }
 
-// Ajouter cette fonction pour observer le scroll
 function initScrollObserver() {
     const subtitle = document.querySelector('.anecdotes__subtitle');
     const comparisonSection = document.querySelector('.comparison-section');
@@ -289,15 +285,12 @@ function initScrollObserver() {
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            // Vérifie si on est dans la section de comparaison
             const comparisonRect = comparisonSection.getBoundingClientRect();
             const statsRect = statsSection.getBoundingClientRect();
 
             if (entry.isIntersecting && comparisonRect.top <= window.innerHeight / 2) {
-                // On est dans la section de comparaison
                 subtitle.textContent = comparisonSubtitle;
             } else if (statsRect.top <= window.innerHeight / 2) {
-                // On est dans la section des stats ou avant
                 subtitle.textContent = originalSubtitle;
             }
         });
@@ -309,7 +302,6 @@ function initScrollObserver() {
     observer.observe(comparisonSection);
 }
 
-// Modifier l'event listener DOMContentLoaded pour inclure l'initialisation de l'observer
 document.addEventListener("DOMContentLoaded", () => {
     const anecdotesContainer = document.querySelector(".anecdotes-container");
     const anecdotesContent = createAnecdotesSection();
@@ -348,29 +340,31 @@ document.addEventListener("DOMContentLoaded", () => {
   `;
     document.head.appendChild(style);
 
-    // Ajouter cette ligne à la fin
     initScrollObserver();
-    const observer = new IntersectionObserver((entries) => {
+
+    const animationObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
+            const bars = entry.target.querySelectorAll('.animated-bar');
+            
             if (entry.isIntersecting) {
-                // Déclencher l'animation lorsque la section devient visible
-                const bars = entry.target.querySelectorAll('.animated-bar');
                 bars.forEach(bar => {
-                    // Petit délai pour un effet plus agréable
                     setTimeout(() => {
                         bar.style.height = bar.getAttribute('data-height');
-                        bar.classList.add('animated');
                     }, 200);
                 });
-                // Désactiver l'observer après l'animation
-                observer.unobserve(entry.target);
+            } else {
+                bars.forEach(bar => {
+                    bar.style.height = '0px';
+                });
             }
         });
-    }, { threshold: 0.01 }); // Déclencher lorsque 20% de la section est visible
+    }, { 
+        threshold: 0.2,  
+        rootMargin: "-10% 0px" 
+    });
 
-    // Observer la section de comparaison
     const comparisonSection = document.querySelector('.comparison-section');
     if (comparisonSection) {
-        observer.observe(comparisonSection);
+        animationObserver.observe(comparisonSection);
     }
 });

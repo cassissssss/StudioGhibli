@@ -66,7 +66,7 @@ fetch("/films.json")
       return lines;
     }
 
-    // Ajoute les titres des films avec rotation et gestion multi-lignes
+    // Titres des films
     svg.selectAll(".film-label-group")
       .data(films)
       .enter()
@@ -143,7 +143,7 @@ fetch("/films.json")
       .append("text")
       .text(d => `★ ${d.rating}`)
       .attr("x", d => x(d.name) + x.bandwidth() / 2)
-      .attr("y", d => y(5e5) + 45) // Position en dessous des revenus
+      .attr("y", d => y(5e5) + 45) 
       .attr("text-anchor", "middle")
       .style("font-size", "14px")
       .style("fill", "#9C6173")
@@ -152,28 +152,30 @@ fetch("/films.json")
     // Configuration des éléments de légende et axes
     const infoColor = "#9C6173";
 
+    // Axe Y
     svg.append("line")
       .attr("x1", margin.left - 80)
       .attr("y1", margin.top - 500)
       .attr("x2", margin.left - 80)
-      .attr("y2", margin.top + height - 50)
+      .attr("y2", margin.top + height - 40)
       .attr("stroke", `${infoColor}`)
       .attr("opacity", 0.1)
       .attr("stroke-width", 3)
 
     svg.append("text")
       .attr("text-anchor", "middle")
-      .attr("transform", `translate(-50, ${height / 2})rotate(-90)`) // Modifié pour centrer verticalement
+      .attr("transform", `translate(-50, ${height / 2})rotate(-90)`)
       .text("Revenus des films ($)")
       .style("font-size", "14px")
       .style("fill", `${infoColor}`)
       .style("font-weight", "bold");
 
+      // Axe X
     svg.append("line")
       .attr("x1", margin.left - 80)
-      .attr("y1", margin.top + height - 50)
+      .attr("y1", margin.top + height - 40)
       .attr("x2", margin.left + width + 10)
-      .attr("y2", margin.top + height - 50)
+      .attr("y2", margin.top + height - 40)
       .attr("stroke", `${infoColor}`)
       .attr("opacity", 0.1)
       .attr("stroke-width", 3)
@@ -181,8 +183,8 @@ fetch("/films.json")
     svg.append("text")
       .attr("text-anchor", "middle")
       .attr("x", margin.left + width / 2)
-      .attr("y", height + 80)
-      .text("Du mieux noté au moins bien noté (IMDB)")
+      .attr("y", height + 95)
+      .text("★ Du mieux noté au moins bien noté (IMDB)")
       .style("font-size", "14px")
       .style("fill", `${infoColor}`)
       .style("font-weight", "bold");

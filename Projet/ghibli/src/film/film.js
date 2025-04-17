@@ -1,31 +1,30 @@
-import { setupFilmPopup }  from "./popup";   
+import { setupFilmPopup } from "./popup";   
 
 let films = [];
-let filmCurrentIndex = 0; // Renommé pour être cohérent
-const filmCarouselRadius = 300; // Rayon du cercle ajusté
+let filmCurrentIndex = 0;
+const filmCarouselRadius = 300;
 
+// Charge les données des films depuis le JSON
 async function loadFilms() {
     try {
         const response = await fetch('films.json');
         films = await response.json();
         
-        // Générer les éléments du carousel
         createFilmCarouselItems();
-        
-        // Charger les données du premier film
         updateFilmDisplay(0);
-
+        initScrollRotation();
+        addScrollToggle();
         setupFilmPopup(films, () => filmCurrentIndex);
     } catch (error) {
         console.error('Erreur lors du chargement des films:', error);
     }
 }
 
+// Crée les éléments du carrousel
 function createFilmCarouselItems() {
     const carousel = document.getElementById('film-carousel');
     carousel.innerHTML = '';
     
-    // Créer un élément pour chaque film
     films.forEach((film, index) => {
         const item = document.createElement('div');
         item.className = `film-item ${index === 0 ? 'active' : ''}`;
@@ -37,15 +36,13 @@ function createFilmCarouselItems() {
         
         item.appendChild(img);
         carousel.appendChild(item);
-        
-        // Ajouter l'événement de clic
         item.addEventListener('click', () => selectFilm(index));
     });
     
-    // Positionner les items en cercle
     positionFilmCarouselItems();
 }
 
+// Positionne les films en cercle
 function positionFilmCarouselItems() {
     const items = document.querySelectorAll('.film-item');
     const totalItems = items.length;
@@ -54,26 +51,14 @@ function positionFilmCarouselItems() {
     const offsetY = 80;
     
     items.forEach((item, index) => {
-        // On décale les indices pour que l'élément actif soit toujours au centre droit
-        // En utilisant le modulo pour faire un cycle circulaire
         const adjustedIndex = (index - filmCurrentIndex + totalItems) % totalItems;
-        
-        // Calculer la position sur le cercle - mettre le film actif à droite (angle 0)
-        // et répartir les autres autour
         const angle = adjustedIndex * angleStep - Math.PI / 200; 
-        
-        // Coordonnées X et Y sur le cercle
         const x = Math.cos(angle) * filmCarouselRadius + offsetX;
         const y = Math.sin(angle) * filmCarouselRadius + offsetY;
         
-        // Appliquer la transformation
-        item.style.transform = `translate(${x}px, ${y}px)`;
+        item.style.transition = 'all 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
         
-        // Style visuel pour l'élément actif vs inactif
         const isActive = index === filmCurrentIndex;
-        
-        // Transition plus complexe pour effet visuel
-        item.style.transition = 'all 0.8s ease';
         
         if (isActive) {
             item.classList.add('active');
@@ -85,130 +70,116 @@ function positionFilmCarouselItems() {
             item.classList.remove('active');
             item.style.opacity = 0.7;
             item.style.filter = 'grayscale(100%)';
-            item.style.zIndex = 10;
+            item.style.zIndex = adjustedIndex;
+            item.style.transform = `translate(${x}px, ${y}px) scale(1)`;
         }
     });
 }
 
+// Sélectionne un nouveau film et met à jour l'affichage
 function selectFilm(index) {
     if (index === filmCurrentIndex) return;
     
-    // Animation pour la transition
-    const items = document.querySelectorAll('.film-item');
-    items.forEach(item => {
-        item.style.transition = 'all 0.8s ease';
-    });
-    
-    // Mettre à jour l'index courant
     filmCurrentIndex = index;
-    
-    // Repositionner les éléments
     positionFilmCarouselItems();
-    
-    // Mettre à jour l'affichage du film
     updateFilmDisplay(index);
 }
 
+// Met à jour l'affichage des informations du film
 function updateFilmDisplay(index) {
     const film = films[index];
     
-    // Ajouter la classe fade-in pour l'animation
     const filmCard = document.querySelector('.film-card');
     filmCard.classList.remove('film-fade-in');
-    void filmCard.offsetWidth; // Force reflow
+    void filmCard.offsetWidth; 
     filmCard.classList.add('film-fade-in');
     
-    // Mettre à jour les éléments
     document.querySelector('.film-main-image').src = film.image || 'placeholder.jpg';
     document.querySelector('.film-main-image').alt = film.name;
-    
-    // Gérer le saut de ligne dans le titre
-    const title = film.name;
-    document.querySelector('.film-info h1').textContent = title;
-    
+    document.querySelector('.film-info h1').textContent = film.name;
     document.querySelector('.film-description').textContent = film.description || 'Description non disponible.';
     document.querySelector('.film-year').textContent = film.year;
     document.querySelector('.film-japanese-title').textContent = film.japanese_title || '';
 }
 
-// Configuration du popup
-function setupPopup() {
-    const popup = document.getElementById('popup-overlay');
-    const popupBody = document.querySelector('.popup-body');
-    const closeBtn = document.querySelector('.close-popup');
-    const exploreBtn = document.querySelector('.film-explore');
-    
-    // Ouvrir le popup au clic sur le bouton Explorer
-    exploreBtn.addEventListener('click', () => {
-        // CORRECTION ICI: utiliser filmCurrentIndex au lieu de currentIndex
-        const film = films[filmCurrentIndex];
-        popup.classList.add('popup-show');
-        
-    });
-    
-    // Fermer le popup au clic sur le bouton de fermeture
-    closeBtn.addEventListener('click', () => {
-        popup.classList.remove('popup-show');
-    });
-    
-    // Fermer le popup en cliquant en dehors du contenu
-    popup.addEventListener('click', (e) => {
-        if (e.target === popup) {
-            popup.classList.remove('popup-show');
-        }
-    });
-    
-    // Fermer le popup avec la touche Echap
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && popup.classList.contains('popup-show')) {
-            popup.classList.remove('popup-show');
-        }
-    });
-}
+// Initialise la rotation par défilement
+function initScrollRotation() {
+    let isScrolling = false;
+    let wheelEvents = 0;
 
-// Fonction pour créer la grille de personnages en fonction du film
-async function createCharacterGrid(filmName) {
-    try {
-        // Charger les données des personnages
-        const response = await fetch('/src/characters/characters.json');
-        const data = await response.json();
+    function handleScroll(event) {
+        const scrollDirection = event.deltaY > 0 ? 1 : -1;
         
-        // Filtrer les personnages pour ce film spécifique
-        const filmCharacters = data.characters.filter(character => character.film === filmName);
-        
-        // Si aucun personnage n'est trouvé pour ce film
-        if (filmCharacters.length === 0) {
-            return `
-                <div class="film-popup-character-grid">
-                    <p>Personnages du film "${filmName}" non disponibles actuellement.</p>
-                </div>
-            `;
+        if (isScrolling) {
+            wheelEvents += scrollDirection;
+            return;
         }
         
-        // Générer le HTML pour la grille de personnages
-        return `
-            <div class="film-popup-character-grid">
-                ${filmCharacters.map(character => `
-                    <div class="film-popup-character-card">
-                        <div class="fil-popup-character-image">
-                            <img src="${character.image}" alt="${character.name}">
-                        </div>
-                        <div class="film-popup-character-name">${character.name}</div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-    } catch (error) {
-        console.error("Erreur lors du chargement des personnages:", error);
-        return `
-            <div class="film-popup-character-grid">
-                <p>Impossible de charger les personnages.</p>
-            </div>
-        `;
+        isScrolling = true;
+        
+        const newIndex = (filmCurrentIndex + scrollDirection + films.length) % films.length;
+        selectFilm(newIndex);
+        
+        setTimeout(() => {
+            isScrolling = false;
+            
+            if (wheelEvents !== 0) {
+                const nextDirection = wheelEvents > 0 ? 1 : -1;
+                wheelEvents = 0;
+                
+                setTimeout(() => {
+                    const nextEvent = new WheelEvent('wheel', { deltaY: nextDirection * 100 });
+                    handleScroll(nextEvent);
+                }, 100);
+            }
+        }, 800);
+    }
+    
+    const filmContainer = document.querySelector('.film-container');
+    if (filmContainer) {
+        filmContainer.addEventListener('wheel', (e) => {
+            if (filmContainer.classList.contains('scroll-rotation-active')) {
+                e.preventDefault();
+                handleScroll(e);
+            }
+        }, { passive: false });
     }
 }
 
-// Initialiser l'application quand le DOM est chargé
-document.addEventListener('DOMContentLoaded', () => {
-    loadFilms();
-});
+// Ajoute le bouton pour activer/désactiver la rotation au scroll
+function addScrollToggle() {
+    const filmSection = document.querySelector('.film-container');
+    
+    // Créer un bouton de toggle
+    const toggleBtn = document.createElement('button');
+    toggleBtn.className = 'scroll-toggle-btn';
+    toggleBtn.innerHTML = '🔄 Scroll rotation: OFF';
+    toggleBtn.style.position = 'absolute';
+    toggleBtn.style.top = '20px';
+    toggleBtn.style.right = '20px';
+    toggleBtn.style.zIndex = '1000';
+    toggleBtn.style.padding = '8px 16px';
+    toggleBtn.style.background = 'rgba(255, 255, 255, 0.7)';
+    toggleBtn.style.border = 'none';
+    toggleBtn.style.borderRadius = '20px';
+    toggleBtn.style.cursor = 'pointer';
+    
+    let scrollActive = false;
+    
+    toggleBtn.addEventListener('click', () => {
+        scrollActive = !scrollActive;
+        toggleBtn.innerHTML = scrollActive 
+            ? '🔄 Scroll rotation: ON' 
+            : '🔄 Scroll rotation: OFF';
+            
+        if (scrollActive) {
+            filmSection.classList.add('scroll-rotation-active');
+        } else {
+            filmSection.classList.remove('scroll-rotation-active');
+        }
+    });
+    
+    filmSection.appendChild(toggleBtn);
+}
+
+document.addEventListener('DOMContentLoaded', loadFilms);
