@@ -2,7 +2,6 @@
   position: relative;
   padding: 100px 0;
   min-height: 100vh; /* Assure que la section prend au moins toute la hauteur de l'écran */
-  scroll-snap-align: start; /* Permet l'arrêt sur la section */
   scroll-margin-top: 0; /* Ajuste le point d'arrêt */
 }
 
