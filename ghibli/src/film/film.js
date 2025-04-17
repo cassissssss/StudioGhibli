@@ -47,7 +47,7 @@ function positionFilmCarouselItems() {
     const totalItems = items.length;
     const angleStep = (2 * Math.PI) / totalItems;
     const offsetX = -350;
-    const offsetY = 80;
+    const offsetY = 80;  
     
     items.forEach((item, index) => {
         const adjustedIndex = (index - filmCurrentIndex + totalItems) % totalItems;
@@ -110,6 +110,38 @@ function initScrollRotation() {
     
     // Indicateur pour savoir si la démonstration initiale a été faite
     let initialDemoDone = false;
+
+    function centerFilmSection() {
+        const filmSection = document.getElementById('film-section');
+        if (filmSection) {
+            // Ajouter une classe pour ajuster la position
+            filmSection.classList.add('centered-film-section');
+            
+            // Ajouter du CSS pour cette classe
+            const style = document.createElement('style');
+            style.textContent = `
+                .centered-film-section {
+                    padding-top: 40px;
+                    padding-bottom: 80px;
+                    min-height: 100vh;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                }
+                
+                @media (max-height: 800px) {
+                    .centered-film-section {
+                        padding-top: 20px;
+                        padding-bottom: 40px;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    }
+
+    // Appeler la fonction pour centrer la section
+    centerFilmSection();
 
     function handleScroll(event) {
         // Si autoRotation est en cours, l'arrêter car l'utilisateur interagit manuellement
@@ -415,5 +447,4 @@ function addSwipeIndicator(container) {
 // Modification de l'écouteur DOMContentLoaded pour appeler la nouvelle fonction
 document.addEventListener('DOMContentLoaded', () => {
     loadFilms();
-    addNavigationButtons();
 });

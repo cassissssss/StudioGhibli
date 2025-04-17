@@ -15,6 +15,32 @@ const fetchCharacters = async () => {
     }
 };
 
+// Configuration de la zone de capture de défilement
+const setupScrollZone = () => {
+    const container = document.getElementById('carousel-container');
+    
+    // Créer une zone visuelle qui indique quand le scroll est capturé
+    const scrollZone = document.createElement('div');
+    scrollZone.className = 'scroll-capture-zone';
+    container.appendChild(scrollZone);
+    
+    // Observer quand le carousel entre dans le viewport
+    const carouselObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                container.classList.add('active-scroll-capture');
+                scrollZone.classList.add('visible');
+            } else {
+                container.classList.remove('active-scroll-capture');
+                scrollZone.classList.remove('visible');
+            }
+        });
+    }, { threshold: 0.3 });
+    
+    carouselObserver.observe(container);
+};
+
+// Initialisation du carousel
 const initCarousel = () => {
     const container = document.getElementById("carousel-container");
     const wrapper = document.createElement("div");
@@ -44,26 +70,15 @@ const initCarousel = () => {
     infoDiv.className = "character-info";
     infoDiv.innerHTML = '<h4></h4><p></p>';
 
- // Modifier le HTML de l'indicateur dans initCarousel() :
-
-const scrollIndicator = document.createElement("div");
-scrollIndicator.className = "scroll-indicator";
-scrollIndicator.innerHTML = `
-    <div class="scroll-icon">
-        <span class="scroll-arrow left"></span>
-        <span class="mouse-wheel"></span>
-        <span class="scroll-arrow right"></span>
-    </div>
-    <p>Défilez ici pour naviguer entre les personnages</p>
-`;
-
     // Ajouter tous les éléments au conteneur
     container.appendChild(wrapper);
     container.appendChild(infoDiv);
-    container.appendChild(scrollIndicator);
 
     // Configurer la zone de capture de défilement
     setupScrollZone();
+    
+    // Ajouter l'indicateur de swipe
+    addCharacterSwipeIndicator(container);
 
     // Gérer le comportement de drag et swipe
     let startX = 0;
@@ -72,37 +87,8 @@ scrollIndicator.innerHTML = `
     wrapper.addEventListener("touchstart", (e) => startX = e.touches[0].clientX, { passive: true });
     wrapper.addEventListener("touchend", (e) => handleSwipe(startX, e.changedTouches[0].clientX));
 
-    // Compter les interactions pour masquer l'indicateur
-    wrapper.addEventListener("click", hideIndicatorAfterInteractions);
-    document.addEventListener("wheel", hideIndicatorAfterInteractions, { passive: true });
-
     // Initialiser l'affichage du carousel
     updateCarousel();
-};
-
-// Configuration de la zone de capture de défilement
-const setupScrollZone = () => {
-    const container = document.getElementById('carousel-container');
-    
-    // Créer une zone visuelle qui indique quand le scroll est capturé
-    const scrollZone = document.createElement('div');
-    scrollZone.className = 'scroll-capture-zone';
-    container.appendChild(scrollZone);
-    
-    // Observer quand le carousel entre dans le viewport
-    const carouselObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                container.classList.add('active-scroll-capture');
-                scrollZone.classList.add('visible');
-            } else {
-                container.classList.remove('active-scroll-capture');
-                scrollZone.classList.remove('visible');
-            }
-        });
-    }, { threshold: 0.3 });
-    
-    carouselObserver.observe(container);
 };
 
 // Gestion du swipe horizontal
@@ -115,13 +101,11 @@ const handleSwipe = (start, end) => {
 };
 
 // Gestion du défilement vertical pour une navigation horizontale
-// Remplacer la fonction throttleScroll existante par celle-ci:
-
 const throttleScroll = (e) => {
     const container = document.getElementById('carousel-container');
     const rect = container.getBoundingClientRect();
     
-    // Vérifier si l'utilisateur est directement sur le carousel (zone plus restreinte)
+    // Vérifier si l'utilisateur est directement sur le carousel
     const isDirectlyOnCarousel = 
         e.clientY >= rect.top && 
         e.clientY <= rect.bottom && 
@@ -129,43 +113,35 @@ const throttleScroll = (e) => {
         e.clientX <= rect.right;
     
     if (isDirectlyOnCarousel) {
-        // Bloquer le défilement de page uniquement lorsque la souris est directement sur le carousel
         e.preventDefault();
         
-        // Si déjà en train de faire défiler, ignorer
         if (isScrolling) return;
         
-        // Déterminer la direction et appliquer le défilement au carousel
         const delta = e.deltaY;
-        if (Math.abs(delta) < 30) return; // Ignorer petits mouvements
+        if (Math.abs(delta) < 30) return;
         
         isScrolling = true;
         delta > 0 ? nextSlide() : prevSlide();
         
-        // Ajouter un effet visuel pour indiquer la direction
-        const wrapper = document.querySelector('.carousel-wrapper');
-        wrapper.classList.add(delta > 0 ? 'swiping-left' : 'swiping-right');
-        
-        // Réinitialiser après l'animation
         setTimeout(() => {
             isScrolling = false;
-            wrapper.classList.remove('swiping-left', 'swiping-right');
         }, 500);
         
         hideIndicatorAfterInteractions();
     }
-    // Si on n'est pas directement sur le carousel, laisser le défilement normal se produire
 };
 
 // Faire disparaître l'indicateur après quelques interactions
 const hideIndicatorAfterInteractions = () => {
     interactionCount++;
     if (interactionCount >= 3) {
-        const indicator = document.querySelector('.scroll-indicator');
+        const indicator = document.querySelector('.character-swipe-indicator');
         if (indicator) {
-            indicator.style.opacity = '0';
+            indicator.style.animation = 'fadeOut 0.5s forwards';
             setTimeout(() => {
-                indicator.remove();
+                if (indicator && indicator.parentNode) {
+                    indicator.parentNode.removeChild(indicator);
+                }
             }, 500);
         }
     }
@@ -210,17 +186,161 @@ const prevSlide = () => {
     updateCarousel();
 };
 
-// Ajouter l'écouteur d'événement pour le défilement avec passive: false pour pouvoir utiliser preventDefault
-document.addEventListener("wheel", throttleScroll, { passive: false });
-// Ajouter cette fonction et son appel à la fin du fichier :
+// Fonction pour ajouter l'indicateur de swipe
+function addCharacterSwipeIndicator(container) {
+    // Créer l'indicateur
+    const indicator = document.createElement('div');
+    indicator.className = 'character-swipe-indicator';
+    
+    indicator.innerHTML = `
+        <div class="indicator-background"></div>
+        <div class="swipe-animation">
+            <div class="mouse-container">
+                <div class="mouse">
+                    <div class="mouse-wheel"></div>
+                    <div class="scroll-arrows">
+                        <div class="arrow arrow-up">▲</div>
+                        <div class="arrow arrow-down">▼</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="swipe-text">scrollez pour faire défiler les personnages</div>
+    `;
+    
+    // Ajouter les styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .character-swipe-indicator {
+            position: absolute;
+            left: 50.02%;
+            top: 38.7%;  /* Centré verticalement */
+            transform: translate(-50%, -50%);
+            background-color: transparent;
+            padding: 15px;
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            max-width: 200px;
+            z-index: 90;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .character-swipe-indicator .indicator-background {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background-color: rgba(0, 0, 0, 0.5);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 20px;
+            z-index: -1;
+        }
+        
+        .character-swipe-indicator .mouse-container {
+            position: relative;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: mouseMove 2s ease-in-out infinite;
+        }
+        
+        .character-swipe-indicator .mouse {
+            width: 40px;
+            height: 70px;
+            border: 3px solid white;
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .character-swipe-indicator .mouse-wheel {
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scrollWheel 1.5s ease-in-out infinite;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .character-swipe-indicator .scroll-arrows {
+            position: absolute;
+            left: auto;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .character-swipe-indicator .arrow {
+            font-size: 14px;
+            opacity: 0.8;
+            filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
+            position: relative;
+            margin: 5px 0;
+        }
+        
+        .character-swipe-indicator .arrow-up {
+            animation: arrowBlink 1.5s ease-in-out infinite;
+            animation-delay: 0s;
+        }
+        
+        .character-swipe-indicator .arrow-down {
+            animation: arrowBlink 1.5s ease-in-out infinite;
+            animation-delay: 0.75s;
+        }
+        
+        .character-swipe-indicator .swipe-text {
+            font-weight: 500;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-top: 15px;
+            font-size: 20px;
+        }
+    `;
+    
+    document.head.appendChild(style);
+    container.appendChild(indicator);
+    
+    // Supprimer après interaction
+    container.addEventListener('wheel', () => {
+        hideIndicatorAfterInteractions();
+    });
+    
+    container.addEventListener('click', () => {
+        hideIndicatorAfterInteractions();
+    });
+    
+    // Masquer après un délai
+    setTimeout(() => {
+        const indicator = document.querySelector('.character-swipe-indicator');
+        if (indicator && indicator.parentNode) {
+            indicator.style.animation = 'fadeOut 0.5s forwards';
+            setTimeout(() => {
+                if (indicator && indicator.parentNode) {
+                    indicator.parentNode.removeChild(indicator);
+                }
+            }, 500);
+        }
+    }, 10000);
+}
 
+// Setup et démarrage
 const setupSectionObserver = () => {
     const charactersSection = document.getElementById('characters-section');
     
     const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (!entry.isIntersecting) {
-                // Si on quitte la section, s'assurer que le défilement normal est restauré
                 isScrolling = false;
             }
         });
@@ -231,7 +351,10 @@ const setupSectionObserver = () => {
     }
 };
 
-// Appel de la fonction d'observation
+// Ajouter l'écouteur d'événement pour le défilement
+document.addEventListener("wheel", throttleScroll, { passive: false });
+
+// Initialisation au chargement de la page
 document.addEventListener("DOMContentLoaded", () => {
     fetchCharacters();
     setupSectionObserver();
