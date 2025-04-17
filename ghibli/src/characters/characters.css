@@ -1,8 +1,7 @@
 #characters-section {
   position: relative;
   padding: 100px 0;
-  min-height: 100vh; /* Assure que la section prend au moins toute la hauteur de l'écran */
-  scroll-margin-top: 0; /* Ajuste le point d'arrêt */
+  min-height: 100vh; 
 }
 
 #carousel-container {
@@ -13,7 +12,13 @@
   padding: 30px 0;
   overflow: visible;
   text-align: center;
+  scroll-snap-align: none;
+  scroll-snap-type: none;
+  border-radius: 15px;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
+
 #skipMapReverse {
   position: absolute;
   top: 0;
@@ -114,7 +119,30 @@
   margin-top: -50px;
 }
 
-html {
-  scroll-snap-type: y mandatory; /* Active le scroll snap sur l'axe vertical */
-  scroll-behavior: smooth; /* Assure un défilement fluide */
+/* Styles pour les animations de swipe */
+.carousel-wrapper.swiping-left {
+  animation: swipeLeftEffect 0.5s ease-out;
 }
+
+.carousel-wrapper.swiping-right {
+  animation: swipeRightEffect 0.5s ease-out;
+}
+
+@keyframes swipeLeftEffect {
+  0% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes swipeRightEffect {
+  0% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+

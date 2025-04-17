@@ -8,21 +8,28 @@
     min-height: 100vh; /* Prendre toute la hauteur de la vue */
     padding: 40px 20px; /* Ajouter du padding pour éviter que le contenu touche les bords */
 }
+#test{
+    position: relative;
+    width: 100%;
+    
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center; /* Centrer verticalement */
+    min-height: 100vh; /* Prendre toute la hauteur de la vue */
+    padding: 40px 20px; /* Ajouter du padding pour éviter que le contenu touche les bords */
+}
 
 .film-container {
     display: flex;
-    justify-content: center; /* Centrer horizontalement les enfants */
-    align-items: center; /* Centrer verticalement les enfants */
+    justify-content: center;
+    align-items: center; 
     width: 100%;
     max-width: 1200px;
-    height: auto; /* Laisser la hauteur s'adapter au contenu */
-    min-height: 600px; /* Fixer une hauteur minimale */
+    height: auto;
+    min-height: 600px;
     position: relative;
-    /* border: 2px solid red; */ /* Commenté pour la production */
-    margin: 0 auto; /* Centrer le conteneur lui-même */
+    margin: 0 auto;
 }
 
-/* Carousel à gauche - disposition en cercle */
 .film-carousel {
     width: 40%;
     height: 100%;
@@ -41,8 +48,7 @@
     flex-direction: column;
     padding: 30px;
     position: relative;
-    /* Supprimer transform: translateY(-50px); qui décale le contenu */
-    justify-content: center; /* Centrer verticalement le contenu */
+    justify-content: center;
 }
 
 .film-carousel-wheel {
