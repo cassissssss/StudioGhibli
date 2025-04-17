@@ -254,10 +254,10 @@ function addSwipeIndicator(container) {
     style.textContent = `
         .swipe-indicator {
             position: absolute;
-            left: -180px;
+            left: -150px;  /* Modifié de -220px à -150px pour déplacer vers la droite */
             top: 50%;
             transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: #ca9ea9;
             padding: 15px;
             border-radius: 10px;
             color: white;
@@ -266,6 +266,8 @@ function addSwipeIndicator(container) {
             max-width: 160px;
             animation: fadeInOut 2s ease-in-out infinite;
             z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
         .swipe-animation {
@@ -293,6 +295,7 @@ function addSwipeIndicator(container) {
         
         .swipe-text {
             font-weight: 500;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
         
         @keyframes fadeInOut {
@@ -306,12 +309,18 @@ function addSwipeIndicator(container) {
             75% { transform: translateX(3px); }
         }
         
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        
         @media (max-width: 768px) {
             .swipe-indicator {
                 left: 10px;
                 bottom: 20px;
                 top: auto;
                 transform: none;
+                background-color: #ca9ea9;
             }
         }
     `;
@@ -349,7 +358,8 @@ function addSwipeIndicator(container) {
     }, 10000);
 }
 
+// Modification de l'écouteur DOMContentLoaded pour appeler la nouvelle fonction
 document.addEventListener('DOMContentLoaded', () => {
-    // Supprimer la réinitialisation du sessionStorage, on n'en a plus besoin
     loadFilms();
+    addNavigationButtons();
 });

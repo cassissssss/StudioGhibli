@@ -55,37 +55,8 @@ html {
   display: flex;
   flex-direction: column;
 }
-.skip-button {
-  background-color: #ca9ea9;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  transition: all 0.3s ease;
-  position: absolute;
-}
 
-.skip-button:hover {
-  background-color: #d9a9b5;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-}
 
-/* Boutons qui naviguent vers le bas */
-.skip-down {
-  top: 30px;
-  right: 50px;
-}
-
-/* Boutons qui naviguent vers le haut */
-.skip-up {
-  top: 30px;
-  left: 50px;
-}
 .intro-text {
   display: flex;
   flex-direction: column;
@@ -104,4 +75,60 @@ html {
   color: #333;
 }
 
+/* Styles pour les boutons de navigation entre sections */
+.navigation-buttons {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.nav-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background-color: #ca9ea9;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, background-color 0.3s, opacity 0.3s;
+}
+
+.nav-button:not(.disabled):hover {
+  transform: scale(1.1);
+  background-color: #b68c96;
+}
+
+.nav-button:active {
+  transform: scale(0.95);
+}
+
+.nav-button.disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.nav-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+@media (max-width: 768px) {
+  .navigation-buttons {
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .nav-button {
+    width: 40px;
+    height: 40px;
+  }
+}
 
