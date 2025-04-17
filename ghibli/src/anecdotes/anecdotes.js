@@ -78,7 +78,7 @@ function createAnecdotesSection() {
     header.appendChild(subtitle);
     layoutDiv.appendChild(header);
 
-    // Characters
+    // Personnages féminins
     const charactersSection = createElement('section', 'anecdotes-characters');
 
     const leftCharacters = data.characters.filter(char => char.column === 'left');
@@ -170,7 +170,7 @@ function createAnecdotesSection() {
     statsSection.appendChild(statsFooter);
     layoutDiv.appendChild(statsSection);
 
-    // Comparison
+    // Comparaison
     const comparisonChart = createComparisonChart();
     layoutDiv.appendChild(comparisonChart);
 
@@ -275,33 +275,58 @@ function createComparisonChart() {
 
     return section;
 }
-
 function initScrollObserver() {
     const subtitle = document.querySelector('.anecdotes__subtitle');
     const comparisonSection = document.querySelector('.comparison-section');
     const statsSection = document.querySelector('.stats');
     const originalSubtitle = "Leur représentation chez Ghibli";
+    const statsSubtitle = "Caractéristiques des personnages féminins et masculins dans les films Ghibli";
     const comparisonSubtitle = "Pourcentage de personnages féminins dans les films Disney vs Studio Ghibli";
 
-    const observer = new IntersectionObserver((entries) => {
+    // Observer pour la section de comparaison
+    const comparisonObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            const comparisonRect = comparisonSection.getBoundingClientRect();
-            const statsRect = statsSection.getBoundingClientRect();
-
-            if (entry.isIntersecting && comparisonRect.top <= window.innerHeight / 2) {
+            if (entry.isIntersecting) {
                 subtitle.textContent = comparisonSubtitle;
-            } else if (statsRect.top <= window.innerHeight / 2) {
+            }
+        });
+    }, {
+        threshold: 0.3,
+        rootMargin: "-20% 0px"
+    });
+
+    // Observer pour la section de statistiques
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                subtitle.textContent = statsSubtitle;
+            } else if (comparisonSection.getBoundingClientRect().top > window.innerHeight) {
                 subtitle.textContent = originalSubtitle;
             }
         });
     }, {
-        threshold: [0, 0.5, 1],
+        threshold: 0.3,
         rootMargin: "-20% 0px"
     });
+    
+    const headerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                subtitle.textContent = originalSubtitle;
+            }
+        });
+    }, {
+        threshold: 0.7
+    });
 
-    observer.observe(comparisonSection);
+    comparisonObserver.observe(comparisonSection);
+    statsObserver.observe(statsSection);
+    
+    const charactersSection = document.querySelector('.anecdotes-characters');
+    if (charactersSection) {
+        headerObserver.observe(charactersSection);
+    }
 }
-
 document.addEventListener("DOMContentLoaded", () => {
     const anecdotesContainer = document.querySelector(".anecdotes-container");
     const anecdotesContent = createAnecdotesSection();
@@ -309,13 +334,13 @@ document.addEventListener("DOMContentLoaded", () => {
     anecdotesContainer.innerHTML = '';
     anecdotesContainer.appendChild(anecdotesContent);
 
-    // Initialize charts
+    // Initialiser les graphiques
     createDonutChart("#chart-male-traits", data.protagonists.male.traits, [colors.secondary, colors.primary]);
     createDonutChart("#chart-female-traits", data.protagonists.female.traits, [colors.secondary, colors.primary]);
 
     createComparisonChart();
 
-    // Populate content
+    // Remplir les listes de traits
     ['male', 'female'].forEach(gender => {
         const traitsList = document.getElementById(`list-${gender}-top-traits`);
         data.protagonists[gender].top_traits.forEach(trait => {

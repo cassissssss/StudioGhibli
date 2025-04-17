@@ -55,7 +55,7 @@ fetch("data-json/films.json")
 
       for (let i = 1; i < words.length; i++) {
         const testLine = currentLine + " " + words[i];
-        if (testLine.length * 6 > width) {
+        if (testLine.length * 6.5 > width) {
           lines.push(currentLine);
           currentLine = words[i];
         } else {
