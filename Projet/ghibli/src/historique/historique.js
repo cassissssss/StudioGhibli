@@ -7,7 +7,7 @@ const CENTER_POSITION = 50;
 document.addEventListener('DOMContentLoaded', async function () {
 
     try {
-        const response = await fetch('/src/historique/data_timeline.json');
+        const response = await fetch('data-json/data_timeline.json');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }

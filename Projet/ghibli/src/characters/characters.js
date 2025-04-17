@@ -4,7 +4,7 @@ let currentIndex = 0;
 // Récupère les données des personnages depuis le fichier JSON
 const fetchCharacters = async () => {
     try {
-        const response = await fetch("/src/characters/characters.json");
+        const response = await fetch("data-json/characters.json");
         const data = await response.json();
         characters = data.characters;
         initCarousel();

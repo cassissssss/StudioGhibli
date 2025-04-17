@@ -7,7 +7,7 @@ const filmCarouselRadius = 300;
 // Charge les données des films depuis le JSON
 async function loadFilms() {
     try {
-        const response = await fetch('films.json');
+        const response = await fetch('data-json/films.json');
         films = await response.json();
         
         createFilmCarouselItems();

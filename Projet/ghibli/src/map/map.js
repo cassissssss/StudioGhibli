@@ -83,7 +83,7 @@ function createSections(locations) {
 function initializeMap() {
     Promise.all([
         d3.json("https://d3js.org/world-110m.v1.json"),
-        d3.json("/src/map/map-data.json")
+        d3.json("data-json/map-data.json")
     ]).then(([world, locations]) => {
         
         createSections(locations);
