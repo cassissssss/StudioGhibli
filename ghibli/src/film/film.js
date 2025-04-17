@@ -233,20 +233,20 @@ function addSwipeIndicator(container) {
     const indicator = document.createElement('div');
     indicator.className = 'swipe-indicator';
     
-    // Ajouter le contenu HTML avec icônes et texte
+    // Ajouter le contenu HTML avec l'icône de souris et les flèches
     indicator.innerHTML = `
         <div class="swipe-animation">
-            <svg class="swipe-arrow left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                <path fill="#fff" d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path>
-            </svg>
-            <svg class="mouse-wheel" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28">
-                <path fill="#fff" d="M12,3C8.59,3 6,5.61 6,9v6c0,3.39 2.61,6 6,6c3.39,0 6,-2.61 6,-6V9C18,5.61 15.39,3 12,3zM12,5c2.21,0 4,1.79 4,4v6c0,2.21 -1.79,4 -4,4c-2.21,0 -4,-1.79 -4,-4V9C8,6.79 9.79,5 12,5zM12,9c-0.55,0 -1,0.45 -1,1v2c0,0.55 0.45,1 1,1c0.55,0 1,-0.45 1,-1v-2C13,9.45 12.55,9 12,9z"/>
-            </svg>
-            <svg class="swipe-arrow right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                <path fill="#fff" d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
-            </svg>
+            <div class="mouse-container">
+                <div class="mouse">
+                    <div class="mouse-wheel"></div>
+                    <div class="scroll-arrows">
+                        <div class="arrow arrow-up">▲</div>
+                        <div class="arrow arrow-down">▼</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="swipe-text">Faites défiler pour explorer les films</div>
+        <div class="swipe-text">Défilez pour explorer les films</div>
     `;
     
     // Styles CSS injectés directement
@@ -254,59 +254,104 @@ function addSwipeIndicator(container) {
     style.textContent = `
         .swipe-indicator {
             position: absolute;
-            left: -150px;  /* Modifié de -220px à -150px pour déplacer vers la droite */
+            left: 30%;
             top: 50%;
-            transform: translateY(-50%);
-            background-color: #ca9ea9;
+            transform: translate(-50%, -50%);
+            background-color: transparent;
             padding: 15px;
-            border-radius: 10px;
             color: white;
-            font-size: 14px;
+            font-size: 18px;
             text-align: center;
-            max-width: 160px;
-            animation: fadeInOut 2s ease-in-out infinite;
-            z-index: 1000;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            max-width: 200px;
+            z-index: 90;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
         
-        .swipe-animation {
+        .mouse-container {
+            position: relative;
+            height: 120px;
             display: flex;
-            align-items: center;
             justify-content: center;
-            margin-bottom: 10px;
+            align-items: center;
+            animation: mouseMove 2s ease-in-out infinite;
         }
         
-        .swipe-arrow {
-            animation: moveArrow 2s ease-in-out infinite;
-        }
-        
-        .swipe-arrow.left {
-            animation-delay: 0s;
-        }
-        
-        .swipe-arrow.right {
-            animation-delay: 1s;
+        .mouse {
+            width: 40px;
+            height: 70px;
+            border: 3px solid white;
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
         
         .mouse-wheel {
-            margin: 0 5px;
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scrollWheel 1.5s ease-in-out infinite;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
         }
+        
+        .scroll-arrows {
+        position: absolute;
+        left: auto;  /* Suppression du positionnement à gauche */
+        right: -25px;  /* Positionnement à droite */
+        top: 50%;  /* Centrage vertical */
+        transform: translateY(-50%);  /* Parfait centrage vertical */
+        height: 70px;  /* Hauteur ajustée */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .arrow {
+        font-size: 14px;
+        opacity: 0.8;
+        filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
+        position: relative;  /* Position relative au lieu d'absolute */
+        margin: 5px 0;  /* Marge pour séparer les flèches */
+    }
+    
+    .arrow-up {
+        /* Suppression de position: absolute et top: 0 */
+        animation: arrowBlink 1.5s ease-in-out infinite;
+        animation-delay: 0s;
+    }
+    
+    .arrow-down {
+        /* Suppression de position: absolute et bottom: 0 */
+        animation: arrowBlink 1.5s ease-in-out infinite;
+        animation-delay: 0.75s;
+    }
         
         .swipe-text {
             font-weight: 500;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-top: 15px;
+            font-size: 20px;
         }
         
-        @keyframes fadeInOut {
-            0%, 100% { opacity: 0.7; }
+        @keyframes scrollWheel {
+            0% { top: 15px; }
+            50% { top: 45px; }
+            100% { top: 15px; }
+        }
+        
+        @keyframes mouseMove {
+            0%, 100% { transform: translateY(-8px); }
+            50% { transform: translateY(8px); }
+        }
+        
+        @keyframes arrowBlink {
+            0%, 100% { opacity: 0.3; }
             50% { opacity: 1; }
-        }
-        
-        @keyframes moveArrow {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-3px); }
-            75% { transform: translateX(3px); }
         }
         
         @keyframes fadeOut {
@@ -316,11 +361,20 @@ function addSwipeIndicator(container) {
         
         @media (max-width: 768px) {
             .swipe-indicator {
-                left: 10px;
-                bottom: 20px;
+                bottom: 30px;
                 top: auto;
-                transform: none;
-                background-color: #ca9ea9;
+                left: 50%;
+                transform: translateX(-50%);
+                text-align: center;
+            }
+            
+            .mouse {
+                width: 35px;
+                height: 60px;
+            }
+            
+            .swipe-text {
+                font-size: 16px;
             }
         }
     `;
@@ -331,7 +385,7 @@ function addSwipeIndicator(container) {
     // Ajouter l'indicateur au conteneur
     container.appendChild(indicator);
     
-    // Faire disparaître l'indicateur après une interaction
+    // Le reste du code reste inchangé
     const hideIndicatorAfterInteraction = () => {
         const indicator = document.querySelector('.swipe-indicator');
         if (indicator) {
