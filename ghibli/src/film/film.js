@@ -13,7 +13,7 @@ async function loadFilms() {
         createFilmCarouselItems();
         updateFilmDisplay(0);
         initScrollRotation();
-        addScrollToggle();
+        // Ne plus appeler addScrollToggle();
         setupFilmPopup(films, () => filmCurrentIndex);
     } catch (error) {
         console.error('Erreur lors du chargement des films:', error);
@@ -106,9 +106,41 @@ function updateFilmDisplay(index) {
 function initScrollRotation() {
     let isScrolling = false;
     let wheelEvents = 0;
+    let filmsViewed = 0;
+    let hasCompletedRotation = false;
+    let scrollTimeout = null;
+    let lastScrollTime = 0;
+    let scrollDebounceTime = 100; // Temps en ms pour considérer une nouvelle série de scrolls
 
     function handleScroll(event) {
+        const currentTime = Date.now();
         const scrollDirection = event.deltaY > 0 ? 1 : -1;
+        
+        // Réinitialiser le compteur si le scroll est trop rapide ou si on change de direction
+        if (currentTime - lastScrollTime > scrollDebounceTime) {
+            wheelEvents = 0;
+        }
+        lastScrollTime = currentTime;
+        
+        // Si on a déjà vu tous les films, passer à la section suivante
+        if (hasCompletedRotation) {
+            // Vérifier si c'est un nouveau geste de scroll (pas une continuation rapide)
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+            }
+            
+            scrollTimeout = setTimeout(() => {
+                const nextSection = document.querySelector('.anecdotes-container') || 
+                                   document.querySelector('#anecdotes-section');
+                
+                if (nextSection) {
+                    event.preventDefault();
+                    nextSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 300); // Attendre un peu pour s'assurer que c'est intentionnel
+            
+            return;
+        }
         
         if (isScrolling) {
             wheelEvents += scrollDirection;
@@ -119,6 +151,30 @@ function initScrollRotation() {
         
         const newIndex = (filmCurrentIndex + scrollDirection + films.length) % films.length;
         selectFilm(newIndex);
+        
+        // Compter le nombre de films vus avec une meilleure logique
+        if (scrollDirection > 0) {
+            filmsViewed++;
+            // Éviter de compter plusieurs fois le même film lors de scrolls rapides
+            if (filmsViewed > films.length) {
+                filmsViewed = films.length;
+            }
+        } else {
+            // Si on revient en arrière, décrémenter le compteur mais pas en dessous de 0
+            filmsViewed = Math.max(0, filmsViewed - 1);
+        }
+        
+        // Vérifier si on a fait un tour complet et attendre un peu avant de confirmer
+        if (filmsViewed >= films.length) {
+            // Attendre un peu pour s'assurer que l'utilisateur a bien fini son exploration
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+            }
+            
+            scrollTimeout = setTimeout(() => {
+                hasCompletedRotation = true;
+            }, 800); // Un délai raisonnable pour confirmer la fin du tour
+        }
         
         setTimeout(() => {
             isScrolling = false;
@@ -137,49 +193,14 @@ function initScrollRotation() {
     
     const filmContainer = document.querySelector('.film-container');
     if (filmContainer) {
+        // Toujours activer la rotation par défaut (sans le besoin d'un bouton)
+        filmContainer.classList.add('scroll-rotation-active');
+        
         filmContainer.addEventListener('wheel', (e) => {
-            if (filmContainer.classList.contains('scroll-rotation-active')) {
-                e.preventDefault();
-                handleScroll(e);
-            }
+            e.preventDefault();
+            handleScroll(e);
         }, { passive: false });
     }
-}
-
-// Ajoute le bouton pour activer/désactiver la rotation au scroll
-function addScrollToggle() {
-    const filmSection = document.querySelector('.film-container');
-    
-    // Créer un bouton de toggle
-    const toggleBtn = document.createElement('button');
-    toggleBtn.className = 'scroll-toggle-btn';
-    toggleBtn.innerHTML = '🔄 Scroll rotation: OFF';
-    toggleBtn.style.position = 'absolute';
-    toggleBtn.style.top = '20px';
-    toggleBtn.style.right = '20px';
-    toggleBtn.style.zIndex = '1000';
-    toggleBtn.style.padding = '8px 16px';
-    toggleBtn.style.background = 'rgba(255, 255, 255, 0.7)';
-    toggleBtn.style.border = 'none';
-    toggleBtn.style.borderRadius = '20px';
-    toggleBtn.style.cursor = 'pointer';
-    
-    let scrollActive = false;
-    
-    toggleBtn.addEventListener('click', () => {
-        scrollActive = !scrollActive;
-        toggleBtn.innerHTML = scrollActive 
-            ? '🔄 Scroll rotation: ON' 
-            : '🔄 Scroll rotation: OFF';
-            
-        if (scrollActive) {
-            filmSection.classList.add('scroll-rotation-active');
-        } else {
-            filmSection.classList.remove('scroll-rotation-active');
-        }
-    });
-    
-    filmSection.appendChild(toggleBtn);
 }
 
 document.addEventListener('DOMContentLoaded', loadFilms);
