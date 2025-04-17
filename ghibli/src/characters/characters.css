@@ -1,105 +1,121 @@
-
 #characters-section {
-    position : relative;
-    padding: 100px 0;
+  position: relative;
+  padding: 100px 0;
+  min-height: 100vh; /* Assure que la section prend au moins toute la hauteur de l'écran */
+  scroll-snap-align: start; /* Permet l'arrêt sur la section */
+  scroll-margin-top: 0; /* Ajuste le point d'arrêt */
 }
 
 #carousel-container {
-    position: relative;
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 30px 0;
-    overflow: visible;
-    text-align: center;
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 30px 0;
+  overflow: visible;
+  text-align: center;
 }
 #skipMapReverse {
-    position: absolute;
-    top: 0; 
-    right: 50px;
+  position: absolute;
+  top: 0;
+  right: 50px;
 }
 
 .carousel-wrapper {
-    position: relative;
-    height: 400px;
-    margin: 0 auto;
-    cursor: grab;
+  position: relative;
+  height: 400px;
+  margin: 0 auto;
+  cursor: grab;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
 .carousel-wrapper:active {
-    cursor: grabbing;
+  cursor: grabbing;
 }
 
 .carousel-item {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 250px;
-    height: 250px;
-    margin-left: -125px;
-    transition: transform 0.6s ease-in-out, opacity 0.5s ease-in-out, filter 0.5s ease;
-    filter: grayscale(100%);
-    z-index: 1;
-    cursor: pointer;
-    border-radius: 20px;
-    overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 250px;
+  height: 250px;
+  margin-left: -125px;
+  transition: transform 0.6s ease-in-out, opacity 0.5s ease-in-out,
+    filter 0.5s ease;
+  filter: grayscale(100%);
+  z-index: 1;
+  cursor: pointer;
+  border-radius: 20px;
+  overflow: hidden;
 }
 
 .carousel-item.moving {
-    transform: scale(0.95);
-    opacity: 0.85;
+  transform: scale(0.95);
+  opacity: 0.85;
 }
 
 .carousel-item:hover {
-    transform: translateY(-5px);
+  transform: translateY(-5px);
 }
 
 .carousel-item img {
-    width: 100%;
-    height: 100%; 
-    object-fit: cover;
-    border-radius: inherit;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .carousel-item.left-2 {
-    transform: translateX(-400px) scale(0.7);
-    z-index: 1;
+  transform: translateX(-400px) scale(0.7);
+  z-index: 1;
 }
 
 .carousel-item.left-1 {
-    transform: translateX(-220px) scale(0.85);
+  transform: translateX(-220px) scale(0.85);
 }
 
 .carousel-item.center {
-    transform: translateX(0) scale(1);
-    opacity: 1;
-    filter: grayscale(0%);
-    z-index: 5;
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+  transform: translateX(0) scale(1);
+  opacity: 1;
+  filter: grayscale(0%);
+  z-index: 5;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
 }
 
 .carousel-item.center:hover {
-    transform: translateX(0) scale(1);
+  transform: translateX(0) scale(1);
 }
 
 .carousel-item.right-1 {
-    transform: translateX(220px) scale(0.85);
-    z-index: 2;
+  transform: translateX(220px) scale(0.85);
+  z-index: 2;
 }
 
 .carousel-item.right-2 {
-    transform: translateX(400px) scale(0.7);
-    z-index: 1;
+  transform: translateX(400px) scale(0.7);
+  z-index: 1;
 }
 
 .character-info {
-    margin-top: -130px; 
+  margin-top: -130px;
 }
 
 .character-info p {
-    font-size: 1.25rem;
-    color: #555;
-    margin-top: -10px;
+  font-size: 1.25rem;
+  color: #555;
+  margin-top: -10px;
 }
 
+.scroll-detection-area {
+  height: 50px;
+  width: 100%;
+  position: relative;
+  margin-top: -50px;
+}
+
+html {
+  scroll-snap-type: y mandatory; /* Active le scroll snap sur l'axe vertical */
+  scroll-behavior: smooth; /* Assure un défilement fluide */
+}

@@ -1,7 +1,8 @@
 let characters = [];
 let currentIndex = 0;
+let isScrolling = false;
 
-// Récupère les données des personnages depuis le fichier JSON
+// Récupération des personnages
 const fetchCharacters = async () => {
     try {
         const response = await fetch("data-json/characters.json");
@@ -13,10 +14,8 @@ const fetchCharacters = async () => {
     }
 };
 
-// Initialise le carrousel avec les éléments nécessaires
 const initCarousel = () => {
     const container = document.getElementById("carousel-container");
-
     const wrapper = document.createElement("div");
     wrapper.className = "carousel-wrapper";
 
@@ -26,11 +25,12 @@ const initCarousel = () => {
         itemDiv.id = `item-${i}`;
         itemDiv.innerHTML = '<img src="" alt="">';
 
-        itemDiv.addEventListener("click", function () {
+        itemDiv.addEventListener("click", () => {
             const offset = i - 2;
-            if (offset === 0) return;
-            currentIndex = (currentIndex + offset + characters.length) % characters.length;
-            updateCarousel();
+            if (offset !== 0) {
+                currentIndex = (currentIndex + offset + characters.length) % characters.length;
+                updateCarousel();
+            }
         });
 
         wrapper.appendChild(itemDiv);
@@ -40,42 +40,48 @@ const initCarousel = () => {
     infoDiv.className = "character-info";
     infoDiv.innerHTML = '<h4></h4><p></p>';
 
-    const navDiv = document.createElement("div");
-    navDiv.className = "carousel-nav";
-    navDiv.innerHTML = `
-        <div class="nav-arrow prev" id="prev-arrow">
-            <span class="arrow-icon"></span>
-        </div>
-        <div class="nav-arrow next" id="next-arrow">
-            <span class="arrow-icon"></span>
-        </div>
-    `;
+    container.append(wrapper, infoDiv);
 
-    container.appendChild(wrapper);
-    container.appendChild(navDiv);
-    container.appendChild(infoDiv);
+    // Gérer drag et swipe
+    let startX = 0;
+    wrapper.addEventListener("mousedown", (e) => startX = e.clientX);
+    wrapper.addEventListener("mouseup", (e) => handleSwipe(startX, e.clientX));
+    wrapper.addEventListener("touchstart", (e) => startX = e.touches[0].clientX, { passive: true });
+    wrapper.addEventListener("touchend", (e) => handleSwipe(startX, e.changedTouches[0].clientX));
 
-    document.getElementById("prev-arrow").addEventListener("click", prevSlide);
-    document.getElementById("next-arrow").addEventListener("click", nextSlide);
-
-    let startX, endX;
-    wrapper.addEventListener("mousedown", function (e) {
-        startX = e.clientX;
-    });
-
-    wrapper.addEventListener("mouseup", function (e) {
-        endX = e.clientX;
-        if (startX - endX > 50) {
-            nextSlide();
-        } else if (endX - startX > 50) {
-            prevSlide();
-        }
-    });
+    // Scroll vertical qui contrôle horizontalement le carousel
+    document.addEventListener("wheel", throttleScroll, { passive: false });
 
     updateCarousel();
 };
 
-// Met à jour l'affichage du carrousel et les informations du personnage sélectionné
+const handleSwipe = (start, end) => {
+    const diff = start - end;
+    if (Math.abs(diff) > 50) {
+        diff > 0 ? nextSlide() : prevSlide();
+    }
+};
+
+const throttleScroll = (e) => {
+    const section = document.getElementById('characters-section');
+    const rect = section.getBoundingClientRect();
+
+    if (rect.top <= 0 && rect.bottom > window.innerHeight / 2) {
+        e.preventDefault();
+        if (isScrolling) return;
+
+        const delta = e.deltaY;
+        if (Math.abs(delta) < 30) return; // Ignore petits mouvements
+
+        isScrolling = true;
+        delta > 0 ? nextSlide() : prevSlide();
+
+        setTimeout(() => {
+            isScrolling = false;
+        }, 500);
+    }
+};
+
 const updateCarousel = () => {
     const positions = ["left-2", "left-1", "center", "right-1", "right-2"];
     const infoTitle = document.querySelector(".character-info h4");
@@ -86,22 +92,11 @@ const updateCarousel = () => {
         const character = characters[itemIndex];
         const itemElement = document.getElementById(`item-${i}`);
 
-        itemElement.classList.add("moving");
+        itemElement.className = `carousel-item ${positions[i]}`;
 
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                itemElement.className = `carousel-item ${positions[i]}`;
-                setTimeout(() => {
-                    itemElement.classList.remove("moving");
-                }, 600);
-            });
-        });
-
-        setTimeout(() => {
-            const img = itemElement.querySelector("img");
-            img.src = character.image;
-            img.alt = character.name;
-        }, 100);
+        const img = itemElement.querySelector("img");
+        img.src = character.image;
+        img.alt = character.name;
     }
 
     const centerCharacter = characters[currentIndex];
@@ -109,13 +104,11 @@ const updateCarousel = () => {
     infoText.textContent = centerCharacter.film;
 };
 
-// Avance au personnage suivant
 const nextSlide = () => {
     currentIndex = (currentIndex + 1) % characters.length;
     updateCarousel();
 };
 
-// Revient au personnage précédent
 const prevSlide = () => {
     currentIndex = (currentIndex - 1 + characters.length) % characters.length;
     updateCarousel();
