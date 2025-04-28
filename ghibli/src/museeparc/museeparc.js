@@ -17,29 +17,24 @@ const parcImages = [
 function createMuseeParcSection() {
     const container = document.querySelector('.museeparc-container');
 
-    // Créer une grille pour les deux colonnes
     const grid = document.createElement('div');
     grid.className = 'museeparc-grid';
 
-    // Créer les colonnes pour le musée et le parc
     const museeColumn = document.createElement('div');
     museeColumn.className = 'museeparc-column';
 
     const parcColumn = document.createElement('div');
     parcColumn.className = 'museeparc-column';
 
-    // Ajouter les titres
     museeColumn.innerHTML = '<h3>Musée</h3>';
     parcColumn.innerHTML = '<h3>Parc</h3>';
 
-    // Créer les conteneurs d'images
     const museeStack = document.createElement('div');
     museeStack.className = 'image-stack';
 
     const parcStack = document.createElement('div');
     parcStack.className = 'image-stack';
 
-    // Ajouter les images empilées
     museeImages.forEach((src, index) => {
         const wrapper = document.createElement('div');
         wrapper.className = 'image-wrapper';
@@ -54,16 +49,13 @@ function createMuseeParcSection() {
         parcStack.appendChild(wrapper);
     });
 
-    // Ajouter les piles d'images aux colonnes
     museeColumn.appendChild(museeStack);
     parcColumn.appendChild(parcStack);
 
-    // Assembler la grille
     grid.appendChild(museeColumn);
     grid.appendChild(parcColumn);
     container.appendChild(grid);
 
-    // Initialiser l'effet de scroll
     initScrollEffect();
 }
 
@@ -75,9 +67,7 @@ function initScrollEffect() {
         const sectionRect = section.getBoundingClientRect();
         const windowHeight = window.innerHeight;
 
-        // Ne rien faire si la section n'est pas encore complètement visible
         if (sectionRect.top > 0) {
-            // Réinitialiser toutes les images à leur état initial
             imageStacks.forEach(stack => {
                 const images = stack.querySelectorAll('.image-wrapper');
                 images.forEach(img => {
@@ -88,7 +78,6 @@ function initScrollEffect() {
             return;
         }
 
-        // Commence l'animation seulement quand la section est complètement visible
         const scrollStart = section.offsetTop;
         const scrollEnd = scrollStart + section.offsetHeight - windowHeight;
         const currentScroll = window.pageYOffset;

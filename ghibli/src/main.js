@@ -45,7 +45,6 @@ function addNavigationButtons() {
     return currentIndex;
   }
 
-  // Créer le conteneur pour les boutons
   const navContainer = document.createElement('div');
   navContainer.className = 'navigation-buttons';
 
@@ -66,7 +65,6 @@ function addNavigationButtons() {
         prevSection.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      // Si c'est la première section, aller en haut de la page
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   });
@@ -82,7 +80,6 @@ function addNavigationButtons() {
   downButton.addEventListener('click', () => {
     const currentIndex = getCurrentSectionIndex();
     if (currentIndex < sections.length - 1) {
-      // Naviguer vers la section suivante
       const nextSection = document.querySelector(sections[currentIndex + 1].selector);
       if (nextSection) {
         nextSection.scrollIntoView({ behavior: 'smooth' });
@@ -90,7 +87,6 @@ function addNavigationButtons() {
     }
   });
 
-  // Mettre à jour l'état des boutons en fonction de la position actuelle
   function updateButtonsState() {
     const currentIndex = getCurrentSectionIndex();
 
@@ -113,18 +109,13 @@ function addNavigationButtons() {
     }
   }
 
-  // Ajouter les boutons au conteneur
   navContainer.appendChild(upButton);
   navContainer.appendChild(downButton);
 
-
-  // Ajouter le conteneur au corps du document
   document.body.appendChild(navContainer);
 
-  // Mettre à jour l'état des boutons initialement
   updateButtonsState();
 
-  // Mettre à jour l'état des boutons lors du défilement
   window.addEventListener('scroll', updateButtonsState);
 }
 

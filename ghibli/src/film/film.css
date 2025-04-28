@@ -3,19 +3,18 @@
     position: relative;
     width: 100%;
     display: flex;
-    justify-content: center; /* Centrer horizontalement */
-    align-items: center; /* Centrer verticalement */
-    min-height: 100vh; /* Prendre toute la hauteur de la vue */
-    padding: 40px 20px; /* Ajouter du padding pour éviter que le contenu touche les bords */
+    justify-content: center; 
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
 }
 #test{
     position: relative;
-    width: 100%;
-    
-    justify-content: center; /* Centrer horizontalement */
-    align-items: center; /* Centrer verticalement */
-    min-height: 100vh; /* Prendre toute la hauteur de la vue */
-    padding: 40px 20px; /* Ajouter du padding pour éviter que le contenu touche les bords */
+    width: 100%; 
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
 }
 
 .film-container {
@@ -37,7 +36,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px; /* Ajouter du padding pour éviter que les éléments touchent les bords */
+    padding: 20px;
 }
 
 /* Film details à droite */
@@ -57,7 +56,7 @@
     height: 280px;
     transform-style: preserve-3d;
     transition: transform 0.8s ease;
-    margin: 0 auto; /* Centrer le carrousel */
+    margin: 0 auto;
 }
 .film-item {
     position: absolute;
@@ -68,7 +67,7 @@
     overflow: hidden;
     cursor: pointer;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    transition: all 0.8s ease; /* Synchroniser avec la transition du carousel */
+    transition: all 0.8s ease;
     opacity: 0.7;
     filter: grayscale(100%);
     transform-origin: center center;
@@ -109,7 +108,7 @@
 .film-title-wrapper {
     display: flex;
     justify-content: space-between;
-    align-items: baseline; /* ou center si tu préfères */
+    align-items: baseline;
     max-width: 100%;
 }
 

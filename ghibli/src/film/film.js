@@ -107,19 +107,16 @@ function initScrollRotation() {
     let isScrolling = false;
     let wheelEvents = 0;
     let autoRotationInterval = null;
-    let autoRotationSpeed = 5000; // Temps en ms entre chaque rotation automatique
+    let autoRotationSpeed = 5000;
     
-    // Indicateur pour savoir si la démonstration initiale a été faite
     let initialDemoDone = false;
     let initialDemoInterval = null;
 
     function centerFilmSection() {
         const filmSection = document.getElementById('film-section');
         if (filmSection) {
-            // Ajouter une classe pour ajuster la position
             filmSection.classList.add('centered-film-section');
             
-            // Ajouter du CSS pour cette classe
             const style = document.createElement('style');
             style.textContent = `
                 .centered-film-section {
@@ -142,24 +139,20 @@ function initScrollRotation() {
         }
     }
 
-    // Appeler la fonction pour centrer la section
     centerFilmSection();
 
     function handleScroll(event) {
         stopAutoRotation();
-        stopInitialDemo(); // Arrêter aussi la démo initiale si elle est en cours
+        stopInitialDemo();
         
-        // Si déjà en train de défiler, ignorer l'événement complètement
         if (isScrolling) {
             return;
         }
         
         isScrolling = true;
-        
-        // Déterminer la direction du défilement (un seul cran à la fois)
+
         const scrollDirection = event.deltaY > 0 ? 1 : -1;
         
-        // Avancer ou reculer d'un seul film
         const newIndex = (filmCurrentIndex + scrollDirection + films.length) % films.length;
         selectFilm(newIndex);
         
@@ -168,9 +161,8 @@ function initScrollRotation() {
         }, 800);
     }
     
-    // Fonction pour démarrer la rotation automatique
     function startAutoRotation() {
-        if (autoRotationInterval) return; // Éviter les doubles intervalles
+        if (autoRotationInterval) return; 
         
         autoRotationInterval = setInterval(() => {
             if (!isScrolling) {
@@ -180,7 +172,6 @@ function initScrollRotation() {
         }, autoRotationSpeed);
     }
     
-    // Fonction pour arrêter la rotation automatique
     function stopAutoRotation() {
         if (autoRotationInterval) {
             clearInterval(autoRotationInterval);
@@ -188,18 +179,15 @@ function initScrollRotation() {
         }
     }
     
-    // Fonction pour démarrer la démonstration initiale immédiate
     function startInitialDemo() {
-        if (initialDemoInterval || initialDemoDone) return; // Ne pas démarrer si déjà en cours ou déjà faite
+        if (initialDemoInterval || initialDemoDone) return; 
         initialDemoDone = true;
         
         let demoCount = 0;
-        const demoSpeed = 1200; // Rotation plus rapide pour la démo (1.2 secondes par film)
+        const demoSpeed = 1200;
         
-        // Démarrer immédiatement
         initialDemoInterval = setInterval(() => {
             if (demoCount >= Math.min(3, films.length)) {
-                // Arrêter après avoir montré 3 films ou tous les films si moins de 3
                 stopInitialDemo();
                 return;
             }
@@ -210,7 +198,6 @@ function initScrollRotation() {
         }, demoSpeed);
     }
     
-    // Fonction pour arrêter la démo initiale
     function stopInitialDemo() {
         if (initialDemoInterval) {
             clearInterval(initialDemoInterval);
@@ -221,42 +208,28 @@ function initScrollRotation() {
     const filmContainer = document.querySelector('.film-container');
     if (filmContainer) {
         filmContainer.classList.add('scroll-rotation-active');
-        
-        // NE PAS AJOUTER L'INDICATEUR ICI
-        // On le fera dans l'IntersectionObserver plus bas
-        
         filmContainer.addEventListener('wheel', (e) => {
             e.preventDefault();
             handleScroll(e);
         }, { passive: false });
         
-        // Démarrer l'autorotation au survol
         filmContainer.addEventListener('mouseenter', () => {
-            // Ne pas démarrer l'auto-rotation si la démo initiale est en cours
             if (!initialDemoInterval) {
                 startAutoRotation();
             }
         });
         
-        // Arrêter l'autorotation quand la souris quitte la zone
         filmContainer.addEventListener('mouseleave', stopAutoRotation);
         
-        // NE PAS DÉMARRER LA DÉMO INITIALE IMMÉDIATEMENT
-        // On le fera dans l'IntersectionObserver plus bas
-        
-        // Arrêter la démo initiale si l'utilisateur clique
         filmContainer.addEventListener('click', stopInitialDemo);
     }
     
-    // Observer quand la section des films entre dans la vue
     const filmSection = document.getElementById('film-section');
     const filmObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting && !filmIndicatorShown) {
-                // Attendre que la section soit suffisamment visible
                 if (entry.intersectionRatio > 0.6) {
                     filmIndicatorShown = true;
-                    // Démarrer la démo et ajouter l'indicateur
                     setTimeout(() => {
                         if (!initialDemoDone) {
                             startInitialDemo();
@@ -268,20 +241,18 @@ function initScrollRotation() {
                 }
             }
         });
-    }, { threshold: [0.6] });  // Active seulement quand 60% de la section est visible
+    }, { threshold: [0.6] }); 
     
     if (filmSection) {
         filmObserver.observe(filmSection);
     }
 }
 
-// Fonction pour ajouter l'indicateur de défilement
+// Ajoute un indicateur visuel expliquant comment naviguer dans le carousel
 function addSwipeIndicator(container) {
-    // Créer l'élément indicateur
     const indicator = document.createElement('div');
     indicator.className = 'swipe-indicator';
     
-    // Ajouter le contenu HTML avec l'icône de souris et les flèches
     indicator.innerHTML = `
         <div class="swipe-animation">
             <div class="mouse-container">
@@ -297,7 +268,6 @@ function addSwipeIndicator(container) {
         <div class="swipe-text">Défilez pour explorer les films</div>
     `;
     
-    // Styles CSS injectés directement
     const style = document.createElement('style');
     style.textContent = `
         .swipe-indicator {
@@ -427,13 +397,10 @@ function addSwipeIndicator(container) {
         }
     `;
     
-    // Ajouter les styles au document
     document.head.appendChild(style);
     
-    // Ajouter l'indicateur au conteneur
     container.appendChild(indicator);
     
-    // Faire disparaître l'indicateur après une interaction
     const hideIndicatorAfterInteraction = () => {
         const indicator = document.querySelector('.swipe-indicator');
         if (indicator) {
@@ -445,22 +412,18 @@ function addSwipeIndicator(container) {
             }, 500);
         }
         
-        // Supprimer les écouteurs après utilisation
         container.removeEventListener('wheel', hideIndicatorAfterInteraction);
         container.removeEventListener('click', hideIndicatorAfterInteraction);
     };
     
-    // Masquer l'indicateur après la première interaction
     container.addEventListener('wheel', hideIndicatorAfterInteraction);
     container.addEventListener('click', hideIndicatorAfterInteraction);
     
-    // Masquer l'indicateur après un délai (10 secondes)
     setTimeout(() => {
         hideIndicatorAfterInteraction();
     }, 10000);
 }
 
-// Modification de l'écouteur DOMContentLoaded pour appeler la nouvelle fonction
 document.addEventListener('DOMContentLoaded', () => {
     loadFilms();
 });
