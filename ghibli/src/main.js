@@ -18,6 +18,7 @@ function addNavigationButtons() {
     { name: 'personnages', selector: '#characters-section' },
     { name: 'films', selector: '#film-section' },
     { name: 'anecdotes', selector: '.anecdotes-container' },
+    { name: 'musées', selector: '#museeparc-section' },
     { name: 'classement', selector: '#graphique-section' }
   ];
 
@@ -26,28 +27,28 @@ function addNavigationButtons() {
     const scrollPos = window.scrollY + window.innerHeight / 3;
     let currentIndex = 0;
     let minDistance = Infinity;
-    
+
     sections.forEach((section, index) => {
       const element = document.querySelector(section.selector);
       if (element) {
         const rect = element.getBoundingClientRect();
         const sectionTop = rect.top + window.scrollY;
         const distance = Math.abs(scrollPos - sectionTop);
-        
+
         if (distance < minDistance) {
           minDistance = distance;
           currentIndex = index;
         }
       }
     });
-    
+
     return currentIndex;
   }
-  
+
   // Créer le conteneur pour les boutons
   const navContainer = document.createElement('div');
   navContainer.className = 'navigation-buttons';
-  
+
   // Bouton vers le haut (section précédente)
   const upButton = document.createElement('button');
   upButton.className = 'nav-button up-button';
@@ -69,7 +70,7 @@ function addNavigationButtons() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   });
-  
+
   // Bouton vers le bas (section suivante)
   const downButton = document.createElement('button');
   downButton.className = 'nav-button down-button';
@@ -88,11 +89,11 @@ function addNavigationButtons() {
       }
     }
   });
-  
+
   // Mettre à jour l'état des boutons en fonction de la position actuelle
   function updateButtonsState() {
     const currentIndex = getCurrentSectionIndex();
-    
+
     // Désactiver le bouton haut si on est à la première section
     if (currentIndex <= 0) {
       upButton.classList.add('disabled');
@@ -101,7 +102,7 @@ function addNavigationButtons() {
       upButton.classList.remove('disabled');
       upButton.style.opacity = '1';
     }
-    
+
     // Désactiver le bouton bas si on est à la dernière section
     if (currentIndex >= sections.length - 1) {
       downButton.classList.add('disabled');
@@ -111,18 +112,18 @@ function addNavigationButtons() {
       downButton.style.opacity = '1';
     }
   }
-  
+
   // Ajouter les boutons au conteneur
   navContainer.appendChild(upButton);
   navContainer.appendChild(downButton);
-  
-  
+
+
   // Ajouter le conteneur au corps du document
   document.body.appendChild(navContainer);
-  
+
   // Mettre à jour l'état des boutons initialement
   updateButtonsState();
-  
+
   // Mettre à jour l'état des boutons lors du défilement
   window.addEventListener('scroll', updateButtonsState);
 }
