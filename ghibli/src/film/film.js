@@ -1,3 +1,4 @@
+let filmIndicatorShown = false;
 import { setupFilmPopup } from "./popup";   
 
 let films = [];
@@ -110,6 +111,7 @@ function initScrollRotation() {
     
     // Indicateur pour savoir si la démonstration initiale a été faite
     let initialDemoDone = false;
+    let initialDemoInterval = null;
 
     function centerFilmSection() {
         const filmSection = document.getElementById('film-section');
@@ -144,39 +146,27 @@ function initScrollRotation() {
     centerFilmSection();
 
     function handleScroll(event) {
-        // Si autoRotation est en cours, l'arrêter car l'utilisateur interagit manuellement
         stopAutoRotation();
         stopInitialDemo(); // Arrêter aussi la démo initiale si elle est en cours
         
-        const scrollDirection = event.deltaY > 0 ? 1 : -1;
-        
+        // Si déjà en train de défiler, ignorer l'événement complètement
         if (isScrolling) {
-            wheelEvents += scrollDirection;
             return;
         }
         
         isScrolling = true;
         
+        // Déterminer la direction du défilement (un seul cran à la fois)
+        const scrollDirection = event.deltaY > 0 ? 1 : -1;
+        
+        // Avancer ou reculer d'un seul film
         const newIndex = (filmCurrentIndex + scrollDirection + films.length) % films.length;
         selectFilm(newIndex);
         
         setTimeout(() => {
             isScrolling = false;
-            
-            if (wheelEvents !== 0) {
-                const nextDirection = wheelEvents > 0 ? 1 : -1;
-                wheelEvents = 0;
-                
-                setTimeout(() => {
-                    const nextEvent = new WheelEvent('wheel', { deltaY: nextDirection * 100 });
-                    handleScroll(nextEvent);
-                }, 100);
-            }
         }, 800);
     }
-    
-    // Variables pour la démo initiale
-    let initialDemoInterval = null;
     
     // Fonction pour démarrer la rotation automatique
     function startAutoRotation() {
@@ -232,8 +222,8 @@ function initScrollRotation() {
     if (filmContainer) {
         filmContainer.classList.add('scroll-rotation-active');
         
-        // Ajouter l'indicateur de swipe
-        addSwipeIndicator(filmContainer);
+        // NE PAS AJOUTER L'INDICATEUR ICI
+        // On le fera dans l'IntersectionObserver plus bas
         
         filmContainer.addEventListener('wheel', (e) => {
             e.preventDefault();
@@ -251,15 +241,41 @@ function initScrollRotation() {
         // Arrêter l'autorotation quand la souris quitte la zone
         filmContainer.addEventListener('mouseleave', stopAutoRotation);
         
-        // Démarrer la démonstration initiale immédiatement
-        // Avec un léger délai pour permettre au DOM de se stabiliser
-        setTimeout(startInitialDemo, 500);
+        // NE PAS DÉMARRER LA DÉMO INITIALE IMMÉDIATEMENT
+        // On le fera dans l'IntersectionObserver plus bas
         
         // Arrêter la démo initiale si l'utilisateur clique
         filmContainer.addEventListener('click', stopInitialDemo);
     }
+    
+    // Observer quand la section des films entre dans la vue
+    const filmSection = document.getElementById('film-section');
+    const filmObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !filmIndicatorShown) {
+                // Attendre que la section soit suffisamment visible
+                if (entry.intersectionRatio > 0.6) {
+                    filmIndicatorShown = true;
+                    // Démarrer la démo et ajouter l'indicateur
+                    setTimeout(() => {
+                        if (!initialDemoDone) {
+                            startInitialDemo();
+                        }
+                        if (filmContainer) {
+                            addSwipeIndicator(filmContainer);
+                        }
+                    }, 500);
+                }
+            }
+        });
+    }, { threshold: [0.6] });  // Active seulement quand 60% de la section est visible
+    
+    if (filmSection) {
+        filmObserver.observe(filmSection);
+    }
 }
 
+// Fonction pour ajouter l'indicateur de défilement
 function addSwipeIndicator(container) {
     // Créer l'élément indicateur
     const indicator = document.createElement('div');
@@ -331,37 +347,37 @@ function addSwipeIndicator(container) {
         }
         
         .scroll-arrows {
-        position: absolute;
-        left: auto;  /* Suppression du positionnement à gauche */
-        right: -25px;  /* Positionnement à droite */
-        top: 50%;  /* Centrage vertical */
-        transform: translateY(-50%);  /* Parfait centrage vertical */
-        height: 70px;  /* Hauteur ajustée */
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .arrow {
-        font-size: 14px;
-        opacity: 0.8;
-        filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
-        position: relative;  /* Position relative au lieu d'absolute */
-        margin: 5px 0;  /* Marge pour séparer les flèches */
-    }
-    
-    .arrow-up {
-        /* Suppression de position: absolute et top: 0 */
-        animation: arrowBlink 1.5s ease-in-out infinite;
-        animation-delay: 0s;
-    }
-    
-    .arrow-down {
-        /* Suppression de position: absolute et bottom: 0 */
-        animation: arrowBlink 1.5s ease-in-out infinite;
-        animation-delay: 0.75s;
-    }
+            position: absolute;
+            left: auto;  /* Suppression du positionnement à gauche */
+            right: -25px;  /* Positionnement à droite */
+            top: 50%;  /* Centrage vertical */
+            transform: translateY(-50%);  /* Parfait centrage vertical */
+            height: 70px;  /* Hauteur ajustée */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .arrow {
+            font-size: 14px;
+            opacity: 0.8;
+            filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
+            position: relative;  /* Position relative au lieu d'absolute */
+            margin: 5px 0;  /* Marge pour séparer les flèches */
+        }
+        
+        .arrow-up {
+            /* Suppression de position: absolute et top: 0 */
+            animation: arrowBlink 1.5s ease-in-out infinite;
+            animation-delay: 0s;
+        }
+        
+        .arrow-down {
+            /* Suppression de position: absolute et bottom: 0 */
+            animation: arrowBlink 1.5s ease-in-out infinite;
+            animation-delay: 0.75s;
+        }
         
         .swipe-text {
             font-weight: 500;
@@ -417,7 +433,7 @@ function addSwipeIndicator(container) {
     // Ajouter l'indicateur au conteneur
     container.appendChild(indicator);
     
-    // Le reste du code reste inchangé
+    // Faire disparaître l'indicateur après une interaction
     const hideIndicatorAfterInteraction = () => {
         const indicator = document.querySelector('.swipe-indicator');
         if (indicator) {

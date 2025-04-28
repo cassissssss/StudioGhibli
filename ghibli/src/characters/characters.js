@@ -1,3 +1,5 @@
+window.characterIndicatorShown = false;
+
 let characters = [];
 let currentIndex = 0;
 let isScrolling = false;
@@ -77,8 +79,25 @@ const initCarousel = () => {
     // Configurer la zone de capture de défilement
     setupScrollZone();
     
-    // Ajouter l'indicateur de swipe
-    addCharacterSwipeIndicator(container);
+    // Utiliser un IntersectionObserver pour ajouter l'indicateur au bon moment
+    const charactersSection = document.getElementById('characters-section');
+    const characterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !window.characterIndicatorShown) {
+                // Attendre que la section soit suffisamment visible
+                if (entry.intersectionRatio > 0.6) {
+                    window.characterIndicatorShown = true;
+                    setTimeout(() => {
+                        addCharacterSwipeIndicator(container);
+                    }, 500);
+                }
+            }
+        });
+    }, { threshold: [0.6] });  // Active seulement quand 60% de la section est visible
+    
+    if (charactersSection) {
+        characterObserver.observe(charactersSection);
+    }
 
     // Gérer le comportement de drag et swipe
     let startX = 0;
